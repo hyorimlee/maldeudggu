@@ -2,7 +2,7 @@
 - 도메인: 인공지능 음성
 - 기획: 사용자 발화에 대해 지역 방언과의 유사도를 알려주는 서비스
 
-<img src="./assets/MobileNet_V2.png" width="300">
+<div align=center><img src="./assets/MobileNet_V2.png" width="300"></div>
 <!-- ![mobilenetv2](./assets/MobileNet_V2.png =250x100) -->
 
 - 관련 링크
@@ -11,4 +11,6 @@
     - 스토리보드: [Figma](https://www.figma.com/file/R3nBd2AO4kMK2cPeYSM5zh/Team_COCO-team-library?node-id=411%3A3)
     - 이슈 관리: [Jira](https://jira.ssafy.com/secure/RapidBoard.jspa?rapidView=11328&projectKey=S06P22A203&view=planning.nodetail&issueLimit=100)
     - ERD 설계: [ERD Cloud](https://www.erdcloud.com/d/M2S4jr4ra8ruhDFGX)
-    <img src="./assets/ERD.png" width="300">
+      <div align=center><img src="./assets/ERD.png" width="300"></div>
+    - RESTful API: [API 문서](https://scalloped-fox-c83.notion.site/API-313fbc4f31314f148b3c750e86ff26f7)
+
