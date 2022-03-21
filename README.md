@@ -10,3 +10,5 @@
     - 팀 및 프로젝트 소개, 기록물: [Wiki](https://lab.ssafy.com/s06-ai-speech-sub2/S06P22A203/-/wikis/home)
     - 스토리보드: [Figma](https://www.figma.com/file/R3nBd2AO4kMK2cPeYSM5zh/Team_COCO-team-library?node-id=411%3A3)
     - 이슈 관리: [Jira](https://jira.ssafy.com/secure/RapidBoard.jspa?rapidView=11328&projectKey=S06P22A203&view=planning.nodetail&issueLimit=100)
+    - ERD 설계: [ERD Cloud](https://www.erdcloud.com/d/M2S4jr4ra8ruhDFGX)
+    <img src="./assets/ERD.png" width="300">
