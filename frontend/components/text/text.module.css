@@ -1,0 +1,31 @@
+.p12 {
+  font-size: 12px;
+}
+
+.p16 {
+  font-size: 16px;
+}
+
+.p18 {
+  font-size: 18px;
+}
+
+.p24 {
+  font-size: 24px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.grey {
+  color: #c5c5c5;
+}
+
+.white {
+  color: white;
+}
+
+.orange {
+  color: #FB7D1E;
+}
