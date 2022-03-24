@@ -1,13 +1,11 @@
-import styles from '../styles/Home.module.css'
+import Layout from '../components/layout/layout'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-      </main>
-
-      <footer className={styles.footer}>
-      </footer>
-    </div>
+    <>
+      <p>테스트</p>
+      <p>테스트</p>
+      <p>테스트</p>
+    </>
   )
 }
