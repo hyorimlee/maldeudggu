@@ -4,9 +4,10 @@
   border-style: none;
   border-radius: 9999px;
   background-color: #FB7D1E;
-}
-
-.button a {
   color: #FFFFFF;
   font-weight: bold;
+}
+
+.button:hover {
+  background-color: #FFAE4A
 }

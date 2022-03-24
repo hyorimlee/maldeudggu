@@ -3,11 +3,11 @@ import classes from './button.module.css';
 
 function Button(props) {
   return (
-    <button className={classes.button}>
-      <Link href={props.link}>
+    <Link href={props.link}>
+      <button className={classes.button}>
         {props.content}
-      </Link>
-    </button>
+      </button>
+    </Link>
   )
 }
 
