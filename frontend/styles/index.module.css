@@ -1,0 +1,11 @@
+.temp {
+  width: 180px;
+  height: 80px;
+  color: white;
+  background-color: black;
+}
+
+.icon {
+  margin: 20px;
+  font-size: 20px;
+}
