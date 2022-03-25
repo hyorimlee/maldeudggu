@@ -1,6 +1,8 @@
-export default function Customize() {
+function Customize() {
   return (
     <>
     </>
   )
 }
+
+export default Customize
