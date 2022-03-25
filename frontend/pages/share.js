@@ -1,6 +1,8 @@
-export default function Share() {
+function Share() {
   return (
     <>
     </>
   )
 }
+
+export default Share
