@@ -20,3 +20,6 @@ class ImageListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Case
         exclude = ('result', )
+
+class AudioQuerySerializer(serializers.Serializer):
+    sentence = serializers.IntegerField(required=True)
