@@ -2,6 +2,10 @@
   font-size: 12px;
 }
 
+.p14 {
+  font-size: 14px;
+}
+
 .p16 {
   font-size: 16px;
 }
@@ -10,8 +14,12 @@
   font-size: 18px;
 }
 
-.p24 {
-  font-size: 24px;
+.p20 {
+  font-size: 20px;
+}
+
+.p22 {
+  font-size: 22px;
 }
 
 .bold {
