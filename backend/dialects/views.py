@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from .serializers import CaseSerializer, SentenceSerializer, ImageListSerializer
 from .models import *
 import random
+from pathlib import Path
+from django.core.files import File
+import datetime
 
 # Create your views here.
 
@@ -51,7 +54,7 @@ def start_test(request):
         }
         return Response(res,status=status.HTTP_201_CREATED)
 
-@api_view(['PATCH'])
+@api_view(['POST'])     # request.FILES 사용하려면 POST 방식이어야 함
 def save_audio(request, case_pk):
     """
     case pk, sentence pk 받아서 오디오 저장
@@ -60,10 +63,18 @@ def save_audio(request, case_pk):
     저장된 audio pk 리턴
     """
     case = get_object_or_404(Case, pk=case_pk)
-    case.sentences.add(request.GET.get('sentence'))
+    sentence_pk = request.GET.get('sentence')
+    sentence = get_object_or_404(Sentence, pk=sentence_pk)
+    case.sentences.add(sentence)
     case.save()
 
-    return Response("hello save_audio",status=status.HTTP_200_OK)
+    audio = get_object_or_404(Audio, case=case, sentence=sentence)
+    audio.audio_path = request.FILES('audio')    # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달
+    res = audio.save()
+    data = {
+        'audio_pk': res.pk
+    }
+    return Response(data,status=status.HTTP_201_CREATED)
 
 def get_result(request, case_pk):
     """
