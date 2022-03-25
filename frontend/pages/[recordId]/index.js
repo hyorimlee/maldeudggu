@@ -1,6 +1,8 @@
-export default function Record() {
+function Record() {
   return (
     <>
     </>
   )
 }
+
+export default Record

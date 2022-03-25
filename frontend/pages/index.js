@@ -5,12 +5,12 @@ import styles from "../styles/index.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Text
         bold
-        size={18}
+        size={16}
         contents={'나는 어떤 억양을 사용할까?'}
       ></Text>
       <div className={styles.temp}>로고 자리</div>
@@ -30,8 +30,8 @@ export default function Home() {
         contents={'음성 데이터 수집에 동의합니다.'}
       ></Text>
       <Button
-        link="#"
-        content="테스트 시작하기">
+        link={''}
+        content={'테스트 시작하기'}>
       </Button>
       <FontAwesomeIcon
         icon={faAnglesDown}
@@ -40,3 +40,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Home;

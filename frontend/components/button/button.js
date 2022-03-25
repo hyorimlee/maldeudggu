@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import classes from './button.module.css';
+import styles from './button.module.css';
 
-function Button(props) {
+function Button({link, content}) {
   return (
-    <Link href={props.link}>
-      <button className={classes.button}>
-        {props.content}
+    <Link href={link}>
+      <button className={styles.button}>
+        {content}
       </button>
     </Link>
   )
