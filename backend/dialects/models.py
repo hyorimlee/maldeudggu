@@ -4,6 +4,8 @@ from django.db import models
 class Case(models.Model):
     image_url = models.URLField()
     result = models.CharField(max_length=128)
+    sentences = models.ManyToManyField('Sentence', through='Audio')
+    # Case 인스턴스 case에 sentence s1 추가해줄 때: case.sentences.add(s1)
 
 
 class Sentence(models.Model):

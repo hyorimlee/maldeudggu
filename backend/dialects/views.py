@@ -1,46 +1,71 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404
 from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CaseSerializer, SentenceSerializer
+from .serializers import CaseSerializer, SentenceSerializer, ImageListSerializer
 from .models import *
-from django.http import Http404
+import random
+
 # Create your views here.
 
 @api_view()
-def image_list(request):
-    
-    # image_list = Case.objects.filter(image_url__isnull=False)
-    # serializer = CaseSerializer(image_list, many=True)
-    # if not serializer:
-    #     raise Http404("[image_list]No Case matches the given query")
-    # return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    return Response("hello image_list",status=status.HTTP_200_OK)
+def get_images(request):
+    cases = get_list_or_404(Case, image_url__isnull=False)
+    # cases = Case.objects.filter(image_url__isnull=False)
+    serializer = ImageListSerializer(cases, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    """
+    image_list = Case.objects.filter(image_url__isnull=False)
+    serializer = CaseSerializer(image_list, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    """
+
+@api_view()
 def count_participant(request):
     """
     tb_case에서 result != Null 인 데이터 개수
     """
-    return Response("hello count_participant",status=status.HTTP_200_OK)
-
+    num_participant = get_list_or_404(Case, result__isnull=False).count()
+    data = {
+        'count': num_participant
+    }
+    return Response(data,status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
 def start_test(request):
     """
     - tb_case에 튜플 생성
     - 케이스 pk와 랜덤 문장 리스트 반환
     """
-    return Response("hello start_test",status=status.HTTP_200_OK)
+    serializer = CaseSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        # raise_exception=True는 기본적으로 문제 있을 경우 HTTP 400 코드를 응답
+        serializer.save()
+        # 랜덤 문장 리스트
+        all_sentences = Sentence.objects.all()
+        random_list = random.sample(list(all_sentences), 5) # 5개로 가정
+        res = {
+            'data': serializer.data,
+            'sentences': random_list
+        }
+        return Response(res,status=status.HTTP_201_CREATED)
 
-def save_audio(request):
+@api_view(['PATCH'])
+def save_audio(request, case_pk):
     """
     case pk, sentence pk 받아서 오디오 저장
     *이름형식
     case pk 이름의 폴더 아래에, 날짜시각, sentence pk, 확장자로 이루어진 파일
     저장된 audio pk 리턴
     """
+    case = get_object_or_404(Case, pk=case_pk)
+    case.sentences.add(request.GET.get('sentence'))
+    case.save()
+
     return Response("hello save_audio",status=status.HTTP_200_OK)
 
-def get_result(request):
+def get_result(request, case_pk):
     """
     case pk 받고, 오디오 재사용 동의여부 받기 (저장은 기본값!)
     case pk에 해당하는 오디오파일 뽑아서 모델에 돌리고 / 로컬 스토리지에서 한번에 받고
@@ -48,7 +73,7 @@ def get_result(request):
     """
     return Response("hello get_result",status=status.HTTP_200_OK)
 
-def save_image(request):
+def save_image(request, case_pk):
     """
     클라이언트에서 firebase 이미지 url과 case pk 주면, 저장(patch)
     ok message (+ 결과값) 반환
