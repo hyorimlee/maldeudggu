@@ -3,6 +3,7 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your models here.
 class Case(models.Model):
+    nickname = models.CharField(max_length=15)
     image_url = models.URLField(null=True)
     result = models.CharField(max_length=128, null=True)
     sentences = models.ManyToManyField('Sentence', through='Audio')

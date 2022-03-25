@@ -29,7 +29,7 @@ def count_participant(request):
     """
     tb_case에서 result != Null 인 데이터 개수
     """
-    num_participant = get_list_or_404(Case, result__isnull=False).count()
+    num_participant = Case.objects.filter(result__isnull=False).count()
     data = {
         'count': num_participant
     }
@@ -69,10 +69,14 @@ def save_audio(request, case_pk):
     case.save()
 
     audio = get_object_or_404(Audio, case=case, sentence=sentence)
-    audio.audio_path = request.FILES('audio')    # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달
-    res = audio.save()
+    ## 테스트용
+    # sentence = Sentence()
+    # sentence.save()
+    # audio = Audio(case=case, sentence=sentence)
+    audio.audio_path = request.FILES['audio']   # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달
+    audio.save()
     data = {
-        'audio_pk': res.pk
+        'audio_pk': audio.pk
     }
     return Response(data,status=status.HTTP_201_CREATED)
 
