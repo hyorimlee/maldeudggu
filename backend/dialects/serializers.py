@@ -13,3 +13,10 @@ class SentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sentence
         fields = '__all__'
+
+
+class ImageListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Case
+        exclude = ('result', )
