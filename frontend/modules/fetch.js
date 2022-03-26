@@ -27,8 +27,10 @@ async function getRequest(url, params={}) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
+    return null
   } catch (error) {
     console.error(error)
+    return null
   }
 }
 
@@ -58,8 +60,10 @@ async function postRequest(url, datas=[]) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
+    return null
   } catch (error) {
     console.error(error)
+    return null
   }
 }
 
@@ -74,7 +78,7 @@ async function postRequest(url, datas=[]) {
 - output
   저장 성공 여부 json 파일
 */
-async function imageSave(url, image) {
+async function patchRequest(url, image) {
   try {
     let formData = new FormData()
     formData.append(image)
@@ -89,9 +93,11 @@ async function imageSave(url, image) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
+    return null
   } catch (error) {
     console.error(error)
+    return null
   }
 }
 
-export { getRequest, postRequest, imageSave }
+export { getRequest, postRequest, patchRequest }
