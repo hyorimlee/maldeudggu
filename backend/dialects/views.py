@@ -3,15 +3,17 @@ from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CaseSerializer, SentenceSerializer, ImageListSerializer
+from .serializers import CaseSerializer, SentenceSerializer, ImageListSerializer, AudioQuerySerializer
 from .models import *
 import random
 from pathlib import Path
 from django.core.files import File
 import datetime
+from rest_framework.decorators import api_view #api docs
+from rest_framework.response import Response #api docs
+from drf_yasg.utils import swagger_auto_schema
 
 # Create your views here.
-
 @api_view()
 def get_images(request):
     cases = get_list_or_404(Case, image_url__isnull=False)
@@ -40,6 +42,8 @@ def start_test(request):
     """
     - tb_case에 튜플 생성
     - 케이스 pk와 랜덤 문장 리스트 반환
+
+    ** nickname 받기
     """
     serializer = CaseSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
@@ -54,13 +58,15 @@ def start_test(request):
         }
         return Response(res,status=status.HTTP_201_CREATED)
 
+@swagger_auto_schema(method='post',query_serializer=AudioQuerySerializer)
 @api_view(['POST'])     # request.FILES 사용하려면 POST 방식이어야 함
 def save_audio(request, case_pk):
     """
     case pk, sentence pk 받아서 오디오 저장
-    *이름형식
     case pk 이름의 폴더 아래에, 날짜시각, sentence pk, 확장자로 이루어진 파일
     저장된 audio pk 리턴
+
+    ** 오디오 저장 방법
     """
     case = get_object_or_404(Case, pk=case_pk)
     sentence_pk = request.GET.get('sentence')
@@ -80,6 +86,7 @@ def save_audio(request, case_pk):
     }
     return Response(data,status=status.HTTP_201_CREATED)
 
+@api_view()
 def get_result(request, case_pk):
     """
     case pk 받고, 오디오 재사용 동의여부 받기 (저장은 기본값!)
@@ -88,6 +95,7 @@ def get_result(request, case_pk):
     """
     return Response("hello get_result",status=status.HTTP_200_OK)
 
+@api_view()
 def save_image(request, case_pk):
     """
     클라이언트에서 firebase 이미지 url과 case pk 주면, 저장(patch)
