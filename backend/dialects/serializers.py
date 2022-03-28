@@ -21,11 +21,14 @@ class ImageListSerializer(serializers.ModelSerializer):
         model = Case
         exclude = ('result', )
 
+
 class AudioQuerySerializer(serializers.Serializer):
     sentence = serializers.IntegerField(required=True)
+
 
 class ReuseQuerySerializer(serializers.Serializer):
     reuse = serializers.BooleanField(required=True)
 
-class StartQuerySerializer(serializers.Serializer):
-    nickname = serializers.CharField(required=True)
+
+class StartBodySerializer(serializers.Serializer):
+    nickname = serializers.CharField(required=True, help_text="닉네임")
