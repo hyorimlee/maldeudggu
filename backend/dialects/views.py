@@ -3,7 +3,7 @@ from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer,StartQuerySerializer
+from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer,StartBodySerializer
 from .models import *
 import random
 from rest_framework.decorators import api_view #api docs
@@ -29,7 +29,8 @@ def count_participant(request):
     }
     return Response(data,status=status.HTTP_200_OK)
 
-@swagger_auto_schema(method='post',query_serializer=StartQuerySerializer)
+# @swagger_auto_schema(method='post',query_serializer=StartQuerySerializer)
+@swagger_auto_schema(method='post', request_body=StartBodySerializer)
 @api_view(['POST'])
 def start_test(request):
     """
@@ -37,13 +38,8 @@ def start_test(request):
     - 케이스 pk와 랜덤 문장 리스트 반환
 
     """
-    nickname=request.POST.get('nickname')
-    case = Case(nickname)
+    case = Case(nickname=request.data['nickname'])
     case.save()
-    # serializer = CaseSerializer(data=request.data)
-    # if serializer.is_valid(raise_exception=True):
-        # raise_exception=True는 기본적으로 문제 있을 경우 HTTP 400 코드를 응답
-        # serializer.save()
     
     # 랜덤 문장 리스트
     all_sentences = Sentence.objects.all()
