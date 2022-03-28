@@ -37,7 +37,6 @@ function Home() {
         icon={faAnglesDown}
         className={styles.icon}
       ></FontAwesomeIcon>
->>>>>>> c221e993d13afb7ec1ee899522210adfebc60f94
     </>
   )
 }
