@@ -13,3 +13,22 @@ class SentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sentence
         fields = '__all__'
+
+
+class ImageListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Case
+        exclude = ('result', )
+
+
+class AudioQuerySerializer(serializers.Serializer):
+    sentence = serializers.IntegerField(required=True)
+
+
+class ReuseQuerySerializer(serializers.Serializer):
+    reuse = serializers.BooleanField(required=True)
+
+
+class StartBodySerializer(serializers.Serializer):
+    nickname = serializers.CharField(required=True, help_text="닉네임")

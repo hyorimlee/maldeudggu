@@ -1,17 +1,31 @@
 .p12 {
   font-size: 12px;
+  text-align: center;
+}
+
+.p14 {
+  font-size: 14px;
+  text-align: center;
 }
 
 .p16 {
   font-size: 16px;
+  text-align: center;
 }
 
 .p18 {
   font-size: 18px;
+  text-align: center;
 }
 
-.p24 {
-  font-size: 24px;
+.p20 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.p22 {
+  font-size: 22px;
+  text-align: center;
 }
 
 .bold {
