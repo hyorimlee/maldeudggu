@@ -1,0 +1,13 @@
+.container {
+  position: "relative";
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  width: 150;
+  height: 150;
+}
+
+.progressIcon {
+  width: 80px;
+  height: 80px;
+}
