@@ -11,7 +11,7 @@
     - 스토리보드: [Figma](https://www.figma.com/file/R3nBd2AO4kMK2cPeYSM5zh/Team_COCO-team-library?node-id=411%3A3)
     - 이슈 관리: [Jira](https://jira.ssafy.com/secure/RapidBoard.jspa?rapidView=11328&projectKey=S06P22A203&view=planning.nodetail&issueLimit=100)
     - ERD 설계: [ERD Cloud](https://www.erdcloud.com/d/M2S4jr4ra8ruhDFGX)
-      <div align=center><img src="./assets/ERD.png" width="300"></div>
+      <div align=center><img src="/assets/ERD.png" width="50%"></div>
     - RESTful API: [API 문서](https://scalloped-fox-c83.notion.site/API-313fbc4f31314f148b3c750e86ff26f7)
 
     ​
