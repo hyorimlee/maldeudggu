@@ -23,3 +23,6 @@ class ImageListSerializer(serializers.ModelSerializer):
 
 class AudioQuerySerializer(serializers.Serializer):
     sentence = serializers.IntegerField(required=True)
+
+class ReuseQuerySerializer(serializers.Serializer):
+    reuse = serializers.BooleanField(required=True)
