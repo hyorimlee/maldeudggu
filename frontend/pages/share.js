@@ -7,7 +7,7 @@ import styles from '../styles/share.module.css'
 
 const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_API_KEY
 
-function Share() {
+function Share({ staticState, changeStaticState }) {
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(KAKAO_API_KEY)
