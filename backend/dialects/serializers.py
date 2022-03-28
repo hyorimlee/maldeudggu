@@ -26,3 +26,6 @@ class AudioQuerySerializer(serializers.Serializer):
 
 class ReuseQuerySerializer(serializers.Serializer):
     reuse = serializers.BooleanField(required=True)
+
+class StartQuerySerializer(serializers.Serializer):
+    nickname = serializers.CharField(required=True)

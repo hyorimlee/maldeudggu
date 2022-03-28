@@ -3,7 +3,7 @@ from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer
+from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer,StartQuerySerializer
 from .models import *
 import random
 from rest_framework.decorators import api_view #api docs
@@ -29,16 +29,16 @@ def count_participant(request):
     }
     return Response(data,status=status.HTTP_200_OK)
 
-
+@swagger_auto_schema(method='post',query_serializer=StartQuerySerializer)
 @api_view(['POST'])
 def start_test(request):
     """
     - tb_case에 튜플 생성
     - 케이스 pk와 랜덤 문장 리스트 반환
 
-    ** nickname 받기
     """
-    case = Case(nickname=request.data['nickname'])
+    nickname=request.POST.get('nickname')
+    case = Case(nickname)
     case.save()
     # serializer = CaseSerializer(data=request.data)
     # if serializer.is_valid(raise_exception=True):
@@ -47,6 +47,8 @@ def start_test(request):
     
     # 랜덤 문장 리스트
     all_sentences = Sentence.objects.all()
+    if len(list(all_sentences)) <5 : 
+        return Response("sentences are less than 5",status=status.HTTP_404_NOT_FOUND)
     random_list = random.sample(list(all_sentences), 5) # 5개로 가정
     data = {
         'case_id': case.pk,
