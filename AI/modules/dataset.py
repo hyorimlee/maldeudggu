@@ -1,3 +1,5 @@
+import torch
+from torch.utils.data import Dataset
 class DialectAudioDataset(Dataset):
     def __init__(self, label_file, root_dir, make_melspectogram=None, transform=None, target_transform=None):
         with open(label_file, 'r', encoding='UTF-8') as f:
@@ -24,7 +26,7 @@ class DialectAudioDataset(Dataset):
         audio = self.make_melspectogram(audio_path)[1]
         
         # label은 0부터 시작
-        label = torch.tensor([int(self.audio_datas[idx][1]) - 1], dtype=torch.long)
+        label = torch.tensor([int(self.audio_datas[idx][1])], dtype=torch.long)
 
         # zero padding, noise padding 필요
         if self.transform:
