@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     },
     recordAudio: [],
     myResult: {},
-    myCharacter: null,
+    myCharacter: {},
   })
 
   // 추가 구현 필요
@@ -25,6 +25,7 @@ function MyApp({ Component, pageProps }) {
       ...staticState.settings,
       ...staticState.recordAudio,
       ...staticState.myResult,
+      ...staticState.myCharacter,
     }
 
     setStaticState({
