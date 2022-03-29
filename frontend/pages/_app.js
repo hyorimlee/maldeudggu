@@ -19,18 +19,17 @@ function MyApp({ Component, pageProps }) {
   })
 
   // 추가 구현 필요
-  const changeStaticState = (data) => (event) => {
-    const preState = {
-      ...staticState,
-      ...staticState.settings,
-      ...staticState.recordAudio,
-      ...staticState.myResult,
-      ...staticState.myCharacter,
-    }
+  const changeStaticState = (data, event) => {
+    function changeState() {
+      const preState = {
+        ...staticState
+      }
 
-    setStaticState({
-      ...preState
-    })
+      setStaticState({
+        ...preState
+      })
+    }
+    changeState()
   }
 
   return (
