@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view #api docs
 from rest_framework.response import Response #api docs
 from drf_yasg.utils import swagger_auto_schema
 
+from .audio_ai import inference
 
 @api_view()
 def get_images(request):
@@ -84,7 +85,7 @@ def save_audio(request, case_pk):
 
 
 @swagger_auto_schema(method='get',query_serializer=ReuseQuerySerializer)
-@api_view()
+@api_view(['GET'])
 def get_result(request, case_pk):
     """
     1) case pk 받고, 오디오 재사용 동의여부 받기 (저장은 기본값!)
@@ -95,9 +96,22 @@ def get_result(request, case_pk):
     case = get_object_or_404(pk=case_pk)
     case.reuse = request.GET.get('reuse')
     case.save()
-    # 2)
+    # 2)`,`
+    audio_objs = case.audio_set.all()
+    audio_files = []
+    for audio_obj in audio_objs:
+        audio_files.append(audio_obj.audio_path)
+    
+    # 테스트 필요
+    result = inference(audio_files)
+    
     # 3)
-    data = {}
+    case.result = ' '.join(result)
+    case.save()
+    data = {
+        'case_id': case.pk,
+        'result': result
+    }
     return Response(data,status=status.HTTP_200_OK)
 
 
