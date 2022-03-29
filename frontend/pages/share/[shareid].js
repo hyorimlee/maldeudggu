@@ -1,10 +1,11 @@
 import Script from 'next/script'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Text from '../components/text/text'
-import SNSContainer from '../containers/sns/snsContainer'
-import Image from '../components/image/image'
+import Text from '../../components/text/text'
+import SNSContainer from '../../containers/sns/snsContainer'
+import Image from '../../components/image/image'
 
-import styles from '../styles/share.module.css'
+import styles from '../../styles/share.module.css'
 
 const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_API_KEY
 const INDEX_URL = process.env.NEXT_PUBLIC_INDEX_URL
@@ -14,6 +15,10 @@ const SHARE_TEXT = `
 `
 
 function Share({ staticState, changeStaticState }) {
+  const router = useRouter()
+  const { shareid, seoul, jeju } = router.query
+  console.log(shareid, seoul, jeju)
+
   // 카카오 API 초기 생성
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {

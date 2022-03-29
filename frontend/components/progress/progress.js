@@ -1,8 +1,21 @@
+import { useEffect, useRef } from 'react'
+
 import styles from './progress.module.css'
 
-function Progress() {
+function Progress({ percent=0 }) {
+  const gauge = useRef()
+  
+  useEffect(() => {
+    gauge.current.style = `width: ${percent}%;`
+  }, [])
+
   return (
     <>
+      <div className={styles.container}>
+        <div ref={gauge} className={styles.gauge}></div>
+      </div>
     </>
   )
 }
+
+export default Progress
