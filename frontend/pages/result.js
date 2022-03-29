@@ -1,5 +1,6 @@
 import Text from '../components/text/text'
 import Button from '../components/button/button'
+import ResultProgress from '../containers/progress/resultProgress'
 
 import styles from '../styles/result.module.css'
 
@@ -19,15 +20,12 @@ function Result({ staticState, changeStaticState }) {
         퍼센트 시상식
       </>
       <Text size={20} bold contents='테스트 결과'></Text>
-      <>
-        퍼센트 프로그레스
-      </>
+      <ResultProgress result={[['서울/경기', 50], ['경상', 35], ['충청', 15]]}></ResultProgress>
       <div>
         <Text contents={`OOO 님의 목소리는 67% 로 경상도 방언을 주로 사용하시는군요! 그 외에 경기 23%, 강원도 10% 가 나왔습니다.`}></Text>
       </div>
       <Text contents={dialectsFeature['서울/경기']}></Text>
       <Button link='/customize' content='내 캐릭터 꾸미기'></Button>
-      <Button color='grey' link='' content='결과만 공유하기'></Button>
     </>
   )
 }
