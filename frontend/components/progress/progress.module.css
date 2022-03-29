@@ -1,0 +1,15 @@
+.container {
+  width: 200px;
+  height: 16px;
+  background-color: #DADADA;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.gauge {
+  width: 0;
+  height: 16px;
+  border-radius: 10px;
+  background-color: #FB7D1E;
+  transition: width 5s cubic-bezier(0, 0, 0.2, 1);
+}
