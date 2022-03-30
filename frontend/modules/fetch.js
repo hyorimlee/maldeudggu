@@ -15,7 +15,7 @@ async function getRequest(url, params={}) {
   try {
     const paramsKeys = Object.keys(params)
     let query
-    
+
     if (paramsKeys.length) {
       query = paramsKeys.map(k => `${k}=${params[k]}`).join('&')
     }
@@ -48,13 +48,15 @@ async function getRequest(url, params={}) {
 async function postRequest(url, datas=[]) {
   try {
     let formData = new FormData()
-    datas.forEach(data => formData.append(data))
+    datas.forEach((data) => {
+      formData.append(data[0], data[1])
+    })
 
     const response = await fetch(`${SERVER_BASE}${url}`, {
       method: 'POST',
       body: formData
     })
-    
+
     if (response.ok) {
       const data = await response.json()
       return data
@@ -87,7 +89,7 @@ async function patchRequest(url, image) {
       method: 'PATCH',
       body: formData
     })
-    
+
     if (response.ok) {
       const data = await response.json()
       return data

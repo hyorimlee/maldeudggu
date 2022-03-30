@@ -6,6 +6,8 @@ import '../styles/globals.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 
+import { postRequest } from '../modules/fetch'
+
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }) {
@@ -14,8 +16,14 @@ function MyApp({ Component, pageProps }) {
       nightMode: false,
     },
     recordAudio: [],
-    myResult: {},
+    myNickname: 'Test_Nicckname',
+    myResult: [
+      ['seoul', '50'],
+      ['jeju', '35'],
+      ['gyeongsang', '15']
+    ],
     myCharacter: {},
+    sampleSentence: [],
   })
 
   // 추가 구현 필요
@@ -25,12 +33,19 @@ function MyApp({ Component, pageProps }) {
         ...staticState
       }
 
+      let recordAudio
+
+      if (data) {
+        recordAudio = [...staticState.recordAudio, data]
+      }
       setStaticState({
-        ...preState
+        ...preState, recordAudio
       })
     }
     changeState()
   }
+
+  postRequest('/start/', [["nickname", "choux"]])
 
   return (
     <Layout>

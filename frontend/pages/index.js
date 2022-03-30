@@ -5,13 +5,30 @@ import Text from "../components/text/text"
 import Input from "../components/input/input"
 import Button from "../components/button/button"
 import Checkbox from "../containers/checkbox/checkbox"
+import SharedImages from '../containers/sharedImages/sharedImages'
 
 //styles
 import styles from "../styles/index.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
 
-function Home() {
+import { getRequest } from '../modules/fetch'
+
+/*
+사람들 공유 이미지 가져오기
+*/
+export async function getServerSideProps() {
+  const data = await getRequest('/shared')
+  
+  return {
+    props : {
+      data
+    }
+  }
+}
+
+
+function Home({ data }) {
   const [agree, setAgree] = useState(false)
 
   const checkHandler = () => {
@@ -50,6 +67,8 @@ function Home() {
         icon={faAnglesDown}
         className={styles.icon}
       ></FontAwesomeIcon>
+      <Text size={16} contents='실시간 생성된 캐릭터' ></Text>
+      <SharedImages data={data}></SharedImages>
     </>
   )
 }
