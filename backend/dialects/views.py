@@ -3,7 +3,7 @@ from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer,StartBodySerializer
+from .serializers import ImageListSerializer, AudioQuerySerializer, ReuseQuerySerializer, StartBodySerializer, SentenceSerializer
 from .models import *
 import random
 from rest_framework.decorators import api_view #api docs
@@ -46,9 +46,10 @@ def start_test(request):
     if len(list(all_sentences)) <5 : 
         return Response("sentences are less than 5",status=status.HTTP_404_NOT_FOUND)
     random_list = random.sample(list(all_sentences), 5) # 5개로 가정
+    serializer = SentenceSerializer(random_list, many=True)
     data = {
-        'case_id': case.pk,
-        'sentences': random_list
+        "case_id": case.pk,
+        "sentences": serializer.data
     }
     return Response(data, status=status.HTTP_201_CREATED)
 
