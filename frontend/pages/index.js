@@ -43,8 +43,9 @@ function Home() {
       ></Checkbox>
       <Button
         link={''}
-        content={'테스트 시작하기'}>
-      </Button>
+        content={'테스트 시작하기'}
+        disabled={!agree}
+      ></Button>
       <FontAwesomeIcon
         icon={faAnglesDown}
         className={styles.icon}
