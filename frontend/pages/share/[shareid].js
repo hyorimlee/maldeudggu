@@ -16,8 +16,7 @@ const SHARE_TEXT = `
 
 function Share({ staticState, changeStaticState }) {
   const router = useRouter()
-  const { shareid, seoul, jeju } = router.query
-  console.log(shareid, seoul, jeju)
+  const { shareid, seoul, jeju, gyeongsang } = router.query
 
   // 카카오 API 초기 생성
   useEffect(() => {

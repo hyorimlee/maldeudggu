@@ -67,6 +67,7 @@ function Home({ data }) {
         icon={faAnglesDown}
         className={styles.icon}
       ></FontAwesomeIcon>
+      <Text size={16} contents='실시간 생성된 캐릭터' ></Text>
       <SharedImages data={data}></SharedImages>
     </>
   )

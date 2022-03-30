@@ -2,12 +2,11 @@ import Image from '../../components/image/image'
 import styles from './sharedImages.module.css'
 
 function SharedImages({ data }) {
-  let images = data.map(d => {
+  let images = data.map((d, idx) => {
     return (
-      <Image path={d.image_url} />
+      <Image path={d.image_url} key={idx} />
     )
   })
-  console.log(data)
 
   return (
     <article className={styles.container}>
