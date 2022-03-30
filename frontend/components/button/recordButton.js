@@ -34,7 +34,7 @@ function RecordButton( { staticState, changeStaticState } ) {
   useEffect(() => {
     console.log(audioUrl);
     if (audioUrl) {
-      const sound = new File([audioUrl], `soundfile${dd}`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      const sound = new File([audioUrl], `soundfile`, { lastModified: new Date().getTime(), type: "audio/webm" });
       console.log(sound)
       const url = URL.createObjectURL(audioUrl)
       console.log(url)
