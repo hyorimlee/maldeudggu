@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://j6a203.p.ssafy.io:8000/api/v1/dialects",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
