@@ -2,7 +2,7 @@ import styles from './recordButton.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from "framer-motion"
 
-function RecordButton() {
+function RecordButton( { staticState, changeStaticState } ) {
   // 애니메이션 관련 state
   const [toggle, setToggle] = useState(false);
   const [pathLength, setPathLength] = useState(0);
@@ -31,6 +31,18 @@ function RecordButton() {
     };
   }, [toggle]);
 
+  useEffect(() => {
+    console.log(audioUrl);
+    if (audioUrl) {
+      const sound = new File([audioUrl], `soundfile${dd}`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      console.log(sound)
+      const url = URL.createObjectURL(audioUrl)
+      console.log(url)
+      changeStaticState(url);
+    }
+    console.log(audioUrl)
+  }, [audioUrl])
+
   // 컴포넌트에 onClick 으로 연결되는 함수, onRec에 따라 녹음을 시작/종료
   function changeRecordState() {
     setToggle(!toggle);
@@ -49,7 +61,7 @@ function RecordButton() {
     setAnalyser(analyser);
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream);
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
       mediaRecorder.start();
       setStream(stream);
       setMedia(mediaRecorder);
@@ -76,8 +88,6 @@ function RecordButton() {
           mediaRecorder.ondataavailable = function (e) {
             setAudioUrl(e.data);
             setOnRec(false);
-            onSubmitAudioFile();
-            play();
           };
         } else {
           setOnRec(true);
@@ -90,8 +100,11 @@ function RecordButton() {
   function stopRecord() {
     media.ondataavailable = function (e) {
       console.log(e);
-      setAudioUrl(e.data);
+      setAudioUrl(() => e.data);
       setOnRec(false);
+      // console.log(audioUrl);
+      // const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
+      // console.log(sound);
     };
 
     stream.getAudioTracks().forEach(function (track) {
@@ -104,24 +117,28 @@ function RecordButton() {
   }
 
   // AudioUrl이 변경되면 URL을 console에 찍고, 음성파일로 변환
-  const onSubmitAudioFile = useCallback(() => {
-    const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-    console.log(sound); // File 정보 출력
+  // const onSubmitAudioFile = useCallback(() => {
+  //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
+  //   console.log(sound); // File 정보 출력
 
-    if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl));
-    } else {
-      console.log('No url')
-    }
-  }, [audioUrl]);
+  //   if (audioUrl) {
+  //     console.log(URL.createObjectURL(audioUrl));
+  //   } else {
+  //     console.log('No url')
+  //   }
+  //   console.log(`파일: ${sound}`)
+  // }, [audioUrl]);
 
   // 음성파일을 실행하는 함수
   const play = () => {
     const audio = new Audio(URL.createObjectURL(audioUrl));
+    console.log(audioUrl)
     audio.loop = false;
     audio.volume = 1;
     audio.play();
   };
+
+  console.log(staticState)
 
   return (
     <div className={styles.container}>
