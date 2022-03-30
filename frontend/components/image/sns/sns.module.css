@@ -4,6 +4,7 @@
   width: 40px;
   height: 40px;
   margin: 10px;
+  object-fit: fill;
 }
 
 .twitter {
@@ -18,5 +19,16 @@
 
 .kakao {
   background-image: url(../../../public/sns/icon-kakao.png);
+  background-repeat: no-repeat;
+}
+
+.link {
+  background-image: url(../../../public/sns/icon-link.png);
+  background-repeat: no-repeat;
+
+}
+
+.download {
+  background-image: url(../../../public/sns/icon-download.png);
   background-repeat: no-repeat;
 }
