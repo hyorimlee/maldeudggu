@@ -14,7 +14,12 @@ function MyApp({ Component, pageProps }) {
       nightMode: false,
     },
     recordAudio: [],
-    myResult: {},
+    myNickname: 'Test_Nicckname',
+    myResult: [
+      ['seoul', '50'],
+      ['jeju', '35'],
+      ['gyeongsang', '15']
+    ],
     myCharacter: {},
   })
 
