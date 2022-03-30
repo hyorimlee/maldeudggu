@@ -8,6 +8,8 @@ function SNSContainer({ onClick }) {
       <SNS type='twitter' onClick={onClick}></SNS>
       <SNS type='facebook' onClick={onClick}></SNS>
       <SNS type='kakao' onClick={onClick}></SNS>
+      <SNS type='link' onClick={onClick}></SNS>
+      <SNS type='download' onClick={onClick}></SNS>
     </section>
   )
 }

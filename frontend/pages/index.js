@@ -1,11 +1,23 @@
+import { useState } from "react"
+
+// components & containers
 import Text from "../components/text/text"
 import Input from "../components/input/input"
 import Button from "../components/button/button"
+import Checkbox from "../containers/checkbox/checkbox"
+
+//styles
 import styles from "../styles/index.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
 
 function Home() {
+  const [agree, setAgree] = useState(false)
+
+  const checkHandler = () => {
+    setAgree(!agree)
+  }
+
   return (
     <>
       <Text
@@ -24,15 +36,16 @@ function Home() {
         contents={'테스트 결과를 통해 캐릭터를 꾸미고 공유할 수 있습니다.'}
       ></Text>
       <Input></Input>
-      {/* 수집동의 부분 checkbox랑 묶어서 containers로 빼기 */}
-      <Text
-        size={12}
+      <Checkbox
+        checked={agree}
+        onChange={checkHandler}
         contents={'음성 데이터 수집에 동의합니다.'}
-      ></Text>
+      ></Checkbox>
       <Button
         link={''}
-        content={'테스트 시작하기'}>
-      </Button>
+        content={'테스트 시작하기'}
+        disabled={!agree}
+      ></Button>
       <FontAwesomeIcon
         icon={faAnglesDown}
         className={styles.icon}
