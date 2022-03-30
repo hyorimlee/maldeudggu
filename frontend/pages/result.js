@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Text from '../components/text/text'
 import Button from '../components/button/button'
 import ResultProgress from '../containers/progress/resultProgress'
@@ -17,7 +18,7 @@ function Result({ staticState, changeStaticState }) {
   return (
     <>
       <>
-        퍼센트 시상식
+        <div className={styles.stand}></div>
       </>
       <Text size={20} bold contents='테스트 결과'></Text>
       <ResultProgress result={[['서울/경기', 50], ['경상', 35], ['충청', 15]]}></ResultProgress>
