@@ -1,9 +1,9 @@
 .stand {
   width: 90%;
-  height: 200px;
-  margin-top: 150px;
+  height: 150px;
 
   background-image: url(../public/reesult/stand.png);
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: bottom;
 }

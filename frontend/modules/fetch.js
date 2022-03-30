@@ -21,7 +21,7 @@ async function getRequest(url, params={}) {
     }
 
     const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}`)
-    console.log(response)
+    
     if (response.ok) {
       const data = await response.json()
       return data
