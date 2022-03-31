@@ -1,5 +1,4 @@
 .image {
-  
 }
 
 .myCharacter {
@@ -16,4 +15,28 @@
 .items {
   width: 70%;
   margin: 10px;
+}
+
+.result1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result2 {
+  position: absolute;
+  left: 20%;
+  top: 60%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result3 {
+  position: absolute;
+  right: 20%;
+  top: 65%;
+  transform: translate(50%, -80%);
+  width: 30%;
 }
