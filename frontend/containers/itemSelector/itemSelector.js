@@ -5,7 +5,7 @@ import styles from "./itemSelector.module.css"
 import Text from "../../components/text/text"
 import Image from "../../components/image/image"
 
-function ItemSelector({ color, items, handleColorChange, handleItemChange, characterFiles, itemFiles }) {
+function ItemSelector({ color, items, handleColorChange, handleItemChange, filteredCharacters, filteredItems }) {
   const [tab, setTab] = useState(0)
 
   // 현재 선택된 tab 바꾸기
@@ -16,15 +16,16 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, chara
   // 각 탭에 들어가는 이미지 grid
   const tabContent = () => {
     if (tab === 0) {
-      const location = Object.keys(characterFiles)
+      const location = Object.keys(filteredCharacters)
       return (
         <div className={styles.grid}>
-          {characterFiles[location[0]].map(character => {
+          {filteredCharacters[location[0]].map(character => {
             return (
               <Image
                 key={character}
                 type={'items'}
                 path={`/img/character/${location[0]}/${character}`}
+                onClick={() => handleColorChange(character)}
               ></Image>
             )
           })
@@ -33,15 +34,16 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, chara
       )
     }
     else if (tab === 1) {
-      const locations = Object.keys(itemFiles)
+      const locations = Object.keys(filteredItems)
       return (
         <div className={styles.grid}>
-          {locations.map(location => itemFiles[location].map(item => {
+          {locations.map(location => filteredItems[location].map(item => {
             return (
               <Image
                 key={item}
                 type={'items'}
                 path={`/img/items/${location}/${item}`}
+                onClick={() => handleItemChange(location, item)}
               ></Image>
             )
           })

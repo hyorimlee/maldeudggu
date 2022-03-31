@@ -7,42 +7,76 @@ import { firebaseConfig } from '../firebaseConfig'
 import { getFileList } from "../modules/filelist"
 import ItemSelector from "../containers/itemSelector/itemSelector"
 
-const location = ['gangwon', 'chungcheong', 'gyeonggi']
+// const province = ['gangwon', 'chungcheong', 'gyeonggi', 'gyeongsang', 'jeju', 'jeolla']
 
-// 특정 폴더에서 이미지 이름 전부 가져오기 (character, items)
-export async function getServerSideProps() {
-  const characterFiles = {
-    [location[0]]: await getFileList('character', location[0])
-  }
-  const itemFiles = {
-    [location[0]]: await getFileList('items', location[0]),
-    [location[1]]: await getFileList('items', location[1]),
-    [location[2]]: await getFileList('items', location[2])
-  }
+// 특정 폴더에서 이미지 이름 전부 가져오기 ({지역: [파일명]})
+export async function getStaticProps() {
+  const characterFiles = await getFileList('character')
+  const itemFiles = await getFileList('items')
   return {
     props: { characterFiles, itemFiles }
   }
 }
 
-function Customize({ characterFiles, itemFiles }) {
-  // asset selected
-  const [color, setColor] = useState('') // 파일 그 자체? 파일 이름? = idx?
-  const [items, setItems] = useState([]) // 최대 3개
+function Customize({ staticState, characterFiles, itemFiles }) {
+  // 선택된 assets
+  // 선택된 애들 명시적으로 (css) 표시해줄 수 있었으면 좋겠음... 귀찮다
+  const [color, setColor] = useState('')
+  const [items, setItems] = useState([])
+
+<<<<<<< HEAD
+  console.log(color)
+  console.log(items)
+
+  // 사용자 결과 지역 3개
+  const location = staticState.myResult.map(element => {
+    return element[0]
+  })
+
+  // object filtering
+  Object.filter = (obj, predicate) =>
+    Object.fromEntries(Object.entries(obj).filter(predicate))
+
+  // characterFiles, itemFiles에서 필요한 장소에 해당하는 값만 남기기
+  const filteredCharacters = Object.filter(characterFiles, ([key, val]) => key === location[0])
+  const filteredItems = Object.filter(itemFiles, ([key, val]) => location.includes(key) === true)
 
   let firebaseApp
   let storage
 
+=======
+  let firebaseApp
+  let storage
+  
+>>>>>>> e3b576ad8fee87b66bd88ed396a1839a08dee040
   useEffect(() => {
     firebaseApp = initializeApp(firebaseConfig)
     storage = getStorage(firebaseApp);
   }, [])
 
+<<<<<<< HEAD
+  const handleColorChange = (file) => {
+    setColor(file)
+=======
   const handleColorChange = (idx) => {
     setColor(idx)
+>>>>>>> e3b576ad8fee87b66bd88ed396a1839a08dee040
   }
 
-  const handleItemChange = (idx) => {
-    setItems(items.push(idx))
+  // 아이템 선택 3개 이상 방지, 두번 누르면 제거
+  const handleItemChange = (location, file) => {
+    const initialLength = items.length
+    const isDuplication = items.filter(item => {
+      if (item.location !== location || item.item !== file) {
+        return item
+      }
+    })
+    const changedLength = isDuplication.length
+    if (initialLength === changedLength && changedLength < 3) {
+      setItems(isDuplication.concat({ location: location, item: file }))
+    } else {
+      setItems(isDuplication)
+    }
   }
 
   // const btnClicked = (event) => {
@@ -72,8 +106,8 @@ function Customize({ characterFiles, itemFiles }) {
         items={items}
         handleColorChange={handleColorChange}
         handleItemChange={handleItemChange}
-        characterFiles={characterFiles}
-        itemFiles={itemFiles}
+        filteredCharacters={filteredCharacters}
+        filteredItems={filteredItems}
       ></ItemSelector>
     </>
   )
