@@ -2,7 +2,7 @@ import styles from './recordButton.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from "framer-motion"
 
-function RecordButton( { staticState, changeStaticState } ) {
+function RecordButton( { sentenceId, staticState, changeStaticState } ) {
   // 애니메이션 관련 state
   const [toggle, setToggle] = useState(false);
   const [pathLength, setPathLength] = useState(0);
@@ -32,9 +32,10 @@ function RecordButton( { staticState, changeStaticState } ) {
   }, [toggle]);
 
   useEffect(() => {
+    const today = getDate()
     console.log(audioUrl);
     if (audioUrl) {
-      const sound = new File([audioUrl], `soundfile`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      const sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
       console.log(sound)
       const url = URL.createObjectURL(audioUrl)
       // const link = document.createElement('a');
@@ -44,10 +45,20 @@ function RecordButton( { staticState, changeStaticState } ) {
       // document.body.appendChild(link);
       // link.click();
       console.log(url)
-      changeStaticState(url);
+      changeStaticState('audioData', [url, sound]);
     }
     console.log(audioUrl)
   }, [audioUrl])
+
+  // 파일 이름 형식을 맞추기 위해 날짜를 리턴하는 함수
+  function getDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (1 + date.getMonth())).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
 
   // 컴포넌트에 onClick 으로 연결되는 함수, onRec에 따라 녹음을 시작/종료
   function changeRecordState() {
@@ -121,30 +132,6 @@ function RecordButton( { staticState, changeStaticState } ) {
     analyser.disconnect();
     source.disconnect();
   }
-
-  // AudioUrl이 변경되면 URL을 console에 찍고, 음성파일로 변환
-  // const onSubmitAudioFile = useCallback(() => {
-  //   const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-  //   console.log(sound); // File 정보 출력
-
-  //   if (audioUrl) {
-  //     console.log(URL.createObjectURL(audioUrl));
-  //   } else {
-  //     console.log('No url')
-  //   }
-  //   console.log(`파일: ${sound}`)
-  // }, [audioUrl]);
-
-  // 음성파일을 실행하는 함수
-  const play = () => {
-    const audio = new Audio(URL.createObjectURL(audioUrl));
-    console.log(audioUrl)
-    audio.loop = false;
-    audio.volume = 1;
-    audio.play();
-  };
-
-  console.log(staticState)
 
   return (
     <div className={styles.container}>
