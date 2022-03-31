@@ -24,7 +24,6 @@ function Customize({ staticState, characterFiles, itemFiles }) {
   const [color, setColor] = useState('')
   const [items, setItems] = useState([])
 
-<<<<<<< HEAD
   console.log(color)
   console.log(items)
 
@@ -44,23 +43,13 @@ function Customize({ staticState, characterFiles, itemFiles }) {
   let firebaseApp
   let storage
 
-=======
-  let firebaseApp
-  let storage
-  
->>>>>>> e3b576ad8fee87b66bd88ed396a1839a08dee040
   useEffect(() => {
     firebaseApp = initializeApp(firebaseConfig)
     storage = getStorage(firebaseApp);
   }, [])
 
-<<<<<<< HEAD
   const handleColorChange = (file) => {
     setColor(file)
-=======
-  const handleColorChange = (idx) => {
-    setColor(idx)
->>>>>>> e3b576ad8fee87b66bd88ed396a1839a08dee040
   }
 
   // 아이템 선택 3개 이상 방지, 두번 누르면 제거
