@@ -5,6 +5,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { firebaseConfig } from '../firebaseConfig'
 
 import { getFileList } from "../modules/filelist"
+import Canvas from '../containers/canvas/canvas'
 import ItemSelector from "../containers/itemSelector/itemSelector"
 
 const location = ['gangwon', 'chungcheong', 'gyeonggi']
@@ -67,6 +68,7 @@ function Customize({ characterFiles, itemFiles }) {
 
   return (
     <>
+      <Canvas></Canvas>
       <ItemSelector
         color={color}
         items={items}

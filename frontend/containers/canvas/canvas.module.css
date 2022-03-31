@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  width: 80vw;
+  height: 80vw;
+  background-color: white;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.item1 {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-image: url(../../public/img/5-4.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.item2 {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-image: url(../../public/img/6-6.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
