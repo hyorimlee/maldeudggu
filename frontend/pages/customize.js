@@ -32,9 +32,13 @@ function Customize({ staticState, characterFiles, itemFiles }) {
     return element[0]
   })
 
-  // characterFiles에서 location[0]만 남기기
+  // object filtering
+  Object.filter = (obj, predicate) =>
+    Object.fromEntries(Object.entries(obj).filter(predicate))
 
-  // itemFiles에서 location만 남기기
+  // characterFiles, itemFiles에서 필요한 장소에 해당하는 값만 남기기
+  const filteredCharacters = Object.filter(characterFiles, ([key, val]) => key === location[0])
+  const filteredItems = Object.filter(itemFiles, ([key, val]) => location.includes(key) === true)
 
   let firebaseApp
   let storage
@@ -91,8 +95,8 @@ function Customize({ staticState, characterFiles, itemFiles }) {
         items={items}
         handleColorChange={handleColorChange}
         handleItemChange={handleItemChange}
-        characterFiles={characterFiles}
-        itemFiles={itemFiles}
+        filteredCharacters={filteredCharacters}
+        filteredItems={filteredItems}
       ></ItemSelector>
     </>
   )
