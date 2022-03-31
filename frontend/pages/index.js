@@ -22,7 +22,7 @@ export async function getServerSideProps() {
   const data = await getRequest('/shared')
 
   return {
-    props : {
+    props: {
       data
     }
   }
