@@ -4,7 +4,7 @@ import styles from "../../styles/record.module.css"
 import RecordButton from "../../components/button/recordButton";
 import AudioProgressBar from "../../components/progressBar/audioProgressBar";
 
-function Record( {staticState, changeStaticState} ) {
+function Record({ staticState, changeStaticState }) {
   return (
     <>
       <Text
@@ -19,7 +19,7 @@ function Record( {staticState, changeStaticState} ) {
       <RecordButton staticState={staticState} changeStaticState={(data) => {
         console.log(changeStaticState)
         changeStaticState(data)
-      }}/>
+      }} />
       <AudioProgressBar staticState={staticState} />
       <Button
         link={'/1'}
