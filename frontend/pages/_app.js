@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
   })
 
   // 추가 구현 필요
-  const changeStaticState = (data, event) => {
+  const changeStaticState = (type, data, event) => {
     function changeState() {
       const preState = {
         ...staticState
@@ -41,11 +41,16 @@ function MyApp({ Component, pageProps }) {
       setStaticState({
         ...preState, recordAudio
       })
+
+      if (type === 'sentence') {
+        setStaticState({...preState, sampleSentence: data})
+      }
+
     }
     changeState()
   }
 
-  postRequest('/start/', [["nickname", "choux"]])
+  console.log(staticState)
 
   return (
     <Layout>
