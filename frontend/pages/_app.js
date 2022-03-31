@@ -18,9 +18,9 @@ function MyApp({ Component, pageProps }) {
     recordAudio: [],
     myNickname: 'Test_Nicckname',
     myResult: [
-      ['seoul', '50'],
-      ['jeju', '35'],
-      ['gyeongsang', '15']
+      ['gangwon', '50'],
+      ['chungcheong', '35'],
+      ['gyeonggi', '15']
     ],
     myCharacter: {},
     sampleSentence: [],
