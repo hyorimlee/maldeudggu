@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import { useRouter } from "next/router"
 // components & containers
 import Text from "../components/text/text"
 import Input from "../components/input/input"
@@ -14,12 +14,13 @@ import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
 
 import { getRequest } from '../modules/fetch'
 
+import { postRequest } from "../modules/fetch"
 /*
 사람들 공유 이미지 가져오기
 */
 export async function getServerSideProps() {
   const data = await getRequest('/shared')
-  
+
   return {
     props : {
       data
@@ -27,9 +28,15 @@ export async function getServerSideProps() {
   }
 }
 
-
-function Home({ data }) {
+function Home({ staticState, changeStaticState, data }) {
   const [agree, setAgree] = useState(false)
+  const router = useRouter()
+
+  async function getSampleSentence() {
+    const sampleSentence = await postRequest('/start/', [["nickname", "choux"]])
+    changeStaticState('sentence', sampleSentence)
+    router.push('/1')
+  }
 
   const checkHandler = () => {
     setAgree(!agree)
@@ -59,8 +66,9 @@ function Home({ data }) {
         contents={'음성 데이터 수집에 동의합니다.'}
       ></Checkbox>
       <Button
-        link={''}
+        link={'/1'}
         content={'테스트 시작하기'}
+        handler={getSampleSentence}
         disabled={!agree}
       ></Button>
       <FontAwesomeIcon

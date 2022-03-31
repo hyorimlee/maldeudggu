@@ -21,7 +21,7 @@ async function getRequest(url, params={}) {
     }
 
     const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}`)
-    
+
     if (response.ok) {
       const data = await response.json()
       return data
@@ -49,14 +49,15 @@ async function postRequest(url, datas=[]) {
   try {
     let formData = new FormData()
     datas.forEach((data) => {
+      console.log(data[0], data[1])
       formData.append(data[0], data[1])
     })
-
+    console.log(formData.get('nickname'))
     const response = await fetch(`${SERVER_BASE}${url}`, {
       method: 'POST',
       body: formData
     })
-
+    console.log(response)
     if (response.ok) {
       const data = await response.json()
       return data
