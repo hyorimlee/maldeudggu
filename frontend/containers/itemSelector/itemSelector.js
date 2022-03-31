@@ -13,6 +13,11 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, chara
     setTab(tabIndex)
   }
 
+  // const clicked = () => {
+  //   console.log('실행')
+  //   handleColorChange(character)
+  // }
+
   // 각 탭에 들어가는 이미지 grid
   const tabContent = () => {
     if (tab === 0) {
@@ -25,6 +30,7 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, chara
                 key={character}
                 type={'items'}
                 path={`/img/character/${location[0]}/${character}`}
+                onClick={() => handleColorChange(character)}
               ></Image>
             )
           })
@@ -42,6 +48,7 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, chara
                 key={item}
                 type={'items'}
                 path={`/img/items/${location}/${item}`}
+                onClick={() => handleItemChange(location, item)}
               ></Image>
             )
           })
