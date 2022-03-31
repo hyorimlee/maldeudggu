@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
       nightMode: false,
     },
     recordAudio: [],
+    recordAudioFile: [],
     myNickname: 'Test_Nicckname',
     myResult: [
       ['gangwon', '50'],
@@ -34,13 +35,17 @@ function MyApp({ Component, pageProps }) {
       }
 
       let recordAudio
+      let recordAudioFile
 
-      if (data) {
-        recordAudio = [...staticState.recordAudio, data]
+      if (type === 'audioData') {
+        console.log(data)
+        recordAudio = [...staticState.recordAudio, data[0]]
+        recordAudioFile = [...staticState.recordAudioFile, data[1]]
+        setStaticState({
+          ...preState, recordAudio, recordAudioFile
+        })
+
       }
-      setStaticState({
-        ...preState, recordAudio
-      })
 
       if (type === 'sentence') {
         setStaticState({...preState, sampleSentence: data})

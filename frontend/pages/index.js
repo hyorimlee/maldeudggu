@@ -35,7 +35,7 @@ function Home({ staticState, changeStaticState, data }) {
   async function getSampleSentence() {
     const sampleSentence = await postRequest('/start/', [["nickname", "choux"]])
     changeStaticState('sentence', sampleSentence)
-    router.push('/1')
+    router.push(`${sampleSentence.case_id}`)
   }
 
   const checkHandler = () => {
@@ -66,7 +66,6 @@ function Home({ staticState, changeStaticState, data }) {
         contents={'음성 데이터 수집에 동의합니다.'}
       ></Checkbox>
       <Button
-        link={'/1'}
         content={'테스트 시작하기'}
         handler={getSampleSentence}
         disabled={!agree}
