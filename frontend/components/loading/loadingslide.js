@@ -32,7 +32,7 @@ function LoadingSlide() {
         className={styles.swiper}
       >
         {images.map((image) => (
-          <SwiperSlide className={styles.swiperSlide}>
+          <SwiperSlide key={index} className={styles.swiperSlide}>
             <img src={image} alt="image"></img>
           </SwiperSlide>
         ))}

@@ -15,8 +15,11 @@ const dialectsFeature = {
 }
 
 const engToKor = {
-  'seoul': '서울/경기',
+  'gyeonggi': '서울/경기',
+  'gangwon': '강원',
+  'chungcheong': '충청',
   'gyeongsang': '경상',
+  'jeolla': '전라',
   'jeju': '제주'
 }
 

@@ -37,6 +37,12 @@ function RecordButton( { staticState, changeStaticState } ) {
       const sound = new File([audioUrl], `soundfile`, { lastModified: new Date().getTime(), type: "audio/webm" });
       console.log(sound)
       const url = URL.createObjectURL(audioUrl)
+      // const link = document.createElement('a');
+      // link.href = url;
+      // link.setAttribute('download', 'test.wav');
+      // link.setAttribute('id', 'tempLink');
+      // document.body.appendChild(link);
+      // link.click();
       console.log(url)
       changeStaticState(url);
     }
