@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Script from 'next/script'
 import { useState } from 'react'
 import Layout from '../components/layout/layout'
 
@@ -69,6 +70,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>말듣꾸</title>
       </Head>
+      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
       <Component {...pageProps} staticState={staticState} changeStaticState={changeStaticState} />
     </Layout>
   )
