@@ -14,4 +14,10 @@ async function getFileList(type) {
   return filelist
 }
 
-export { getFileList }
+async function getBackgroundList() {
+  const dir = basedir + 'background'
+  const result = await fs.promises.readdir(dir)
+  return result
+}
+
+export { getFileList, getBackgroundList }
