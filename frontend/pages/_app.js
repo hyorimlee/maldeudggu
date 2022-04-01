@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }) {
     changeState()
   }
 
-  console.log(staticState)
+  // console.log(staticState)
 
   return (
     <Layout>
