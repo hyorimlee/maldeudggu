@@ -23,7 +23,8 @@ const korToEng = {
   '충청': 'chungcheong',
   '경상': 'gyeongsang',
   '전라': 'jeolla',
-  '제주': 'jeju'
+  '제주': 'jeju',
+  '전체': 'all'
 }
 
 // 특정 폴더에서 이미지 이름 전부 가져오기 ({지역: [파일명]})
@@ -47,12 +48,10 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   const [background, setBackground] = useState('')
   const router = useRouter()
 
-  console.log(background)
-
-
-  // 사용자 결과 3개에 맞게 필터링
+  // 사용자 결과 3개에 맞게 필터링, 아이템은 '전체'까지 추가
   useEffect(() => {
     const location = Object.keys(staticState.myResult.result)
+    const locationForItems = location.concat('전체')
 
     setFilteredCharacters(
       location.slice(0, 1).reduce((preValue, currentValue) => {
@@ -63,7 +62,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     )
 
     setFilteredItems(
-      location.reduce((preValue, currentValue) => {
+      locationForItems.reduce((preValue, currentValue) => {
         return {
           ...preValue, [korToEng[currentValue]]: [...itemFiles[korToEng[currentValue]]]
         }
