@@ -15,16 +15,16 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, filte
 
   // 각 탭에 들어가는 이미지 grid
   const tabContent = () => {
-    if (tab === 0) {
-      const location = Object.keys(filteredCharacters)
+    if (tab === 0 && Object.keys(filteredCharacters).length) {
+      const location = Object.keys(filteredCharacters)[0]
       return (
         <div className={styles.grid}>
-          {filteredCharacters[location[0]].map(character => {
+          {filteredCharacters[location].map(character => {
             return (
               <Image
                 key={character}
                 type={'items'}
-                path={`/img/character/${location[0]}/${character}`}
+                path={`/img/character/${location}/${character}`}
                 onClick={() => handleColorChange(character)}
               ></Image>
             )
@@ -33,7 +33,7 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, filte
         </div >
       )
     }
-    else if (tab === 1) {
+    else if (tab === 1 && Object.keys(filteredItems).length) {
       const locations = Object.keys(filteredItems)
       return (
         <div className={styles.grid}>
