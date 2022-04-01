@@ -51,7 +51,7 @@ function Home({ staticState, changeStaticState, data, participant }) {
         contents={'나는 어떤 억양을 사용할까?'}
       ></Text>
       <Image
-        type={'items'}
+        type={'logo'}
         path={'/img/logo/logo.png'}
       ></Image>
       <Text
