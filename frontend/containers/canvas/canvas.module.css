@@ -7,20 +7,17 @@
   overflow: hidden;
 }
 
-.item1 {
+.character {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background-image: url(../../public/img/5-4.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+  width: 45%;
 }
 
-.item2 {
+.item {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background-image: url(../../public/img/6-6.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+  width: 25%;
+}
+
+.none {
+  width: 0;
+  height: 0;
 }
