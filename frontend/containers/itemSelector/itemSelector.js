@@ -5,7 +5,10 @@ import styles from "./itemSelector.module.css"
 import Text from "../../components/text/text"
 import Image from "../../components/image/image"
 
-function ItemSelector({ color, items, handleColorChange, handleItemChange, filteredCharacters, filteredItems }) {
+function ItemSelector({
+  handleColorChange, handleItemChange, handleBackgroundChange,
+  filteredCharacters, filteredItems, backgroundFiles
+}) {
   const [tab, setTab] = useState(0)
 
   // 현재 선택된 tab 바꾸기
@@ -51,6 +54,23 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, filte
         </div>
       )
     }
+    else {
+      return (
+        <div className={styles.grid}>
+          {backgroundFiles.map(bg => {
+            return (
+              <Image
+                key={bg}
+                type={'items'}
+                path={`/img/background/${bg}`}
+                onClick={() => handleBackgroundChange(bg)}
+              ></Image>
+            )
+          })
+          }
+        </div>
+      )
+    }
   }
 
   return (
@@ -71,6 +91,14 @@ function ItemSelector({ color, items, handleColorChange, handleItemChange, filte
           margin={5}
           contents={'아이템'}
           onClick={() => handleTab(1)}
+        ></Text>
+        <Text
+          size={12}
+          color={(tab === 2) ? 'orange' : 'grey'}
+          bold={(tab === 2) ? true : false}
+          margin={5}
+          contents={'배경'}
+          onClick={() => handleTab(2)}
         ></Text>
       </div>
       {tabContent()}

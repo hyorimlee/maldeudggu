@@ -1,28 +1,29 @@
 import { useState, useEffect, useRef } from 'react'
+import Image from '../../components/image/image'
 
 import styles from './canvas.module.css'
 
-function Canvas({ color, items, firstLocation }) {
+function Canvas({ color, items, background, firstLocation }) {
   const [coordinatesDiff, setCoordinatesDiff] = useState({})
   const character = useRef()
   const container = useRef()
   const item1 = useRef()
   const item2 = useRef()
   const item3 = useRef()
-  
+
   // 최초 캐릭터 터치시에 터치된 부분과 캐릭터 div의 위치와 차이값 계산
   const touched = (event) => {
     const difX = event.targetTouches[0].clientX - event.target.offsetLeft
     const difY = event.targetTouches[0].clientY - event.target.offsetTop
-    
+
     setCoordinatesDiff({ x: difX, y: difY })
   }
-  
+
   // 캐릭터 터치로 드래그하여 이동
   const moveItem = (event) => {
     const x = event.targetTouches[0].clientX - coordinatesDiff.x
     const y = event.targetTouches[0].clientY - coordinatesDiff.y
-    
+
     if (event.target.id === 'character') {
       character.current.style.left = x + 'px'
       character.current.style.top = y + 'px'
@@ -37,20 +38,20 @@ function Canvas({ color, items, firstLocation }) {
       item3.current.style.top = y + 'px'
     }
   }
-  
+
   // 캐릭터 터치 손에서 놓으면 실행됨
   const touchEnd = (event) => {
     const canvasBottom = event.target.parentElement.offsetTop + event.target.parentElement.offsetHeight
     const canvasRight = event.target.parentElement.offsetLeft + event.target.parentElement.offsetWidth
-    
+
     const itemTop = event.target.offsetTop
     const itemBottom = event.target.offsetTop + event.target.offsetHeight
     const itemLeft = event.target.offsetLeft
     const itemRight = event.target.offsetLeft + event.target.offsetWidth
-    
-    const halfHeight = parseInt(event.target.offsetHeight/2)
-    const halfWidth = parseInt(event.target.offsetWidth/2)
-    
+
+    const halfHeight = parseInt(event.target.offsetHeight / 2)
+    const halfWidth = parseInt(event.target.offsetWidth / 2)
+
     if (itemTop < -halfHeight || itemBottom > canvasBottom || itemLeft < -halfWidth || itemRight > canvasRight) {
       alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
       if (itemTop < -halfHeight) {
@@ -66,9 +67,9 @@ function Canvas({ color, items, firstLocation }) {
         event.target.style.left = (canvasRight - event.target.offsetWidth) + 'px'
       }
     }
-    
+
   }
-  
+
   // 색상 변경시에만 실행됨
   useEffect(() => {
     if (color) {
@@ -112,6 +113,10 @@ function Canvas({ color, items, firstLocation }) {
 
   return (
     <div id='canvas' className={styles.container} ref={container}>
+      {background ? <Image
+        type={'background'}
+        path={`/img/background/${background}`}
+      ></Image> : ''}
       <img
         id='character'
         ref={character}
