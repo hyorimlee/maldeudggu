@@ -1,5 +1,5 @@
 .image {
-  
+
 }
 
 .myCharacter {
@@ -16,4 +16,8 @@
 .items {
   width: 70%;
   margin: 10px;
+}
+
+.logo {
+  width: 100%;
 }
