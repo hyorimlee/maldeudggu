@@ -10,6 +10,8 @@ from rest_framework.decorators import api_view #api docs
 from rest_framework.response import Response #api docs
 from drf_yasg.utils import swagger_auto_schema
 
+from .audio_ai.inference import inference
+
 
 @api_view()
 def get_images(request):
@@ -17,6 +19,11 @@ def get_images(request):
     serializer = ImageListSerializer(cases, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view()
+def get_image(request, case_pk):
+    case = get_object_or_404(Case, pk=case_pk)
+    serializer = ImageListSerializer(case)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view()
 def count_participant(request):
@@ -53,7 +60,7 @@ def start_test(request):
     }
     return Response(data, status=status.HTTP_201_CREATED)
 
-
+from pydub import AudioSegment
 @swagger_auto_schema(method='post',query_serializer=AudioQuerySerializer)
 @api_view(['POST'])     # request.FILES 사용하려면 POST 방식이어야 함
 def save_audio(request, case_pk):
@@ -75,8 +82,17 @@ def save_audio(request, case_pk):
     # sentence = Sentence()
     # sentence.save()
     # audio = Audio(case=case, sentence=sentence)
-    audio.audio_path = request.FILES['audio']   # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달
+    audio.audio_path = request.FILES.get('audio')   # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달    
     audio.save()
+    audioSegment = AudioSegment.from_file(audio.audio_path, 'webm')
+    # print(audio.audio_path.name)
+    audio_path = str(audio.audio_path.name)
+    new_file_path = 'media/' + audio_path.replace('webm', 'wav')
+    audioSegment.export(new_file_path, format='wav')
+    
+    audio.audio_path.name = audio_path.replace('webm', 'wav')
+    audio.save()
+    
     data = {
         'case_id': case_pk,
         'audio_id': audio.pk
@@ -85,7 +101,7 @@ def save_audio(request, case_pk):
 
 
 @swagger_auto_schema(method='get',query_serializer=ReuseQuerySerializer)
-@api_view()
+@api_view(['GET'])
 def get_result(request, case_pk):
     """
     1) case pk 받고, 오디오 재사용 동의여부 받기 (저장은 기본값!)
@@ -93,12 +109,24 @@ def get_result(request, case_pk):
     3) case pk 에 해당하는 결과 반환하며 tb_case에 결과값 저장 (리스트 형태. 저장시 string)
     """
     # 1)
-    case = get_object_or_404(pk=case_pk)
+    case = get_object_or_404(Case, pk=case_pk)
     case.reuse = request.GET.get('reuse')
     case.save()
     # 2)
+    audio_objs = case.audio_set.all()
+    audio_files = []
+    for audio_obj in audio_objs:
+        audio_files.append('media/'+audio_obj.audio_path.name)
+    # print(audio_files)
+    result = inference(audio_files)
+    
     # 3)
-    data = {}
+    case.result = '\t'.join([f'{k} {v}' for k, v in result.items()])
+    case.save()
+    data = {
+        'case_id': case.pk,
+        'result': result
+    }
     return Response(data,status=status.HTTP_200_OK)
 
 
@@ -108,8 +136,8 @@ def save_image(request, case_pk):
     클라이언트에서 firebase 이미지 url과 case pk 주면, 저장(patch)
     ok message (+ 결과값) 반환
     """
-    case = get_object_or_404(pk=case_pk)
-    case.image_url = request.GET.get('image_url')   # image_url이라는 이름으로 받는다고 가정
+    case = get_object_or_404(Case, pk=case_pk)
+    case.image_url = request.data['image_url']   # image_url이라는 이름으로 받는다고 가정
     case.save()
     data = {
         'case_id': case.pk,
