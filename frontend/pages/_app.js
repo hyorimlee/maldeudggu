@@ -51,6 +51,10 @@ function MyApp({ Component, pageProps }) {
         setStaticState({...preState, sampleSentence: data})
       }
 
+      if (type === 'result') {
+        setStaticState({...preState, myResult: data})
+      }
+
     }
     changeState()
   }

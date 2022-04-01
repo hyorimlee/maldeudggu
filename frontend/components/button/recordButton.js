@@ -32,22 +32,12 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
   }, [toggle]);
 
   useEffect(() => {
-    const today = getDate()
-    console.log(audioUrl);
     if (audioUrl) {
+      const today = getDate()
       const sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
-      console.log(sound)
       const url = URL.createObjectURL(audioUrl)
-      // const link = document.createElement('a');
-      // link.href = url;
-      // link.setAttribute('download', 'test.wav');
-      // link.setAttribute('id', 'tempLink');
-      // document.body.appendChild(link);
-      // link.click();
-      console.log(url)
       changeStaticState('audioData', [url, sound]);
     }
-    console.log(audioUrl)
   }, [audioUrl])
 
   // 파일 이름 형식을 맞추기 위해 날짜를 리턴하는 함수
@@ -87,9 +77,6 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
       setSource(source);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
-
-      console.log(media);
-
       analyser.onaudioprocess = function (e) {
         // 10초 이후 정지
         if (e.playbackTime > 10) {
@@ -116,12 +103,8 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
 
   function stopRecord() {
     media.ondataavailable = function (e) {
-      console.log(e);
       setAudioUrl(() => e.data);
       setOnRec(false);
-      // console.log(audioUrl);
-      // const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-      // console.log(sound);
     };
 
     stream.getAudioTracks().forEach(function (track) {

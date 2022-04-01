@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 // components & containers
 import Text from "../components/text/text"
+import Image from "../components/image/image"
 import Input from "../components/input/input"
 import Button from "../components/button/button"
 import Checkbox from "../containers/checkbox/checkbox"
@@ -49,7 +50,10 @@ function Home({ staticState, changeStaticState, data }) {
         size={16}
         contents={'나는 어떤 억양을 사용할까?'}
       ></Text>
-      <div className={styles.temp}>로고 자리</div>
+      <Image
+        type={'items'}
+        path={'/img/logo/logo.png'}
+      ></Image>
       <Text
         contents={'지금까지 nn명이 참여했어요!'}
       ></Text>

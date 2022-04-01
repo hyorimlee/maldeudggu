@@ -1,6 +1,7 @@
-import Text from "../../components/text/text"
-import Button from "../../components/button/button"
-import styles from "../../styles/record.module.css"
+import Text from "../../components/text/text";
+import Image from "../../components/image/image";
+import Button from "../../components/button/button";
+import styles from "../../styles/record.module.css";
 import RecordButton from "../../components/button/recordButton";
 import AudioProgressBar from "../../components/progressBar/audioProgressBar";
 import { getRequest, postRequest } from "../../modules/fetch";
@@ -24,54 +25,61 @@ function Record( {staticState, changeStaticState} ) {
     } else {
       await postRequest(`/${caseId}/?sentence=${sentences[curSentence].id}`, [["audio", soundfile]])
       setIsRecordEnd(true)
+
       const testResult = await getRequest(`/${caseId}/result/?reuse=true`)
+      changeStaticState('result', testResult)
       setTimeout(() => {
         router.push('/result')
       }, 5000)
     }
   }
 
-  return (
-    <>
-      <div>
-        { isRecordEnd ?
-          <div>
-            <LoadingSlide />
-            <Text
-              size={16}
-              contents={'결과를 측정하고 있습니다'}
-            ></Text>
-          </div>
-          :
-          <div>
-            <Text
-              size={16}
-              contents={`${curSentence + 1}/5`}
-            ></Text>
-            <Text
-              size={16}
-              contents={'아래의 문장을 평소 말투로 녹음해주세요'}
-            ></Text>
-            <Text
-              color={'white'}
-              size={18}
-              contents={`${sentences[curSentence].sentence}`}
-            ></Text>
-            <RecordButton sentenceId={`${sentences[curSentence].id}`} staticState={staticState} changeStaticState={(type, data) => {
-              console.log(changeStaticState)
-              changeStaticState(type, data)
-            }}/>
-            <AudioProgressBar staticState={staticState} />
-            <Button
-              content={'다음으로 넘어가기'}
-              color={'grey'}
-              handler={sendSoundFile}
-            />
-          </div>
-        }
-      </div>
-    </>
-  )
+  if (isRecordEnd) {
+    return (
+      <>
+        <LoadingSlide />
+        <Text
+          size={18}
+          bold={true}
+          contents={'결과를 분석하고 있습니다.'}
+        ></Text>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Text
+          size={16}
+          contents={`${curSentence + 1}/5`}
+        ></Text>
+        <Text
+          size={16}
+          contents={'아래의 문장을 평소 말투로 녹음해주세요'}
+        ></Text>
+        <div className={styles.sampleSentence}>
+          <Image
+            type={'logo'}
+            path={'/img/logo/text-background.png'}
+          ></Image>
+          <Text
+            color={'white'}
+            size={18}
+            contents={`${sentences[curSentence].sentence}`}
+          ></Text>
+        </div>
+        <RecordButton sentenceId={`${sentences[curSentence].id}`} staticState={staticState} changeStaticState={(type, data) => {
+          console.log(changeStaticState)
+          changeStaticState(type, data)
+        }}/>
+        <AudioProgressBar staticState={staticState} />
+        <Button
+          content={'다음으로 넘어가기'}
+          color={'grey'}
+          handler={sendSoundFile}
+        />
+      </>
+    )
+  }
 }
 
 export default Record
