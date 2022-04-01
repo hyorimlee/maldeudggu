@@ -9,9 +9,14 @@
   margin: 15px;
 }
 
+/* itemSelector */
 .items {
   width: 70%;
   margin: 10px;
+}
+
+.background {
+  width: 101%;
 }
 
 .logo {
