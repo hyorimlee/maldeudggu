@@ -34,23 +34,18 @@ function Share({ staticState, changeStaticState }) {
           imageUrl:
             'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
           link: {
-            mobileWebUrl: 'https://j6a203.p.ssafy.io',
+            mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
+            androidExecParams: "test",
           },
         },
-        // buttons: [
-        //   {
-        //     title: '웹으로 이동',
-        //     link: {
-        //       mobileWebUrl: 'https://developers.kakao.com',
-        //     },
-        //   },
-        //   {
-        //     title: '앱으로 이동',
-        //     link: {
-        //       mobileWebUrl: 'https://developers.kakao.com',
-        //     },
-        //   },
-        // ]
+        buttons: [
+          {
+            title: '웹으로 이동',
+            link: {
+              mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
+            },
+          }
+        ]
       })
 
       // window.Kakao.Link.sendCustom({
