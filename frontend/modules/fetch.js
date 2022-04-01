@@ -90,8 +90,6 @@ async function patchRequest(url, image_url) {
         'Content-Type': 'application/json'
       }
     })
-    
-    console.log(response)
 
     if (response.ok) {
       const data = await response.json()
