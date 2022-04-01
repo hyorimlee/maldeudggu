@@ -1,11 +1,5 @@
-import Script from 'next/script'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-
-import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { firebaseConfig } from '../../firebaseConfig'
-
 import Text from '../../components/text/text'
 import SNSContainer from '../../containers/sns/snsContainer'
 import Image from '../../components/image/image'
@@ -20,18 +14,13 @@ const SHARE_TEXT = `
 평소 말투를 분석하여 어느 지방의 방언을 사용하는지 알려주는 서비스입니다!
 `
 
-// firebase 초기화
-const storage = getStorage(initializeApp(firebaseConfig));
-
 function Share({ staticState, changeStaticState }) {
   const [info, setInfo] = useState({})  
   const router = useRouter()
   const { shareid, first, second, third } = router.query
 
   useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(KAKAO_API_KEY)
-    }
+    window.Kakao.init(KAKAO_API_KEY)
   }, [])
 
   useEffect(() => {
@@ -83,26 +72,12 @@ function Share({ staticState, changeStaticState }) {
       navigator.clipboard.writeText(INDEX_URL + router.asPath)
       // alert('복사되었습니다.')
     } else if (id === 'download') {
-      // const storageRef = ref(storage, `${shareid}.png`)
-
-      // const xhr = new XMLHttpRequest();
-      // xhr.responseType = 'blob';
-      // xhr.onload = (event) => {
-      //   const blob = xhr.response;
-      // };
-      // xhr.open('GET', info.image_url);
-      // xhr.send();
-
-      // const img = document.createElement('img')
-      // img.src = info.image_url
-      // img.download = `/말듣꾸_${shareid}.png`
-      // img.click()
+      // 다운로드 로직 필요
     }
   }
 
   return (
     <>
-      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
       <Image type="myCharacter" path={info.image_url}></Image>
       <Text size={12} contents={'친구에게 공유하기'}></Text>
       <SNSContainer onClick={clickedShare}></SNSContainer>
