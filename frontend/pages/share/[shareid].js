@@ -16,26 +16,49 @@ const SHARE_TEXT = `
 
 function Share({ staticState, changeStaticState }) {
   const router = useRouter()
-  const { shareid, seoul, jeju, gyeongsang } = router.query
 
-  // 카카오 API 초기 생성
-  useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(KAKAO_API_KEY)
-    }
-  }, [])
-
+  const { shareid, first, second, third } = router.query
+    
   // 공유하기 아이콘 클릭시 실행
   const clickedShare = (event) => {
     const id = event.target.id
+    window.Kakao.init(KAKAO_API_KEY)
+    console.log(window.Kakao.isInitialized())
 
     if (id === 'kakao') {
-      window.Kakao.Link.sendCustom({
-        templateId: 73945,
-        templateArgs: {
-          'THU': 'https://w.namu.la/s/9071d0575b6d14c0d6fc5832e26fe8ef0a298a1abb1d442cc3c865534ec5e949e8a2d195fe425ebb15f2f1f5b270e6b86979bd1e3fcb4e9d9432bdfbf4fb02a60e245973d362fe31a044c09a5e7ecedcf593e7612e89cf721a17560806d89288',
-        }
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '오늘의 디저트',
+          description: '아메리카노, 빵, 케익',
+          imageUrl:
+            'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+          link: {
+            mobileWebUrl: 'https://j6a203.p.ssafy.io',
+          },
+        },
+        // buttons: [
+        //   {
+        //     title: '웹으로 이동',
+        //     link: {
+        //       mobileWebUrl: 'https://developers.kakao.com',
+        //     },
+        //   },
+        //   {
+        //     title: '앱으로 이동',
+        //     link: {
+        //       mobileWebUrl: 'https://developers.kakao.com',
+        //     },
+        //   },
+        // ]
       })
+
+      // window.Kakao.Link.sendCustom({
+      //   templateId: 73945,
+      //   templateArgs: {
+      //     'THU': 'https://w.namu.la/s/9071d0575b6d14c0d6fc5832e26fe8ef0a298a1abb1d442cc3c865534ec5e949e8a2d195fe425ebb15f2f1f5b270e6b86979bd1e3fcb4e9d9432bdfbf4fb02a60e245973d362fe31a044c09a5e7ecedcf593e7612e89cf721a17560806d89288',
+      //   }
+      // })
     } else if (id === 'twitter') {
       window.open("https://twitter.com/intent/tweet?text=" + SHARE_TEXT + "&url=" + INDEX_URL);
     } else if (id === 'facebook') {
@@ -53,7 +76,7 @@ function Share({ staticState, changeStaticState }) {
 
   return (
     <>
-      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
+      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='afterInteractive'></Script>
       <Image type="myCharacter" path={staticState.myCharacter.path}></Image>
       <Text size={12} contents={'친구에게 공유하기'}></Text>
       <SNSContainer onClick={clickedShare}></SNSContainer>

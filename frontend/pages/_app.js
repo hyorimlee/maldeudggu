@@ -18,11 +18,14 @@ function MyApp({ Component, pageProps }) {
     recordAudio: [],
     recordAudioFile: [],
     myNickname: 'Test_Nicckname',
-    myResult: [
-      ['gangwon', '50'],
-      ['chungcheong', '35'],
-      ['gyeonggi', '15']
-    ],
+    myResult: {
+      'case_id': 5669,
+      'result': {
+        '충청': 41,
+        '강원': 35,
+        '제주': 14
+      }
+    },
     myCharacter: {},
     sampleSentence: [],
   })

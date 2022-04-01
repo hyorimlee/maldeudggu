@@ -20,7 +20,7 @@ async function getRequest(url, params={}) {
       query = paramsKeys.map(k => `${k}=${params[k]}`).join('&')
     }
 
-    const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}`)
+    const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}/`)
 
     if (response.ok) {
       const data = await response.json()
@@ -53,7 +53,7 @@ async function postRequest(url, datas=[]) {
       formData.append(data[0], data[1])
     })
     console.log(formData.get('nickname'))
-    const response = await fetch(`${SERVER_BASE}${url}`, {
+    const response = await fetch(`${SERVER_BASE}${url}/`, {
       method: 'POST',
       body: formData
     })
@@ -81,15 +81,17 @@ async function postRequest(url, datas=[]) {
 - output
   저장 성공 여부 json 파일
 */
-async function patchRequest(url, image) {
+async function patchRequest(url, image_url) {
   try {
-    let formData = new FormData()
-    formData.append(image)
-
-    const response = await fetch(`${SERVER_BASE}${url}`, {
+    const response = await fetch(`${SERVER_BASE}${url}/`, {
       method: 'PATCH',
-      body: formData
+      body: JSON.stringify({ image_url }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
+    
+    console.log(response)
 
     if (response.ok) {
       const data = await response.json()
