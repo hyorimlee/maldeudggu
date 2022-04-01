@@ -1,10 +1,16 @@
 import Script from 'next/script'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
+
+import { initializeApp } from 'firebase/app';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { firebaseConfig } from '../../firebaseConfig'
+
 import Text from '../../components/text/text'
 import SNSContainer from '../../containers/sns/snsContainer'
 import Image from '../../components/image/image'
 
+import { getRequest } from '../../modules/fetch'
 import styles from '../../styles/share.module.css'
 
 const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_API_KEY
@@ -14,25 +20,40 @@ const SHARE_TEXT = `
 평소 말투를 분석하여 어느 지방의 방언을 사용하는지 알려주는 서비스입니다!
 `
 
-function Share({ staticState, changeStaticState }) {
-  const router = useRouter()
+// firebase 초기화
+const storage = getStorage(initializeApp(firebaseConfig));
 
+function Share({ staticState, changeStaticState }) {
+  const [info, setInfo] = useState({})  
+  const router = useRouter()
   const { shareid, first, second, third } = router.query
-    
+
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(KAKAO_API_KEY)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Object.keys(router.query).length) {
+      getRequest(`/${shareid}/my`)
+      .then(response => {
+        setInfo(response)
+      })
+    }
+  }, [router])
+
   // 공유하기 아이콘 클릭시 실행
   const clickedShare = (event) => {
     const id = event.target.id
-    window.Kakao.init(KAKAO_API_KEY)
-    console.log(window.Kakao.isInitialized())
 
     if (id === 'kakao') {
       window.Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: '오늘의 디저트',
-          description: '아메리카노, 빵, 케익',
-          imageUrl:
-            'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+          title: '말듣꾸',
+          description: SHARE_TEXT,
+          imageUrl: `${info.image_url}`,
           link: {
             mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
             androidExecParams: "test",
@@ -40,39 +61,49 @@ function Share({ staticState, changeStaticState }) {
         },
         buttons: [
           {
-            title: '웹으로 이동',
+            title: '결과 확인',
+            link: {
+              mobileWebUrl: `http://j6a203.p.ssafy.io:3000/${router.asPath}`,
+            },
+          },
+          {
+            title: '테스트 하기',
             link: {
               mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
             },
           }
         ]
       })
-
-      // window.Kakao.Link.sendCustom({
-      //   templateId: 73945,
-      //   templateArgs: {
-      //     'THU': 'https://w.namu.la/s/9071d0575b6d14c0d6fc5832e26fe8ef0a298a1abb1d442cc3c865534ec5e949e8a2d195fe425ebb15f2f1f5b270e6b86979bd1e3fcb4e9d9432bdfbf4fb02a60e245973d362fe31a044c09a5e7ecedcf593e7612e89cf721a17560806d89288',
-      //   }
-      // })
     } else if (id === 'twitter') {
-      window.open("https://twitter.com/intent/tweet?text=" + SHARE_TEXT + "&url=" + INDEX_URL);
+      window.open("https://twitter.com/intent/tweet?text=" + SHARE_TEXT + "&url=" + INDEX_URL + router.asPath);
     } else if (id === 'facebook') {
-      window.open("http://www.facebook.com/sharer/sharer.php?u=" + INDEX_URL);
+      window.open("http://www.facebook.com/sharer/sharer.php?u=" + INDEX_URL + router.asPath);
     } else if (id === 'link') {
-      navigator.clipboard.writeText(INDEX_URL)
-      alert('복사되었습니다.')
+      console.log(navigator.clipboard)
+      navigator.clipboard.writeText(INDEX_URL + router.asPath)
+      // alert('복사되었습니다.')
     } else if (id === 'download') {
-      const a = document.createElement('a')
-      a.href = staticState.myCharacter.path
-      a.download = `말듣꾸_${staticState.myCharacter.id}.png`
-      a.click()
+      // const storageRef = ref(storage, `${shareid}.png`)
+
+      // const xhr = new XMLHttpRequest();
+      // xhr.responseType = 'blob';
+      // xhr.onload = (event) => {
+      //   const blob = xhr.response;
+      // };
+      // xhr.open('GET', info.image_url);
+      // xhr.send();
+
+      // const img = document.createElement('img')
+      // img.src = info.image_url
+      // img.download = `/말듣꾸_${shareid}.png`
+      // img.click()
     }
   }
 
   return (
     <>
-      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='afterInteractive'></Script>
-      <Image type="myCharacter" path={staticState.myCharacter.path}></Image>
+      <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
+      <Image type="myCharacter" path={info.image_url}></Image>
       <Text size={12} contents={'친구에게 공유하기'}></Text>
       <SNSContainer onClick={clickedShare}></SNSContainer>
     </>
