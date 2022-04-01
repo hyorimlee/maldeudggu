@@ -1,3 +1,11 @@
+import os
+import random
+import torch
+import torchaudio
+import torchaudio.transforms as T
+
+torchaudio.USE_SOUNDFILE_LEGACY_INTERFACE = False
+
 """
 -- description : 로그로 기록하기 위한 함수
 
