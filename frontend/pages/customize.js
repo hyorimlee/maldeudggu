@@ -118,7 +118,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
       }
     })
 
-    const storageRef = ref(storage, `test17.png`)
+    const storageRef = ref(storage, `${staticState.myResult.case_id}.png`)
 
     useIdx.forEach(idx => {
       const img = new Image()

@@ -34,7 +34,7 @@ function Home({ staticState, changeStaticState, data, participant }) {
   const router = useRouter()
 
   async function getSampleSentence() {
-    const sampleSentence = await postRequest('/start/', [["nickname", "choux"]])
+    const sampleSentence = await postRequest('/start', [["nickname", "choux"]])
     changeStaticState('sentence', sampleSentence)
     router.push(`${sampleSentence.case_id}`)
   }
