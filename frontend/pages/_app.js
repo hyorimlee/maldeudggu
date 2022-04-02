@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }) {
     },
     myCharacter: {},
     sampleSentence: [],
+    reuse: false
   })
 
   // 추가 구현 필요
@@ -52,13 +53,16 @@ function MyApp({ Component, pageProps }) {
       }
 
       if (type === 'sentence') {
-        setStaticState({...preState, sampleSentence: data})
+        setStaticState({ ...preState, sampleSentence: data })
       }
 
       if (type === 'result') {
-        setStaticState({...preState, myResult: data})
+        setStaticState({ ...preState, myResult: data })
       }
 
+      if (type === 'reuse') {
+        setStaticState({ ...preState, reuse: !reuse })
+      }
     }
     changeState()
   }

@@ -30,7 +30,7 @@ export async function getServerSideProps() {
 }
 
 function Home({ staticState, changeStaticState, data, participant }) {
-  const [agree, setAgree] = useState(false)
+  const [use, setUse] = useState(false)
   const router = useRouter()
 
   async function getSampleSentence() {
@@ -40,7 +40,7 @@ function Home({ staticState, changeStaticState, data, participant }) {
   }
 
   const checkHandler = () => {
-    setAgree(!agree)
+    setUse(!use)
   }
 
   return (
@@ -65,14 +65,20 @@ function Home({ staticState, changeStaticState, data, participant }) {
       ></Text>
       <Input></Input>
       <Checkbox
-        checked={agree}
+        checked={use}
         onChange={checkHandler}
         contents={'(필수) 음성 데이터 활용에 동의합니다.'}
+      ></Checkbox>
+      <Checkbox
+        checked={staticState.reuse}
+        // onChange={}
+        contents={'(선택) 음성 데이터를 학습에 활용하는 데 동의합니다.'}
+      // 누르면 메타정보용 modal
       ></Checkbox>
       <Button
         content={'테스트 시작하기'}
         handler={getSampleSentence}
-        disabled={!agree}
+        disabled={!use}
       ></Button>
       <FontAwesomeIcon
         icon={faAnglesDown}
