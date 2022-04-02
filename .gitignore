@@ -341,3 +341,5 @@ $RECYCLE.BIN/
 frontend/firebaseConfig.js
 
 *.pt
+
+*.png
