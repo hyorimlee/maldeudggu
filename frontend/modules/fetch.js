@@ -1,3 +1,5 @@
+let FormData = require('form-data')
+
 const SERVER_BASE = process.env.NEXT_PUBLIC_SERVER_BASE
 
 /*
@@ -52,12 +54,12 @@ async function postRequest(url, datas=[]) {
       console.log(data[0], data[1])
       formData.append(data[0], data[1])
     })
-    console.log(formData.get('nickname'))
-    const response = await fetch(`${SERVER_BASE}${url}/`, {
+
+    const response = await fetch(`${SERVER_BASE}${url}`, {
       method: 'POST',
       body: formData
     })
-    console.log(response)
+    
     if (response.ok) {
       const data = await response.json()
       return data
