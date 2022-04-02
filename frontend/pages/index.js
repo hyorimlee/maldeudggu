@@ -39,7 +39,10 @@ function Home({ staticState, changeStaticState, data, participant }) {
     router.push(`${sampleSentence.case_id}`)
   }
 
-  const checkHandler = () => {
+  console.log('use', use)
+  console.log('reuse', staticState.reuse)
+
+  const useCheckHandler = () => {
     setUse(!use)
   }
 
@@ -66,12 +69,12 @@ function Home({ staticState, changeStaticState, data, participant }) {
       <Input></Input>
       <Checkbox
         checked={use}
-        onChange={checkHandler}
+        onChange={useCheckHandler}
         contents={'(필수) 음성 데이터 활용에 동의합니다.'}
       ></Checkbox>
       <Checkbox
         checked={staticState.reuse}
-        // onChange={}
+        onChange={() => changeStaticState('reuse')}
         contents={'(선택) 음성 데이터를 학습에 활용하는 데 동의합니다.'}
       // 누르면 메타정보용 modal
       ></Checkbox>

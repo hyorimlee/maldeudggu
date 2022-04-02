@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps }) {
       }
 
       if (type === 'reuse') {
-        setStaticState({ ...preState, reuse: !reuse })
+        setStaticState({ ...preState, reuse: !staticState.reuse })
       }
     }
     changeState()
