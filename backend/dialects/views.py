@@ -144,3 +144,25 @@ def save_image(request, case_pk):
         'image_url': case.image_url
     }
     return Response(data, status=status.HTTP_200_OK)
+
+from django.http import HttpResponse
+import urllib.request
+from PIL import Image
+from io import BytesIO
+
+# Create your views here.
+def download_image(request, case_pk):
+    case = get_object_or_404(Case, pk=case_pk)
+    urllib.request.urlretrieve(case.image_url, f'{case.pk}_img.png')
+
+    img = Image.open(f'{case.pk}_img.png')
+    img_file = BytesIO()
+    img.save(img_file, 'png')
+    image_file_size = img_file.tell()
+
+    response = HttpResponse()
+    response['content-type'] = 'image/png'
+    response['Content-Length'] = image_file_size
+    response['Content-Disposition'] = "attachment; filename=%s" % (f'{case.pk}_img.png')
+    img.save(response, "png")
+    return response
