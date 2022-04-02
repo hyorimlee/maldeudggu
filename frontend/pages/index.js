@@ -29,12 +29,12 @@ export async function getServerSideProps() {
   }
 }
 
-function Home({ staticState, changeStaticState, data, participant }) {
+function Home({ staticState, changeStaticState, data, participant = { count: 0 } }) {
   const [use, setUse] = useState(false)
   const router = useRouter()
 
   async function getSampleSentence() {
-    const sampleSentence = await postRequest('/start', [["nickname", "choux"]])
+    const sampleSentence = await postRequest('/start/', [["nickname", "choux"]])
     changeStaticState('sentence', sampleSentence)
     router.push(`${sampleSentence.case_id}`)
   }
