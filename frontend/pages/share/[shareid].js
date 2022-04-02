@@ -68,7 +68,6 @@ function Share({ staticState, changeStaticState }) {
     } else if (id === 'facebook') {
       window.open("http://www.facebook.com/sharer/sharer.php?u=" + INDEX_URL + router.asPath);
     } else if (id === 'link') {
-      console.log(navigator.clipboard)
       navigator.clipboard.writeText(INDEX_URL + router.asPath)
       // alert('복사되었습니다.')
     } else if (id === 'download') {

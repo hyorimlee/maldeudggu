@@ -15,7 +15,6 @@ const AudioProgressBar = ( { staticState }) => {
   const animationRef = useRef();  // reference the animation
 
   let recordAudio = staticState.recordAudio
-  console.log(recordAudio)
   let audio = recordAudio[recordAudio.length - 1]
 
   // let audioUrl = recordAudio[recordAudio.length - 1]
