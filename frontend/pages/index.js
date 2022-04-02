@@ -31,7 +31,7 @@ async function getDatas() {
   }
 }
 
-function Home({ staticState, changeStaticState }) {
+function Home({ staticState, changeStaticState, data, participant = { count: 0 } }) {
   const [participant, setParticipant] = useState(0)
   const [sharedImages, setSharedImages] = useState({})
   const [nickname, setNickname] = useState('')

@@ -1,7 +1,8 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5vw;
+  grid-auto-flow: row;
   align-items: center;
+  justify-items: center;
 }
