@@ -14,7 +14,7 @@ function Image({ type, path, onClick }) {
       <img
         src={path}
         onClick={onClick}
-        className={`${styles.image} ${styles[type]}`}
+        className={`${styles[type]}`}
       ></img>
     </>
   )

@@ -4,7 +4,7 @@ import styles from './sharedImages.module.css'
 function SharedImages({ data }) {
   let images = data.map((d, idx) => {
     return (
-      <Image path={d.image_url} key={idx} />
+      <Image path={d.image_url} key={idx} type={'sharedImage'} />
     )
   })
 
