@@ -28,7 +28,31 @@ function MyApp({ Component, pageProps }) {
       }
     },
     myCharacter: {},
-    sampleSentence: [],
+    sampleSentence: {
+      "case_id": 5684,
+      "sentences": [
+        {
+          "id": 3,
+          "sentence": "밤에 모기가 날아다녀서 잠을 한숨도 못 잤어."
+        },
+        {
+          "id": 1,
+          "sentence": "오늘 무슨 반찬 먹었니?"
+        },
+        {
+          "id": 7,
+          "sentence": "되는 일이 없네, 짜증난다."
+        },
+        {
+          "id": 6,
+          "sentence": "선생님, 이거 어떻게 하는 거예요?"
+        },
+        {
+          "id": 10,
+          "sentence": "얼른 주말이 왔으면 좋겠다."
+        }
+      ]
+    },
     reuse: false
   })
 
@@ -43,7 +67,6 @@ function MyApp({ Component, pageProps }) {
       let recordAudioFile
 
       if (type === 'audioData') {
-        console.log(data)
         recordAudio = [...staticState.recordAudio, data[0]]
         recordAudioFile = [...staticState.recordAudioFile, data[1]]
         setStaticState({
@@ -66,8 +89,6 @@ function MyApp({ Component, pageProps }) {
     }
     changeState()
   }
-
-  // console.log(staticState)
 
   return (
     <Layout>

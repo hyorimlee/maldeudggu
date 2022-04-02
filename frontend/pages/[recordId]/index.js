@@ -68,7 +68,6 @@ function Record( {staticState, changeStaticState} ) {
           ></Text>
         </div>
         <RecordButton sentenceId={`${sentences[curSentence].id}`} staticState={staticState} changeStaticState={(type, data) => {
-          console.log(changeStaticState)
           changeStaticState(type, data)
         }}/>
         <AudioProgressBar staticState={staticState} />
