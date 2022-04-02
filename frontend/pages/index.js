@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 // components & containers
 import Text from "../components/text/text"
+import Modal from "../containers/modal/modal"
 import Image from "../components/image/image"
 import Input from "../components/input/input"
 import Button from "../components/button/button"
@@ -31,6 +32,7 @@ export async function getServerSideProps() {
 
 function Home({ staticState, changeStaticState, data, participant = { count: 0 } }) {
   const [use, setUse] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const router = useRouter()
 
   async function getSampleSentence() {
@@ -83,6 +85,11 @@ function Home({ staticState, changeStaticState, data, participant = { count: 0 }
         handler={getSampleSentence}
         disabled={!use}
       ></Button>
+      <button onClick={() => setShowModal(true)}>모달</button>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      ></Modal>
       <FontAwesomeIcon
         icon={faAnglesDown}
         className={styles.icon}
