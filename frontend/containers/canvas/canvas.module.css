@@ -5,6 +5,8 @@
   background-color: white;
   margin: 20px 0;
   overflow: hidden;
+  
+  touch-action: none;
 }
 
 .character {
