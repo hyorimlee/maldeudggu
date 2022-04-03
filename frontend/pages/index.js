@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 // components & containers
 import Text from "../components/text/text"
@@ -44,6 +44,10 @@ function Home({ staticState, changeStaticState, data, participant = { count: 0 }
   console.log('use', use)
   console.log('reuse', staticState.reuse)
 
+  useEffect(() => {
+    setShowModal(staticState.reuse)
+  }, [staticState.reuse])
+
   const useCheckHandler = () => {
     setUse(!use)
   }
@@ -80,16 +84,15 @@ function Home({ staticState, changeStaticState, data, participant = { count: 0 }
         contents={'(선택) 음성 데이터를 학습에 활용하는 데 동의합니다.'}
       // 누르면 메타정보용 modal
       ></Checkbox>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      ></Modal>
       <Button
         content={'테스트 시작하기'}
         handler={getSampleSentence}
         disabled={!use}
       ></Button>
-      <button onClick={() => setShowModal(true)}>모달</button>
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-      ></Modal>
       <FontAwesomeIcon
         icon={faAnglesDown}
         className={styles.icon}

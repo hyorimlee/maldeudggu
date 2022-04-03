@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
+
+import Text from '../../components/text/text'
+
 import styles from './modal.module.css'
 
 function Modal({ show, onClose }) {
@@ -18,7 +21,11 @@ function Modal({ show, onClose }) {
     <div className={styles.overlay}>
       <div className={styles.wrapper}>
         <div className={styles.inner} onClick={handleClose}>close 임시~~~</div>
-        <div className={styles.inner}>.....</div>
+        <div className={styles.inner}>
+          <Text contents={'1. 성별/나이를 알려주세요.'}></Text>
+          <Text contents={'2. 출생 지역을 알려주세요.'}></Text>
+          <Text contents={'3. 10년 이상 거주했던 지역이 있다면 알려주세요.'}></Text>
+        </div>
       </div>
     </div>
   ) : null
@@ -31,16 +38,6 @@ function Modal({ show, onClose }) {
   } else {
     return null
   }
-
-  // return (
-  //   <>
-  //     <div className={styles.overlay}>
-  //       <div className={styles.wrapper}>
-  //         <div className={styles.inner}></div>
-  //       </div>
-  //     </div>
-  //   </>
-  // )
 }
 
 export default Modal
