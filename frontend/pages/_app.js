@@ -23,7 +23,8 @@ function MyApp({ Component, pageProps }) {
     recordAudio: [],
     recordAudioFile: [],
     result: {},
-    reuse: false
+    reuse: false,
+    metaData: {}
   })
 
   // 추가 구현 필요
@@ -32,7 +33,7 @@ function MyApp({ Component, pageProps }) {
       if (type === 'audioData') {
         let recordAudio
         let recordAudioFile
-        
+
         if (staticState.recordAudio.length === staticState.recordCount + 1) {
           recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
           recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]

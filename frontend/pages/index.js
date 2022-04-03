@@ -106,6 +106,8 @@ function Home({ staticState, changeStaticState }) {
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
+        staticState={staticState}
+        changeStaticState={changeStaticState}
       ></Modal>
       <Button
         content={!agree || !nickname ? '별명 입력과 필수 동의를 눌러주세요' : '테스트 시작하기'}
