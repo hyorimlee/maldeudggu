@@ -6,6 +6,7 @@ function Progress({ percent=0 }) {
   const gauge = useRef()
   
   useEffect(() => {
+    console.log(percent)
     gauge.current.style = `width: ${percent}%;`
   }, [])
 
