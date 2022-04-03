@@ -1,3 +1,5 @@
+let FormData = require('form-data')
+
 const SERVER_BASE = process.env.NEXT_PUBLIC_SERVER_BASE
 
 /*
@@ -11,7 +13,7 @@ const SERVER_BASE = process.env.NEXT_PUBLIC_SERVER_BASE
 - output
   요청 결과 반환 json 파일
 */
-async function getRequest(url, params={}) {
+async function getRequest(url, params = {}) {
   try {
     const paramsKeys = Object.keys(params)
     let query
@@ -45,19 +47,19 @@ async function getRequest(url, params={}) {
 - output
   요청 결과 json 파일
 */
-async function postRequest(url, datas=[]) {
+async function postRequest(url, datas = []) {
   try {
     let formData = new FormData()
     datas.forEach((data) => {
       console.log(data[0], data[1])
       formData.append(data[0], data[1])
     })
-    console.log(formData.get('nickname'))
-    const response = await fetch(`${SERVER_BASE}${url}/`, {
+    
+    const response = await fetch(`${SERVER_BASE}${url}`, {
       method: 'POST',
       body: formData
     })
-    console.log(response)
+    
     if (response.ok) {
       const data = await response.json()
       return data

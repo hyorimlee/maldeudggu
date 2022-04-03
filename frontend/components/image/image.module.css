@@ -46,3 +46,7 @@
   transform: translate(50%, -80%);
   width: 30%;
 }
+
+.sharedImage {
+  width: 25vw;
+}
