@@ -44,7 +44,9 @@ export async function getStaticProps({ params }) {
   }
 }
 
+
 function Record( { staticState, changeStaticState, sentence, id } ) {
+  const [isEnd, setIsEnd] = useState(false)
   const router = useRouter()
 
   let soundfiles = staticState.recordAudioFile
@@ -55,12 +57,14 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
       await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
       changeStaticState('recordCount', staticState.recordCount + 1)
       router.push(`/record/${staticState.sentences[staticState.recordCount + 1].id}`)
+      console.log('next')
     } else {
+      setIsEnd(true)
       await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
 
       const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
-      console.log(testResult)
       changeStaticState('result', testResult.result)
+      
       setTimeout(() => {
         router.push('/result')
       }, 5000)
@@ -70,7 +74,7 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
   return (
     <>
       {
-        staticState.recordCount >= 5
+        isEnd
         ?
         (
           <>
@@ -108,11 +112,30 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
               changeStaticState(type, data)
             }}/>
             <AudioProgressBar staticState={staticState} />
-            <Button
-              content={'다음으로 넘어가기'}
-              color={'grey'}
-              handler={sendSoundFile}
-            />
+            {
+              staticState.recordAudio.length === staticState.recordCount + 1
+              ?
+              (
+                <>
+                  <Button
+                    content={'다음으로 넘어가기'}
+                    handler={sendSoundFile}
+                  />
+                </>
+              )
+              :
+              (
+                <>
+                  <Button
+                    content={'음성을 녹음해주세요'}
+                    disabled
+                  ></Button>
+                </>
+              )
+            }
+            
+            
+            
           </>
         )
       }

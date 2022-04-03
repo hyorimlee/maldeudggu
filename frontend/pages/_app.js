@@ -34,18 +34,22 @@ function MyApp({ Component, pageProps }) {
   // 추가 구현 필요
   const changeStaticState = (type, data, type2, data2, event) => {
     function changeState() {
-      let recordAudio
-      let recordAudioFile
-
       if (type === 'audioData') {
-        recordAudio = [...staticState.recordAudio, data[0]]
-        recordAudioFile = [...staticState.recordAudioFile, data[1]]
+        let recordAudio
+        let recordAudioFile
+        
+        if (staticState.recordAudio.length === staticState.recordCount + 1) {
+          recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
+          recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+        } else {
+          recordAudio = [...staticState.recordAudio, data[0]]
+          recordAudioFile = [...staticState.recordAudioFile, data[1]]
+        }
+
         setStaticState({
           ...staticState, recordAudio, recordAudioFile
         })
-      }
-      
-      else {
+      } else {
         if (type2) {
           setStaticState({ ...staticState, [type]: data, [type2]: data2 })
         } else {

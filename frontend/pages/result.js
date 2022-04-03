@@ -8,13 +8,8 @@ import { dialectsFeature, korToEng } from '../modules/locationText'
 import styles from '../styles/result.module.css'
 
 function Result({ staticState, changeStaticState }) {
-  const resultKor = Object.keys({ ...staticState.result.result })
   const router = useRouter()
-  const nickname = staticState.nickname
-
-  const routeCustomize = () => {
-    router.push('/customize')
-  }
+  const resultKor = Object.keys({ ...staticState.result })
 
   return (
     <>
@@ -36,21 +31,21 @@ function Result({ staticState, changeStaticState }) {
       <Text size={20} bold contents='테스트 결과'></Text>
       <ResultProgress
         result={[
-          [resultKor[0], parseInt(staticState.result.result[resultKor[0]])],
-          [resultKor[1], parseInt(staticState.result.result[resultKor[1]])],
-          [resultKor[2], parseInt(staticState.result.result[resultKor[2]])]
+          [resultKor[0], parseInt(staticState.result[resultKor[0]])],
+          [resultKor[1], parseInt(staticState.result[resultKor[1]])],
+          [resultKor[2], parseInt(staticState.result[resultKor[2]])]
         ]}>
       </ResultProgress>
       <div>
         <Text
           contents={`
-            ${myNickname} 님의 목소리는 ${resultKor[0]} 방언이 ${parseInt(staticState.result.result[resultKor[0]])}% 로 주로 사용하시는군요!
-            그 외에 ${resultKor[1]} ${parseInt(staticState.myResult.result[resultKor[1]])}%, ${resultKor[2]} ${parseInt(staticState.myResult.result[resultKor[2]])}% 가 나왔습니다.
+            ${staticState.nickname} 님의 목소리는 ${resultKor[0]} 방언이 ${staticState.result[resultKor[0]]}% 로 주로 사용하시는군요!
+            그 외에 ${resultKor[1]} ${staticState.result[resultKor[1]]}%, ${resultKor[2]} ${staticState.result[resultKor[2]]}% 가 나왔습니다.
           `}>
         </Text>
       </div>
       <Text contents={dialectsFeature[resultKor[0]]}></Text>
-      <Button content='내 캐릭터 꾸미기' handler={routeCustomize}></Button>
+      <Button content='내 캐릭터 꾸미기' handler={() => router.push('/customize')}></Button>
     </>
   )
 }
