@@ -1,0 +1,14 @@
+.loadingContainer {
+  width: 20vw;
+  height: 20vw;
+  display: flex;
+  justify-content: space-around;
+}
+
+.loadingCircle {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background-color: #FB7D1E;
+  border-radius: 50%;
+}
