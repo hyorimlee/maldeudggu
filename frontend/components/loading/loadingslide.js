@@ -9,9 +9,9 @@ import { Autoplay, Pagination } from "swiper"
 // 전국 & 색상 전부 가져오기 (6*9)
 // 이미지 크기 맞춰야 함
 const images = [
-  '/img/character/gangwon/1-1.svg',
-  '/img/character/gangwon/1-2.svg',
-  '/img/character/gangwon/1-3.svg',
+  '/img/character/gangwon/gangwon-1.svg',
+  '/img/character/gangwon/gangwon-2.svg',
+  '/img/character/gangwon/gangwon-3.svg',
 ]
 
 function LoadingSlide() {

@@ -36,6 +36,7 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
       const today = getDate()
       const sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
       const url = URL.createObjectURL(audioUrl)
+
       changeStaticState('audioData', [url, sound]);
     }
   }, [audioUrl])

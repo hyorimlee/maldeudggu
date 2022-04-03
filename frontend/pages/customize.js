@@ -6,26 +6,15 @@ import { firebaseConfig } from '../firebaseConfig'
 
 import { getBackgroundList, getFileList } from "../modules/filelist"
 import { patchRequest, getRequest } from '../modules/fetch'
+import { korToEng } from '../modules/locationText'
 
 import Canvas from '../containers/canvas/canvas'
 import ItemSelector from "../containers/itemSelector/itemSelector"
 import Button from '../components/button/button'
 
 
-// /{case_pk}/my/
-
 // firebase 초기화
 const storage = getStorage(initializeApp(firebaseConfig));
-
-const korToEng = {
-  '경기': 'gyeonggi',
-  '강원': 'gangwon',
-  '충청': 'chungcheong',
-  '경상': 'gyeongsang',
-  '전라': 'jeolla',
-  '제주': 'jeju',
-  '전체': 'all'
-}
 
 // 특정 폴더에서 이미지 이름 전부 가져오기 ({지역: [파일명]})
 export async function getStaticProps() {
@@ -50,7 +39,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
   // 사용자 결과 3개에 맞게 필터링, 아이템은 '전체'까지 추가
   useEffect(() => {
-    const location = Object.keys(staticState.myResult.result)
+    const location = Object.keys(staticState.result)
     const locationForItems = location.concat('전체')
 
     setFilteredCharacters(
@@ -117,7 +106,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
       }
     })
 
-    const storageRef = ref(storage, `${staticState.myResult.case_id}.png`)
+    const storageRef = ref(storage, `${staticState.caseId}.png`)
 
     useIdx.forEach(idx => {
       const img = new Image()
@@ -133,11 +122,11 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
               .then((snapshot) => {
                 getDownloadURL(storageRef)
                   .then((url) => {
-                    patchRequest(`/${staticState.myResult.case_id}/image`, url)
+                    patchRequest(`/${staticState.caseId}/image`, url)
                       .then((response) => {
-                        const location = Object.keys(staticState.myResult.result)
-
-                        router.push(`/share/${response.case_id}?first=${korToEng[location[0]]}_${staticState.myResult.result[location[0]]}&second=${korToEng[location[1]]}_${staticState.myResult.result[location[1]]}&third=${korToEng[location[2]]}_${staticState.myResult.result[location[2]]}`)
+                        const location = Object.keys(staticState.result)
+                        
+                        router.push(`/share/${response.case_id}?result=${korToEng[location[0]]}_${staticState.result[location[0]]}_${korToEng[location[1]]}_${staticState.result[location[1]]}_${korToEng[location[2]]}_${staticState.result[location[2]]}`)
                       })
                   })
               })
@@ -149,7 +138,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
   return (
     <div id='test'>
-      <Canvas color={color} items={items} background={background} firstLocation={korToEng[Object.keys(staticState.myResult.result)[0]]}></Canvas>
+      <Canvas color={color} items={items} background={background} firstLocation={korToEng[Object.keys(staticState.result)[0]]}></Canvas>
       <ItemSelector
         color={color}
         items={items}
