@@ -24,8 +24,11 @@ async function getRequest(url, params = {}) {
 
     const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}/`)
 
-    if (response.ok) {
+    if (response.ok && response.headers.get('content-type') === 'application/json') {
       const data = await response.json()
+      return data
+    } else if (response.ok && response.headers.get('content-type') === 'image/png') {
+      const data = await response.blob()
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')

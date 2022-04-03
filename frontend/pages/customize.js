@@ -37,6 +37,13 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   const [background, setBackground] = useState('')
   const router = useRouter()
 
+  // 전역 state 값이 비어있으면 404 페이지로 이동
+  useEffect(() => {
+    if (staticState.caseId || staticState.sentences) {
+      router.push('/404')
+    }
+  }, [])
+
   // 사용자 결과 3개에 맞게 필터링, 아이템은 '전체'까지 추가
   useEffect(() => {
     const location = Object.keys(staticState.result)
