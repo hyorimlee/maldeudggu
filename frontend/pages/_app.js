@@ -16,79 +16,46 @@ function MyApp({ Component, pageProps }) {
     settings: {
       nightMode: false,
     },
+    caseId: 0,
+    nickname: '',
+    sentences: [],
+    recordCount: 0,
     recordAudio: [],
     recordAudioFile: [],
-    myNickname: 'Test_Nicckname',
-    myResult: {
-      'case_id': 5669,
-      'result': {
-        '충청': 41,
-        '강원': 35,
-        '제주': 14
-      }
-    },
-    myCharacter: {},
-    sampleSentence: {
-      "case_id": 5684,
-      "sentences": [
-        {
-          "id": 3,
-          "sentence": "밤에 모기가 날아다녀서 잠을 한숨도 못 잤어."
-        },
-        {
-          "id": 1,
-          "sentence": "오늘 무슨 반찬 먹었니?"
-        },
-        {
-          "id": 7,
-          "sentence": "되는 일이 없네, 짜증난다."
-        },
-        {
-          "id": 6,
-          "sentence": "선생님, 이거 어떻게 하는 거예요?"
-        },
-        {
-          "id": 10,
-          "sentence": "얼른 주말이 왔으면 좋겠다."
-        }
-      ]
-    },
+    result: {},
     reuse: false
   })
 
   // 추가 구현 필요
-  const changeStaticState = (type, data, event) => {
+  const changeStaticState = (type, data, type2, data2, event) => {
     function changeState() {
-      const preState = {
-        ...staticState
-      }
-
-      let recordAudio
-      let recordAudioFile
-
       if (type === 'audioData') {
-        recordAudio = [...staticState.recordAudio, data[0]]
-        recordAudioFile = [...staticState.recordAudioFile, data[1]]
+        let recordAudio
+        let recordAudioFile
+        
+        if (staticState.recordAudio.length === staticState.recordCount + 1) {
+          recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
+          recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+        } else {
+          recordAudio = [...staticState.recordAudio, data[0]]
+          recordAudioFile = [...staticState.recordAudioFile, data[1]]
+        }
+
         setStaticState({
-          ...preState, recordAudio, recordAudioFile
+          ...staticState, recordAudio, recordAudioFile
         })
-
-      }
-
-      if (type === 'sentence') {
-        setStaticState({ ...preState, sampleSentence: data })
-      }
-
-      if (type === 'result') {
-        setStaticState({ ...preState, myResult: data })
-      }
-
-      if (type === 'reuse') {
-        setStaticState({ ...preState, reuse: !staticState.reuse })
+      } else {
+        if (type2) {
+          setStaticState({ ...staticState, [type]: data, [type2]: data2 })
+        } else {
+          setStaticState({ ...staticState, [type]: data })
+        }
       }
     }
     changeState()
   }
+
+  console.log(staticState)
 
   return (
     <Layout>
