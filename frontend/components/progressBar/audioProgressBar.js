@@ -19,10 +19,16 @@ const AudioProgressBar = ( { staticState }) => {
 
   // let audioUrl = recordAudio[recordAudio.length - 1]
   useEffect(() => {
+    console.log(audioPlayer)
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
     progressBar.current.max = seconds;
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+  }, [audio, audioPlayer?.current?.readyState]);
+
+  const resetAudio = () => {
+    progressBar.current.value = 0
+    setIsPlaying(!isPlaying)
+  }
 
   const togglePlayPause = () => {
     const prevValue = isPlaying;
@@ -54,7 +60,7 @@ const AudioProgressBar = ( { staticState }) => {
 
   return (
     <div className={styles.audioPlayer}>
-      <audio ref={audioPlayer} src={audio} type="audio/mpeg" preload="metadata"></audio>
+      <audio ref={audioPlayer} src={audio} type="audio/mpeg" onEnded={resetAudio} onLoadedMetadata={event => console.log(event.target.duration)} preload="metadata"></audio>
       <button onClick={togglePlayPause} className={styles.playPause}>
         {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} className={styles.play} />}
       </button>
