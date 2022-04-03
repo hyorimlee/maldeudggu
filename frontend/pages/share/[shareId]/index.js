@@ -7,7 +7,7 @@ import ResultProgress from '../../../containers/progress/resultProgress'
 
 import { shareText } from '../../../modules/locationText'
 import { getRequest } from '../../../modules/fetch'
-import { engToKor } from '../../../modules/locationText'
+import { engToKor, dialectsFeature } from '../../../modules/locationText'
 
 import styles from '../../../styles/share.module.css'
 
@@ -93,6 +93,13 @@ function Share({ staticState, changeStaticState }) {
                 [engToKor[results[4]], parseInt(results[5])]
               ]}
             ></ResultProgress>
+            <Text
+              contents={`
+                ${info.nickname} 님의 목소리는 ${engToKor[results[0]]} 방언이 ${results[1]}% 로 주로 사용하시는군요!
+                그 외에 ${engToKor[results[2]]} ${results[3]}%, ${engToKor[results[4]]} ${results[5]}% 가 나왔습니다.
+              `}>
+            </Text>
+            <Text contents={dialectsFeature[engToKor[results[0]]]}></Text>
             <Text size={12} contents={'친구에게 공유하기'}></Text>
             <SNSContainer onClick={clickedShare}></SNSContainer>
           </>

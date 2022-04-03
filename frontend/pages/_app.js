@@ -22,12 +22,7 @@ function MyApp({ Component, pageProps }) {
     recordCount: 0,
     recordAudio: [],
     recordAudioFile: [],
-    result: {
-      '충청': 41,
-      '강원': 35,
-      '제주': 14
-    },
-    myCharacter: {},
+    result: {},
     reuse: false
   })
 
