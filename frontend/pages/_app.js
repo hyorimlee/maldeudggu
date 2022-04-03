@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import Layout from '../components/layout/layout'
 
 import '../styles/globals.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 
-import { postRequest } from '../modules/fetch'
-
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
   const [staticState, setStaticState] = useState({
     settings: {
       nightMode: false,
@@ -55,7 +55,25 @@ function MyApp({ Component, pageProps }) {
     changeState()
   }
 
-  console.log(staticState)
+  // 새로고침시 확인 메시지 띄우기
+  useEffect(() => {
+    const reloadHandler = (event) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+
+    window.addEventListener('beforeunload', reloadHandler)
+
+    const before = ({ url, as, options }) => {
+      if (router.pathname.split('/')[1] === 'record' || router.pathname === '/') {
+        alert('이전 또는 이후 화면으로 돌아갈 수 없습니다.')
+        return false
+      }
+      return true
+    }
+    
+    router.beforePopState(before)
+  }, [])
 
   return (
     <Layout>
