@@ -15,5 +15,6 @@ urlpatterns = [
     path('<int:case_pk>/', views.save_audio),
     path('<int:case_pk>/result/', views.get_result),
     path('<int:case_pk>/image/', views.save_image),
-    path('<int:case_pk>/download/', views.download_image)
+    path('<int:case_pk>/download/', views.download_image),
+    path('<int:case_pk>/survey/', views.save_survey)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
