@@ -80,7 +80,7 @@ function Canvas({ color, items, background, firstLocation }) {
       character.current.style = `top: ${preTop ? preTop : 0}; left:${preLeft ? preLeft : 0};`
       character.current.className = styles.character
     } else {
-      character.current.src = `/img/character/${firstLocation}/${firstLocation}-1.svg`
+      // character.current.src = `/img/character/${firstLocation}/${firstLocation}-1.svg`
       character.current.className = styles.character
     }
   }, [color])
@@ -116,7 +116,7 @@ function Canvas({ color, items, background, firstLocation }) {
       {background ? <Image
         type={'background'}
         path={`/img/background/${background}`}
-      ></Image> : ''}
+      ></Image> : <div></div>}
       <img
         id='character'
         ref={character}
