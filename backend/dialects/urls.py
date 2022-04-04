@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 app_name = 'dialects'
 
 urlpatterns = [
+    path('sentence/<int:sentence_pk>/',views.get_sentence),
+    path('sentence/',views.get_sentences),
     path('<int:case_pk>/my/', views.get_image),
     path('shared/', views.get_images),
     path('participant/', views.count_participant),
