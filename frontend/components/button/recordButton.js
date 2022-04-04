@@ -2,7 +2,7 @@ import styles from './recordButton.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from "framer-motion"
 
-function RecordButton() {
+function RecordButton({ sentenceId, staticState, changeStaticState }) {
   // 애니메이션 관련 state
   const [toggle, setToggle] = useState(false);
   const [pathLength, setPathLength] = useState(0);
@@ -31,6 +31,33 @@ function RecordButton() {
     };
   }, [toggle]);
 
+  useEffect(() => {
+    if (audioUrl) {
+      const today = getDate()
+      let sound
+
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.mp4`, { lastModified: new Date().getTime(), type: "audio/mp4" });
+      }
+
+      const url = URL.createObjectURL(audioUrl)
+
+      changeStaticState('audioData', [url, sound]);
+    }
+  }, [audioUrl])
+
+  // 파일 이름 형식을 맞추기 위해 날짜를 리턴하는 함수
+  function getDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (1 + date.getMonth())).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
   // 컴포넌트에 onClick 으로 연결되는 함수, onRec에 따라 녹음을 시작/종료
   function changeRecordState() {
     setToggle(!toggle);
@@ -49,7 +76,14 @@ function RecordButton() {
     setAnalyser(analyser);
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream);
+      let mediaRecorder
+
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
+      }
+
       mediaRecorder.start();
       setStream(stream);
       setMedia(mediaRecorder);
@@ -58,9 +92,6 @@ function RecordButton() {
       setSource(source);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
-
-      console.log(media);
-
       analyser.onaudioprocess = function (e) {
         // 10초 이후 정지
         if (e.playbackTime > 10) {
@@ -74,23 +105,19 @@ function RecordButton() {
           setToggle(!toggle);
 
           mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data);
+            setAudioUrl(() => e.data);
             setOnRec(false);
-            onSubmitAudioFile();
-            play();
           };
         } else {
           setOnRec(true);
         }
       };
-      setOnRec(true);
     });
   }
 
   function stopRecord() {
     media.ondataavailable = function (e) {
-      console.log(e);
-      setAudioUrl(e.data);
+      setAudioUrl(() => e.data);
       setOnRec(false);
     };
 
@@ -102,26 +129,6 @@ function RecordButton() {
     analyser.disconnect();
     source.disconnect();
   }
-
-  // AudioUrl이 변경되면 URL을 console에 찍고, 음성파일로 변환
-  const onSubmitAudioFile = useCallback(() => {
-    const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-    console.log(sound); // File 정보 출력
-
-    if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl));
-    } else {
-      console.log('No url')
-    }
-  }, [audioUrl]);
-
-  // 음성파일을 실행하는 함수
-  const play = () => {
-    const audio = new Audio(URL.createObjectURL(audioUrl));
-    audio.loop = false;
-    audio.volume = 1;
-    audio.play();
-  };
 
   return (
     <div className={styles.container}>
@@ -138,7 +145,7 @@ function RecordButton() {
             translateY: 5,
           }}
           initial={{ pathLength: 1.1 }}
-          />
+        />
         <motion.path
           fill="none"
           strokeWidth="5"
@@ -155,7 +162,7 @@ function RecordButton() {
           initial={{ pathLength: 0 }}
           animate={{ pathLength: pathLength }}
           transition={{ duration: transitionTime, ease: 'linear' }}
-          />
+        />
         <motion.path
           fill={`${buttonColor}`}
           d="M 0, 10 a 10, 10 0 1,0 20,0 a 10, 10 0 1,0 -20,0"

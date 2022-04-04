@@ -17,7 +17,7 @@ class Sentence(models.Model):
 # fs = FileSystemStorage(location='/audio')
 
 def audio_file_path(instance, filename):
-    return f'user_{instance.pk}/{filename}'
+    return f'user_{instance.case.pk}/{filename}'
 
 class Audio(models.Model):
     # audio_path = models.FileField(storage=fs)

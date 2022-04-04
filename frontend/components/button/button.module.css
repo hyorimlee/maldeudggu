@@ -3,12 +3,29 @@
   height: 40px;
   border-style: none;
   border-radius: 9999px;
-  background-color: #FB7D1E;
-  color: #FFFFFF;
   font-weight: bold;
   font-family: 'Noto Sans KR';
+  margin: 10px;
 }
 
-.button:hover {
-  background-color: #FFAE4A
+.orange {
+  background-color: #FB7D1E;
+  color: #FFFFFF;
+}
+
+.orange:hover {
+  background-color: #FFAE4A;
+}
+
+.orange:disabled {
+  background-color: #9b9999;
+}
+
+.grey {
+  background-color: #B5B5B5;
+  color: #FFFFFF;
+}
+
+.grey:hover {
+  background-color: #9b9999;
 }

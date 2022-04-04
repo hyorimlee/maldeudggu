@@ -1,0 +1,24 @@
+.inputLabel {
+  font-size: 12px;
+  margin: 5px;
+}
+
+.input {
+  height: 45px;
+  padding: 10px;
+  margin: 5px;
+  font-family: 'Noto Sans KR';
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #000000;
+  border-radius: 8px 8px 0 0;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: 2px solid #fb7d12;
+}
+
+.input::placeholder {
+  font-size: 0.75rem;
+}

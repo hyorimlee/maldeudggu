@@ -1,3 +1,5 @@
+let FormData = require('form-data')
+
 const SERVER_BASE = process.env.NEXT_PUBLIC_SERVER_BASE
 
 /*
@@ -11,19 +13,22 @@ const SERVER_BASE = process.env.NEXT_PUBLIC_SERVER_BASE
 - output
   요청 결과 반환 json 파일
 */
-async function getRequest(url, params={}) {
+async function getRequest(url, params = {}) {
   try {
     const paramsKeys = Object.keys(params)
     let query
-    
+
     if (paramsKeys.length) {
       query = paramsKeys.map(k => `${k}=${params[k]}`).join('&')
     }
 
-    const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}`)
-    
-    if (response.ok) {
+    const response = await fetch(`${SERVER_BASE}${url}${paramsKeys.length ? '?' + query : ''}/`)
+
+    if (response.ok && response.headers.get('content-type') === 'application/json') {
       const data = await response.json()
+      return data
+    } else if (response.ok && response.headers.get('content-type') === 'image/png') {
+      const data = await response.blob()
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
@@ -45,11 +50,13 @@ async function getRequest(url, params={}) {
 - output
   요청 결과 json 파일
 */
-async function postRequest(url, datas=[]) {
+async function postRequest(url, datas = []) {
   try {
     let formData = new FormData()
-    datas.forEach(data => formData.append(data))
-
+    datas.forEach((data) => {
+      formData.append(data[0], data[1])
+    })
+    
     const response = await fetch(`${SERVER_BASE}${url}`, {
       method: 'POST',
       body: formData
@@ -78,16 +85,16 @@ async function postRequest(url, datas=[]) {
 - output
   저장 성공 여부 json 파일
 */
-async function patchRequest(url, image) {
+async function patchRequest(url, image_url) {
   try {
-    let formData = new FormData()
-    formData.append(image)
-
-    const response = await fetch(`${SERVER_BASE}${url}`, {
+    const response = await fetch(`${SERVER_BASE}${url}/`, {
       method: 'PATCH',
-      body: formData
+      body: JSON.stringify({ image_url }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    
+
     if (response.ok) {
       const data = await response.json()
       return data

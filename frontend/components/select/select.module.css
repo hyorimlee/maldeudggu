@@ -1,0 +1,23 @@
+.select {
+  font-family: 'Noto Sans KR';
+  font-size: 12px;
+  background-color: #FFFFFF;
+  border: 2px solid #FFAE4A;
+  border-radius: 5px;
+  padding: 3px 5px;
+  display: block;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+.option {
+  background: #F3F3F3;
+  text-align: center;
+}
+
+/* css만으로는 선택 시 bg컬러 바뀌는 거 할 수 없다는 슬픈 소식
+.option:checked {
+  background: #FFAE4A;
+  color: #fff;
+  box-shadow: 0 0 10px 100px #FFAE4A inset;
+} */
