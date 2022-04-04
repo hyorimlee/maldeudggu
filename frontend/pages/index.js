@@ -146,7 +146,7 @@ function Home({ staticState, changeStaticState }) {
       {
         sharedImages.length
           ? (
-            <Suspense fallback={<Text contents='로딩 중... 조금만 기다려주세요'></Text>}>
+            <Suspense fallback={<Text contents='이미지를 불러오는 중이에요'></Text>}>
               <SharedImages data={sharedImages}></SharedImages>
             </Suspense>
           )
