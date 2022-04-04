@@ -34,9 +34,15 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
   useEffect(() => {
     if (audioUrl) {
       const today = getDate()
-      const sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
-      const url = URL.createObjectURL(audioUrl)
+      let sound
 
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.mp4`, { lastModified: new Date().getTime(), type: "audio/mp4" });
+      }
+
+      const url = URL.createObjectURL(audioUrl)
       changeStaticState('audioData', [url, sound]);
     }
   }, [audioUrl])
@@ -69,7 +75,14 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
     setAnalyser(analyser);
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      let mediaRecorder
+
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
+      }
+
       mediaRecorder.start();
       setStream(stream);
       setMedia(mediaRecorder);
@@ -91,14 +104,13 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
           setToggle(!toggle);
 
           mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data);
+            setAudioUrl(() => e.data);
             setOnRec(false);
           };
         } else {
           setOnRec(true);
         }
       };
-      setOnRec(true);
     });
   }
 
