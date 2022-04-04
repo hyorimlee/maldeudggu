@@ -63,8 +63,10 @@ function MyApp({ Component, pageProps }) {
   // 새로고침시 확인 메시지 띄우기, 녹음 페이지 이동 못하게 막기
   useEffect(() => {
     const reloadHandler = (event) => {
-      event.preventDefault()
-      event.returnValue = ''
+      if (router.pathname !== '/share/[shareId]') {
+        event.preventDefault()
+        event.returnValue = ''
+      }
     }
 
     const before = () => {
