@@ -72,8 +72,8 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
 
   const modalContent = show ? (
     <div className={styles.overlay}>
-      <div className={styles.wrapper}>
-        <div className={styles.inner}>
+      <div className={styles.wrapper} tabIndex="-1">
+        <div className={styles.inner} tabIndex="0">
           <Text size={12} contents={'1. 성별/나이를 알려주세요.'}></Text>
           <Select name={'gender'} id={'gender'} options={GENDER} onChange={changeMetaData}></Select>
           <Select name={'age'} options={AGE} onChange={changeMetaData}></Select>

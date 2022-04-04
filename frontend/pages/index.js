@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react"
+import { useState, useEffect, useRef, lazy, Suspense } from "react"
 import { useRouter } from "next/router"
 
 // components & containers
@@ -42,6 +42,9 @@ function Home({ staticState, changeStaticState }) {
   const [loading, setLoading] = useState(false)
   const [delay, setDelay] = useState(false)
   const router = useRouter()
+  const body = useRef(null)
+
+  console.log(body)
 
   useEffect(() => {
     getDatas()
@@ -49,10 +52,12 @@ function Home({ staticState, changeStaticState }) {
         setParticipant(response.participant)
         setSharedImages(response.sharedImages)
       })
+    body.current = document.querySelector('body')
   }, [])
 
-  // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게
+  // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
   useEffect(() => {
+    staticState.reuse === true ? body.current.classList.add('disableScroll') : body.current.classList.remove('disableScroll')
     setShowModal(staticState.reuse)
   }, [staticState.reuse])
 
