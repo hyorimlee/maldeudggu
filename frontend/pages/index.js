@@ -1,5 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react"
 import { useRouter } from "next/router"
+
 // components & containers
 import Text from "../components/text/text"
 import Modal from "../containers/modal/modal"
@@ -37,7 +38,6 @@ function Home({ staticState, changeStaticState }) {
   const [participant, setParticipant] = useState(0)
   const [sharedImages, setSharedImages] = useState({})
   const [nickname, setNickname] = useState('')
-  const [agree, setAgree] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [delay, setDelay] = useState(false)
@@ -51,9 +51,14 @@ function Home({ staticState, changeStaticState }) {
       })
   }, [])
 
+  // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게
+  useEffect(() => {
+    setShowModal(staticState.reuse)
+  }, [staticState.reuse])
+
   const changeNickname = (event) => {
     if (event.target.value.length && !event.target.value.trim()) {
-      alert('시작과 끝에 공백을 넣지 말아주세요')
+      alert('시작과 끝에 공백을 넣지 말아주세요.')
     } else if (event.target.value.length > 10) {
       alert('별명이 너무 길어요!')
     } else {
@@ -61,25 +66,15 @@ function Home({ staticState, changeStaticState }) {
     }
   }
 
-  const checkAgree = () => {
-    if (!agree) {
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
-        console.log('User Audio Access Confirmed')
-        setAgree(!agree)
-      }).catch(() => {
-        console.log('User Audio Access Denied')
-        alert('마이크 접근 설정을 허용으로 바꿔주세요')
-      })
-    } else {
-      setAgree(!agree)
-    }
-  }
-
-  useEffect(() => {
-    setShowModal(staticState.reuse)
-  }, [staticState.reuse])
-
   const testStart = async () => {
+    // 마이크 접근
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+      console.log('User Audio Access Confirmed')
+    }).catch(() => {
+      console.log('User Audio Access Denied')
+      alert('마이크 접근 설정을 허용으로 바꿔주세요.')
+    })
+
     setLoading(true)
 
     const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
@@ -117,15 +112,15 @@ function Home({ staticState, changeStaticState }) {
         contents={'테스트 결과를 통해 캐릭터를 꾸미고 공유할 수 있습니다.'}
       ></Text>
       <Input onChange={changeNickname} value={nickname}></Input>
-      <Checkbox
-        checked={agree}
-        onChange={checkAgree}
-        contents={'(필수) 음성 데이터 수집에 동의합니다. 이건 수집하여 음성 판별에만 사용을 위함'}
-      ></Checkbox>
+      <Text
+        size={12}
+        color={'orange'}
+        contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
+      ></Text>
       <Checkbox
         checked={staticState.reuse}
         onChange={() => changeStaticState('reuse', !staticState.reuse)}
-        contents={'(선택) 음성 데이터를 수집 및 활용하는 데 동의합니다. 추가적인 학습'}
+        contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
       ></Checkbox>
       <Modal
         show={showModal}
@@ -134,9 +129,9 @@ function Home({ staticState, changeStaticState }) {
         changeStaticState={changeStaticState}
       ></Modal>
       <Button
-        content={!agree || !nickname ? '별명 입력과 필수 동의를 눌러주세요' : '테스트 시작하기'}
+        content={!nickname ? '별명을 입력해주세요' : '테스트 시작하기'}
         handler={testStart}
-        disabled={!agree || !nickname}
+        disabled={!nickname}
       ></Button>
       <FontAwesomeIcon
         icon={faAnglesDown}
