@@ -39,7 +39,6 @@ function Home({ staticState, changeStaticState }) {
   const [sharedImages, setSharedImages] = useState({})
   const [nickname, setNickname] = useState('')
   const [showModal, setShowModal] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [delay, setDelay] = useState(false)
   const router = useRouter()
   const body = useRef(null)
@@ -78,8 +77,6 @@ function Home({ staticState, changeStaticState }) {
       alert('마이크 접근 설정을 허용으로 바꿔주세요.')
     })
 
-    setLoading(true)
-
     const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
     changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
 
@@ -96,59 +93,68 @@ function Home({ staticState, changeStaticState }) {
 
   return (
     <>
-      <Text
-        bold
-        size={16}
-        contents={'나는 어떤 억양을 사용할까?'}
-      ></Text>
-      <Image
-        type={'logo'}
-        path={'/img/logo/logo.png'}
-      ></Image>
-      <Text
-        contents={`지금까지 ${participant}명이 참여했어요!`}
-      ></Text>
-      <Text
-        contents={'말듣꾸는 나의 평소 말투를 인공지능이 분석하여 어느 지방의 억양을 사용하고 있는지 알려주는 서비스입니다.'}
-      ></Text>
-      <Text
-        contents={'테스트 결과를 통해 캐릭터를 꾸미고 공유할 수 있습니다.'}
-      ></Text>
-      <Input onChange={changeNickname} value={nickname}></Input>
-      <Text
-        size={12}
-        color={'orange'}
-        contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
-      ></Text>
-      <Checkbox
-        checked={staticState.reuse}
-        onChange={() => changeStaticState('reuse', !staticState.reuse)}
-        contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
-      ></Checkbox>
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        staticState={staticState}
-        changeStaticState={changeStaticState}
-      ></Modal>
-      <Button
-        content={!nickname ? '별명을 입력해주세요' : '테스트 시작하기'}
-        handler={testStart}
-        disabled={!nickname}
-      ></Button>
-      <FontAwesomeIcon
-        icon={faAnglesDown}
-        className={styles.icon}
-      ></FontAwesomeIcon>
-      <Text size={16} contents='실시간 생성된 캐릭터' ></Text>
-      {
-        sharedImages.length
-          ? (
-            <Suspense fallback={<Text contents='이미지를 불러오는 중이에요'></Text>}>
-              <SharedImages data={sharedImages}></SharedImages>
-            </Suspense>
-          )
-          : <></>
+      {delay ? (
+        <ThreeDotsWave
+          contents={'테스트를 준비중이에요.'}
+        ></ThreeDotsWave>
+      ) : (
+        <>
+          <Text
+            bold
+            size={16}
+            contents={'나는 어떤 억양을 사용할까?'}
+          ></Text>
+          <Image
+            type={'logo'}
+            path={'/img/logo/logo.png'}
+          ></Image>
+          <Text
+            contents={`지금까지 ${participant}명이 참여했어요!`}
+          ></Text>
+          <Text
+            contents={'말듣꾸는 나의 평소 말투를 인공지능이 분석하여 어느 지방의 억양을 사용하고 있는지 알려주는 서비스입니다.'}
+          ></Text>
+          <Text
+            contents={'테스트 결과를 통해 캐릭터를 꾸미고 공유할 수 있습니다.'}
+          ></Text>
+          <Input onChange={changeNickname} value={nickname}></Input>
+          <Text
+            size={12}
+            color={'orange'}
+            contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
+          ></Text>
+          <Checkbox
+            checked={staticState.reuse}
+            onChange={() => changeStaticState('reuse', !staticState.reuse)}
+            contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
+          ></Checkbox>
+          <Modal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            staticState={staticState}
+            changeStaticState={changeStaticState}
+          ></Modal>
+          <Button
+            content={!nickname ? '별명을 입력해주세요' : '테스트 시작하기'}
+            handler={testStart}
+            disabled={!nickname}
+          ></Button>
+          <FontAwesomeIcon
+            icon={faAnglesDown}
+            className={styles.icon}
+          ></FontAwesomeIcon>
+          <Text size={16} contents='실시간 생성된 캐릭터' ></Text>
+          {
+            sharedImages.length
+              ? (
+                <Suspense fallback={<Text contents='이미지를 불러오는 중이에요'></Text>}>
+                  <SharedImages data={sharedImages}></SharedImages>
+                </Suspense>
+              )
+              : <></>
+          }
+        </>
+      )
       }
     </>
   )
