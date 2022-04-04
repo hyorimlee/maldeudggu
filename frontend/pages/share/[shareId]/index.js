@@ -19,13 +19,28 @@ const INDEX_URL = process.env.NEXT_PUBLIC_INDEX_URL
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { shareId: ''} }
+      { params: { shareId: '0'} }
     ],
     fallback: true
   }
 }
 
 export async function getStaticProps({ params }) {
+  if (params.shareId === '0') {
+    return {
+      props: {
+        caseId: '0',
+        nickname: 'empty',
+        imageUrl: '',
+        result: {
+          경기: 0,
+          경기: 0,
+          경기: 0,
+        }
+      }
+    }
+  }
+
   const image = await getRequest(`/${params.shareId}/my`)
   const result = await getRequest(`/${params.shareId}/result`)
 
@@ -40,6 +55,12 @@ export async function getStaticProps({ params }) {
 }
 
 function Share({ staticState, changeStaticState, nickname, imageUrl, result, router, caseId }) {
+  useEffect(() => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(KAKAO_API_KEY)
+    }
+  }, [])
+
   //페이지 없는 경우 띄우는 컴포넌트
   if (router.isFallback) {
     return <ThreeDotsWave contents={'이미지를 제작하는 중입니다'}></ThreeDotsWave>
@@ -47,11 +68,6 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
 
   const korLocation = Object.keys(result)
 
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(KAKAO_API_KEY)
-    }
-  }, [])
 
   // 공유하기 아이콘 클릭시 실행
   const clickedShare = (event) => {
