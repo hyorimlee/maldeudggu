@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Image from '../components/image/image'
 import Text from '../components/text/text'
 import Button from '../components/button/button'
@@ -10,6 +11,13 @@ import styles from '../styles/result.module.css'
 function Result({ staticState, changeStaticState }) {
   const router = useRouter()
   const resultKor = Object.keys({ ...staticState.result })
+
+  // 전역 state 값이 비어있으면 404 페이지로 이동
+  useEffect(() => {
+    if (staticState.caseId || staticState.sentences) {
+      router.push('/404')
+    }
+  }, [])
 
   return (
     <>

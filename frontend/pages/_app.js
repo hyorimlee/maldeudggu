@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
     settings: {
       nightMode: false,
     },
-    caseId: 0,
+    caseId: -1,
     nickname: '',
     sentences: [],
     recordCount: 0,
@@ -26,7 +26,6 @@ function MyApp({ Component, pageProps }) {
     reuse: false
   })
 
-  // 추가 구현 필요
   const changeStaticState = (type, data, type2, data2, event) => {
     function changeState() {
       if (type === 'audioData') {
@@ -60,23 +59,22 @@ function MyApp({ Component, pageProps }) {
     changeState()
   }
 
-  // 새로고침시 확인 메시지 띄우기
+  // 새로고침시 확인 메시지 띄우기, 녹음 페이지 이동 못하게 막기
   useEffect(() => {
     const reloadHandler = (event) => {
       event.preventDefault()
       event.returnValue = ''
     }
-
-    window.addEventListener('beforeunload', reloadHandler)
-
-    const before = ({ url, as, options }) => {
+     
+    const before = () => {
       if (router.pathname.split('/')[1] === 'record' || router.pathname === '/') {
         alert('이전 또는 이후 화면으로 돌아갈 수 없습니다.')
         return false
       }
       return true
     }
-
+    
+    window.addEventListener('beforeunload', reloadHandler)
     router.beforePopState(before)
   }, [])
 

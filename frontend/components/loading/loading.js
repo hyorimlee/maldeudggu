@@ -1,6 +1,9 @@
-import { motion } from "framer-motion";
-import styles from "./loading.module.css";
-import Text from "../text/text";
+import { motion } from "framer-motion"
+
+import Text from "../text/text"
+import Image from '../image/image'
+
+import styles from "./loading.module.css"
 
 const loadingContainerVariants = {
   start: {
@@ -30,36 +33,59 @@ const loadingCircleTransition = {
   ease: "easeInOut"
 };
 
-export default function ThreeDotsWave() {
+export default function ThreeDotsWave({ contents }) {
   return (
     <>
-    <Text
-      size={14}
-      bold={true}
-      contents={'잠시만 기다려 주세요'}
-    ></Text>
-    <motion.div
-      className={styles.loadingContainer}
-      variants={loadingContainerVariants}
-      initial="start"
-      animate="end"
-    >
-      <motion.span
-        className={styles.loadingCircle}
-        variants={loadingCircleVariants}
-        transition={loadingCircleTransition}
-      />
-      <motion.span
-        className={styles.loadingCircle}
-        variants={loadingCircleVariants}
-        transition={loadingCircleTransition}
-      />
-      <motion.span
-        className={styles.loadingCircle}
-        variants={loadingCircleVariants}
-        transition={loadingCircleTransition}
+      <motion.div
+        className={styles.loadingContainer}
+        variants={loadingContainerVariants}
+        initial="start"
+        animate="end"
+      >
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
         />
-    </motion.div>
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+          />
+      </motion.div>
+      <Image type='logo' path='/img/logo/logo.png'></Image>
+      <Text
+        size={16}
+        bold={true}
+        contents={contents}
+      ></Text>
+      <motion.div
+        className={styles.loadingContainer}
+        variants={loadingContainerVariants}
+        initial="start"
+        animate="end"
+      >
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+        <motion.span
+          className={styles.loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+          />
+      </motion.div>
     </>
   );
 }
