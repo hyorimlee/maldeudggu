@@ -63,13 +63,15 @@ function MyApp({ Component, pageProps }) {
   // 새로고침시 확인 메시지 띄우기, 녹음 페이지 이동 못하게 막기
   useEffect(() => {
     const reloadHandler = (event) => {
-      if (router.pathname !== '/share/[shareId]') {
+      // 공유 페이지 제외한 모든 페이지 새로고침시 확인 메시지 띄움
+      if (event.target.location.pathname.slice(0, 6) !== '/share') {
         event.preventDefault()
         event.returnValue = ''
       }
     }
 
     const before = () => {
+      // 뒤로 또는 앞으로 페이지 이동시 녹음페이지이거나 메인페이지라면 이동을 막음
       if (router.pathname.split('/')[1] === 'record' || router.pathname === '/') {
         alert('이전 또는 이후 화면으로 돌아갈 수 없습니다.')
         return false
