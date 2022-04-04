@@ -12,38 +12,25 @@ import LoadingSlide from '../../../components/loading/loadingslide'
 
 
 export async function getStaticPaths() {
-  // 모든 문장들의 ID만 받아오는 API 필요
-
+  const sentences = await getRequest('/sentence')
+  const paths = sentences.map(s => ({ params: { recordId : s.id.toString() }}))
+  
   return {
-    paths: [
-      { params: { recordId: '0' }},
-      { params: { recordId: '1' }},
-      { params: { recordId: '2' }},
-      { params: { recordId: '3' }},
-      { params: { recordId: '4' }},
-      { params: { recordId: '5' }},
-      { params: { recordId: '6' }},
-      { params: { recordId: '7' }},
-      { params: { recordId: '8' }},
-      { params: { recordId: '9' }},
-      { params: { recordId: '10' }},
-    ],
+    paths,
     fallback: false   // false - 없는 id 값인 경우 404 페이지, true - build 타임으로 다시 돌아가서 서버에서 재렌더
   }
 }
 
 export async function getStaticProps({ params }) {
-  // 문장의 id에 맞게 문장을 가져오는 API 필요
-  const sentence = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+  const sentence = await getRequest(`/sentence/${params.recordId}`)
 
   return {
     props: {
       id: params.recordId,
-      sentence: sentence[params.recordId]
+      sentence: sentence.sentence
     }
   }
 }
-
 
 function Record( { staticState, changeStaticState, sentence, id } ) {
   const [isEnd, setIsEnd] = useState(false)
@@ -52,7 +39,7 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
     if (staticState.caseId === -1 || staticState.sentences.length === 0 ) {
-      router.push('/404')
+      router.push({ pathname: '/404', query: { code: '0001' }})
     }
   }, [])
 

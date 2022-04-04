@@ -65,21 +65,29 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
           description: shareText,
           imageUrl: `${imageUrl}`,
           link: {
-            mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
-            androidExecParams: "test",
+            webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+            mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+            androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+            iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
           },
         },
         buttons: [
           {
             title: '결과 보러가기',
             link: {
-              mobileWebUrl: `http://j6a203.p.ssafy.io:3000/share/${caseId}`,
+              webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+              mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+              androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+              iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
             },
           },
           {
             title: '나의 방언 보러가기',
             link: {
-              mobileWebUrl: 'http://j6a203.p.ssafy.io:3000/',
+              webUrl: 'https://j6a203.p.ssafy.io:3000/',
+              mobileWebUrl: 'https://j6a203.p.ssafy.io:3000/',
+              androidExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
+              iosExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
             },
           }
         ]
@@ -90,7 +98,8 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
       window.open("http://www.facebook.com/sharer/sharer.php?u=" + INDEX_URL + '/share/' + caseId)
     } else if (id === 'link') {
       navigator.clipboard.writeText(INDEX_URL + '/share/' + caseId)
-      alert('복사되었습니다.')
+      .then(() => alert('복사되었습니다.'))
+      .catch(error => alert('주소 복사에 실패했습니다.'))
     } else if (id === 'download') {
       getRequest(`/${caseId}/download`)
       .then(blob => {
