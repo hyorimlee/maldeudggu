@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
     settings: {
       nightMode: false,
     },
-    caseId: 0,
+    caseId: -1,
     nickname: '',
     sentences: [],
     recordCount: 0,
