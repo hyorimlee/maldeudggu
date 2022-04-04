@@ -3,7 +3,7 @@ import styles from './audioProgressBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons"
 
-const AudioProgressBar = ( { staticState }) => {
+const AudioProgressBar = ({ staticState }) => {
   // state
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -28,7 +28,7 @@ const AudioProgressBar = ( { staticState }) => {
 
   return (
     <div className={styles.audioPlayer}>
-      <audio ref={audioPlayer} src={audio} type="audio/mpeg" onEnded={resetAudio} preload="metadata"></audio>
+      <audio ref={audioPlayer} src={audio} type="audio" onEnded={resetAudio} preload="metadata"></audio>
       <button onClick={togglePlayPause} className={styles.playPause}>
         {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} className={styles.play} />}
       </button>

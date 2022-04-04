@@ -2,7 +2,7 @@ import styles from './recordButton.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from "framer-motion"
 
-function RecordButton( { sentenceId, staticState, changeStaticState } ) {
+function RecordButton({ sentenceId, staticState, changeStaticState }) {
   // 애니메이션 관련 state
   const [toggle, setToggle] = useState(false);
   const [pathLength, setPathLength] = useState(0);
@@ -34,7 +34,14 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
   useEffect(() => {
     if (audioUrl) {
       const today = getDate()
-      const sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      let sound
+
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.webm`, { lastModified: new Date().getTime(), type: "audio/webm" });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        sound = new File([audioUrl], `${today}-${sentenceId}.mp4`, { lastModified: new Date().getTime(), type: "audio/mp4" });
+      }
+
       const url = URL.createObjectURL(audioUrl)
 
       changeStaticState('audioData', [url, sound]);
@@ -69,7 +76,14 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
     setAnalyser(analyser);
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      let mediaRecorder
+
+      if (navigator.userAgent.indexOf("Chrome") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
+      }
+
       mediaRecorder.start();
       setStream(stream);
       setMedia(mediaRecorder);
@@ -91,14 +105,13 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
           setToggle(!toggle);
 
           mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data);
+            setAudioUrl(() => e.data);
             setOnRec(false);
           };
         } else {
           setOnRec(true);
         }
       };
-      setOnRec(true);
     });
   }
 
@@ -132,7 +145,7 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
             translateY: 5,
           }}
           initial={{ pathLength: 1.1 }}
-          />
+        />
         <motion.path
           fill="none"
           strokeWidth="5"
@@ -149,7 +162,7 @@ function RecordButton( { sentenceId, staticState, changeStaticState } ) {
           initial={{ pathLength: 0 }}
           animate={{ pathLength: pathLength }}
           transition={{ duration: transitionTime, ease: 'linear' }}
-          />
+        />
         <motion.path
           fill={`${buttonColor}`}
           d="M 0, 10 a 10, 10 0 1,0 20,0 a 10, 10 0 1,0 -20,0"
