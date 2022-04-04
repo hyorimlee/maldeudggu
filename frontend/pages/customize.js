@@ -32,15 +32,15 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   // 선택된 애들 명시적으로 (css) 표시해줄 수 있었으면 좋겠음... 귀찮다
   const [filteredCharacters, setFilteredCharacters] = useState({})
   const [filteredItems, setFilteredItems] = useState({})
-  const [color, setColor] = useState('')
+  const [color, setColor] = useState(`${korToEng[Object.keys(staticState.result)[0]]}-1.svg`)
   const [items, setItems] = useState([])
   const [background, setBackground] = useState('')
   const router = useRouter()
 
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
-    if (staticState.caseId === -1 || staticState.sentences.length === 0 ) {
-      router.push({ pathname: '/404', query: { code: '0001' }})
+    if (staticState.caseId === -1 || staticState.sentences.length === 0) {
+      router.push({ pathname: '/404', query: { code: '0001' } })
     }
   }, [])
 
@@ -132,7 +132,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
                     patchRequest(`/${staticState.caseId}/image`, url)
                       .then((response) => {
                         const location = Object.keys(staticState.result)
-                        
+
                         router.push(`/share/${response.case_id}?result=${korToEng[location[0]]}_${staticState.result[location[0]]}_${korToEng[location[1]]}_${staticState.result[location[1]]}_${korToEng[location[2]]}_${staticState.result[location[2]]}`)
                       })
                   })
