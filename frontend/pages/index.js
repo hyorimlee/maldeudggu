@@ -62,8 +62,8 @@ function Home({ staticState, changeStaticState }) {
 
   const testStart = async () => {
     const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
-    changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
     router.push(`/record/${response.sentences[0].id}`)
+    changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
   }
 
   return (
