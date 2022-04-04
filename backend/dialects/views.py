@@ -14,6 +14,18 @@ from .audio_ai.inference import inference
 
 
 @api_view()
+def get_sentences(request):
+    sentences = get_list_or_404(Sentence)
+    serializer = SentenceSerializer(sentences, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view()
+def get_sentence(request,sentence_pk):
+    sentence = get_object_or_404(Sentence, pk=sentence_pk)
+    serializer = SentenceSerializer(sentence)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view()
 def get_images(request):
     cases = get_list_or_404(Case, image_url__isnull=False)
     serializer = ImageListSerializer(cases, many=True)
