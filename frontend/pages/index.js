@@ -57,7 +57,17 @@ function Home({ staticState, changeStaticState }) {
   }
 
   const checkAgree = () => {
-    setAgree(!agree)
+    if (!agree) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+        console.log('User Audio Access Confirmed')
+        setAgree(!agree)
+      }).catch(() => {
+        console.log('User Audio Access Denied')
+        alert('마이크 접근 설정을 허용으로 바꿔주세요')
+      })
+    } else {
+      setAgree(!agree)
+    }
   }
 
   const testStart = async () => {
