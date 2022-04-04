@@ -44,8 +44,6 @@ function Home({ staticState, changeStaticState }) {
   const router = useRouter()
   const body = useRef(null)
 
-  console.log(body)
-
   useEffect(() => {
     getDatas()
       .then(response => {
