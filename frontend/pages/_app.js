@@ -31,10 +31,15 @@ function MyApp({ Component, pageProps }) {
       if (type === 'audioData') {
         let recordAudio
         let recordAudioFile
-        
+
         if (staticState.recordAudio.length === staticState.recordCount + 1) {
-          recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
-          recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+          if (data === null) {
+            recordAudio = [...staticState.recordAudio.slice(0, -1)]
+            recordAudioFile = [...staticState.recordAudioFile.slice(0, -1)]
+          } else {
+            recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
+            recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+          }
         } else {
           recordAudio = [...staticState.recordAudio, data[0]]
           recordAudioFile = [...staticState.recordAudioFile, data[1]]
