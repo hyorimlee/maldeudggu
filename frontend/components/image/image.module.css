@@ -23,6 +23,10 @@
   width: 50%;
 }
 
+.sentenceBackground {
+  width: 70vw;
+}
+
 .result1 {
   position: absolute;
   left: 50%;

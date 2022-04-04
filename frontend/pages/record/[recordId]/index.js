@@ -6,7 +6,7 @@ import RecordButton from "../../../components/button/recordButton";
 import AudioProgressBar from "../../../components/progressBar/audioProgressBar";
 
 import { getRequest, postRequest } from "../../../modules/fetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import LoadingSlide from '../../../components/loading/loadingslide'
 
@@ -49,6 +49,13 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
   const [isEnd, setIsEnd] = useState(false)
   const router = useRouter()
 
+  // 전역 state 값이 비어있으면 404 페이지로 이동
+  useEffect(() => {
+    if (staticState.caseId === -1 || staticState.sentences.length === 0 ) {
+      router.push('/404')
+    }
+  }, [])
+
   let soundfiles = staticState.recordAudioFile
   let soundfile = soundfiles[soundfiles.length - 1]
 
@@ -64,11 +71,15 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
 
       const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
       changeStaticState('result', testResult.result)
-      
+
       setTimeout(() => {
         router.push('/result')
       }, 5000)
     }
+  }
+
+  function reRecord() {
+    changeStaticState('audioData', null)
   }
 
   return (
@@ -99,7 +110,7 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
             ></Text>
             <div className={styles.sampleSentence}>
               <Image
-                type={'logo'}
+                type={'sentenceBackground'}
                 path={'/img/logo/text-background.png'}
               ></Image>
               <Text
@@ -108,15 +119,16 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
                 contents={`${sentence}`}
               ></Text>
             </div>
-            <RecordButton sentenceId={`${id}`} staticState={staticState} changeStaticState={(type, data) => {
-              changeStaticState(type, data)
-            }}/>
-            <AudioProgressBar staticState={staticState} />
             {
               staticState.recordAudio.length === staticState.recordCount + 1
               ?
               (
                 <>
+                  <AudioProgressBar staticState={staticState} />
+                  <Button
+                    content={'여기를 눌러서 다시 녹음하기'}
+                    handler={reRecord}
+                  ></Button>
                   <Button
                     content={'다음으로 넘어가기'}
                     handler={sendSoundFile}
@@ -126,6 +138,9 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
               :
               (
                 <>
+                  <RecordButton sentenceId={`${id}`} staticState={staticState} changeStaticState={(type, data) => {
+                    changeStaticState(type, data)
+                  }}/>
                   <Button
                     content={'음성을 녹음해주세요'}
                     disabled
@@ -133,9 +148,6 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
                 </>
               )
             }
-            
-            
-            
           </>
         )
       }

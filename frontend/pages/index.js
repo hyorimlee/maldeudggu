@@ -7,6 +7,7 @@ import Image from "../components/image/image"
 import Input from "../components/input/input"
 import Button from "../components/button/button"
 import Checkbox from "../containers/checkbox/checkbox"
+import ThreeDotsWave from '../components/loading/loading'
 // import SharedImages from '../containers/sharedImages/sharedImages'
 
 // styles
@@ -38,6 +39,8 @@ function Home({ staticState, changeStaticState }) {
   const [nickname, setNickname] = useState('')
   const [agree, setAgree] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [delay, setDelay] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -59,7 +62,17 @@ function Home({ staticState, changeStaticState }) {
   }
 
   const checkAgree = () => {
-    setAgree(!agree)
+    if (!agree) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+        console.log('User Audio Access Confirmed')
+        setAgree(!agree)
+      }).catch(() => {
+        console.log('User Audio Access Denied')
+        alert('마이크 접근 설정을 허용으로 바꿔주세요')
+      })
+    } else {
+      setAgree(!agree)
+    }
   }
 
   useEffect(() => {
@@ -67,10 +80,21 @@ function Home({ staticState, changeStaticState }) {
   }, [staticState.reuse])
 
   const testStart = async () => {
+    setLoading(true)
+
     const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
     changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
-    router.push(`/record/${response.sentences[0].id}`)
+
+    setTimeout(() => {
+      setDelay(true)
+    }, 1000 + Math.random() * 1000)
   }
+
+  useEffect(() => {
+    if (delay === true && staticState.caseId !== -1) {
+      router.push(`/record/${staticState.sentences[0].id}`)
+    }
+  }, [staticState, delay])
 
   return (
     <>

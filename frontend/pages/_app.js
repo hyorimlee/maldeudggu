@@ -1,22 +1,22 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import Layout from '../components/layout/layout'
 
 import '../styles/globals.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 
-import { postRequest } from '../modules/fetch'
-
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
   const [staticState, setStaticState] = useState({
     settings: {
       nightMode: false,
     },
-    caseId: 0,
+    caseId: -1,
     nickname: '',
     sentences: [],
     recordCount: 0,
@@ -27,7 +27,6 @@ function MyApp({ Component, pageProps }) {
     metaData: {}
   })
 
-  // 추가 구현 필요
   const changeStaticState = (type, data, type2, data2, event) => {
     function changeState() {
       if (type === 'audioData') {
@@ -35,8 +34,13 @@ function MyApp({ Component, pageProps }) {
         let recordAudioFile
 
         if (staticState.recordAudio.length === staticState.recordCount + 1) {
-          recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
-          recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+          if (data === null) {
+            recordAudio = [...staticState.recordAudio.slice(0, -1)]
+            recordAudioFile = [...staticState.recordAudioFile.slice(0, -1)]
+          } else {
+            recordAudio = [...staticState.recordAudio.slice(0, -1), data[0]]
+            recordAudioFile = [...staticState.recordAudioFile.slice(0, -1), data[1]]
+          }
         } else {
           recordAudio = [...staticState.recordAudio, data[0]]
           recordAudioFile = [...staticState.recordAudioFile, data[1]]
@@ -56,7 +60,24 @@ function MyApp({ Component, pageProps }) {
     changeState()
   }
 
-  console.log(staticState)
+  // 새로고침시 확인 메시지 띄우기, 녹음 페이지 이동 못하게 막기
+  useEffect(() => {
+    const reloadHandler = (event) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+
+    const before = () => {
+      if (router.pathname.split('/')[1] === 'record' || router.pathname === '/') {
+        alert('이전 또는 이후 화면으로 돌아갈 수 없습니다.')
+        return false
+      }
+      return true
+    }
+
+    window.addEventListener('beforeunload', reloadHandler)
+    router.beforePopState(before)
+  }, [])
 
   return (
     <Layout>

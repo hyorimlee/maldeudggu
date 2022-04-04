@@ -5,6 +5,7 @@ const nextConfig = {
 
 module.exports = nextConfig
 
+
 // 이미지 사용
 // import withImages from 'next-images'
 // const withImages = ({
