@@ -54,7 +54,6 @@ async function postRequest(url, datas = []) {
   try {
     let formData = new FormData()
     datas.forEach((data) => {
-      console.log(data[0], data[1])
       formData.append(data[0], data[1])
     })
     

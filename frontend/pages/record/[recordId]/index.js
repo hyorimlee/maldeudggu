@@ -51,7 +51,7 @@ function Record( { staticState, changeStaticState, sentence, id } ) {
 
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
-    if (staticState.caseId || staticState.sentences) {
+    if (staticState.caseId === -1 || staticState.sentences.length === 0 ) {
       router.push('/404')
     }
   }, [])
