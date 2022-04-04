@@ -133,7 +133,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
                       .then((response) => {
                         const location = Object.keys(staticState.result)
 
-                        router.push(`/share/${response.case_id}?result=${korToEng[location[0]]}_${staticState.result[location[0]]}_${korToEng[location[1]]}_${staticState.result[location[1]]}_${korToEng[location[2]]}_${staticState.result[location[2]]}`)
+                        router.push(`/share/${response.case_id}`)
                       })
                   })
               })
