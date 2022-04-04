@@ -74,40 +74,44 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
     const id = event.target.id
 
     if (id === 'kakao') {
-      window.Kakao.Link.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: '말듣꾸',
-          description: shareText,
-          imageUrl: `${imageUrl}`,
-          link: {
-            webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-            mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-            androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-            iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-          },
-        },
-        buttons: [
-          {
-            title: '결과 보러가기',
-            link: {
-              webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-              mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-              androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-              iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
-            },
-          },
-          {
-            title: '나의 방언 보러가기',
-            link: {
-              webUrl: 'https://j6a203.p.ssafy.io:3000/',
-              mobileWebUrl: 'https://j6a203.p.ssafy.io:3000/',
-              androidExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
-              iosExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
-            },
-          }
-        ]
+      window.Kakao.Link.sendCustom({
+        templateId: 73945,
+        templateArgs: { imageUrl, caseId }
       })
+      // window.Kakao.Link.sendDefault({
+      //   objectType: 'feed',
+      //   content: {
+      //     title: '말듣꾸',
+      //     description: shareText,
+      //     imageUrl: `${imageUrl}`,
+      //     link: {
+      //       webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //       mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //       androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //       iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //     },
+      //   },
+      //   buttons: [
+      //     {
+      //       title: '결과 보러가기',
+      //       link: {
+      //         webUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //         mobileWebUrl: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //         androidExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //         iosExecutionParams: `https://j6a203.p.ssafy.io:3000/share/${caseId}`,
+      //       },
+      //     },
+      //     {
+      //       title: '나의 방언 보러가기',
+      //       link: {
+      //         webUrl: 'https://j6a203.p.ssafy.io:3000/',
+      //         mobileWebUrl: 'https://j6a203.p.ssafy.io:3000/',
+      //         androidExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
+      //         iosExecutionParams: 'https://j6a203.p.ssafy.io:3000/',
+      //       },
+      //     }
+      //   ]
+      // })
     } else if (id === 'twitter') {
       window.open("https://twitter.com/intent/tweet?text=" + shareText + "&url=" + INDEX_URL + '/share/' + caseId)
     } else if (id === 'facebook') {
