@@ -23,7 +23,8 @@ function MyApp({ Component, pageProps }) {
     recordAudio: [],
     recordAudioFile: [],
     result: {},
-    reuse: false
+    reuse: false,
+    metaData: {}
   })
 
   const changeStaticState = (type, data, type2, data2, event) => {
@@ -65,7 +66,7 @@ function MyApp({ Component, pageProps }) {
       event.preventDefault()
       event.returnValue = ''
     }
-     
+
     const before = () => {
       if (router.pathname.split('/')[1] === 'record' || router.pathname === '/') {
         alert('이전 또는 이후 화면으로 돌아갈 수 없습니다.')
@@ -73,7 +74,7 @@ function MyApp({ Component, pageProps }) {
       }
       return true
     }
-    
+
     window.addEventListener('beforeunload', reloadHandler)
     router.beforePopState(before)
   }, [])
