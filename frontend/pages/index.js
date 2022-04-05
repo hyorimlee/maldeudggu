@@ -155,7 +155,7 @@ function Home({ staticState, changeStaticState }) {
             ></FontAwesomeIcon>
           </div>
           <div className={styles.sharedImages__container}>
-            <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
+            <Text bold size={18} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
             {
               sharedImages.length
                 ? (
