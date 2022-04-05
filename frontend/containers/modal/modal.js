@@ -8,8 +8,8 @@ import Button from '../../components/button/button'
 import styles from './modal.module.css'
 
 const GENDER = [
-  { value: 0 , name: '남자' },
-  { value: 1 , name: '여자' },
+  { value: 0, name: '남자' },
+  { value: 1, name: '여자' },
 ]
 
 const AGE = [
@@ -78,7 +78,7 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
     <div className={styles.overlay}>
       <div className={styles.wrapper} tabIndex="-1">
         <div className={styles.inner} tabIndex="0">
-          <Text size={12} contents={'1. 성별/나이를 알려주세요.'}></Text>
+          <Text size={12} contents={'1. 성별과 나이를 알려주세요.'}></Text>
           <Select name={'gender'} id={'gender'} options={GENDER} onChange={changeMetaData}></Select>
           <Select name={'age'} options={AGE} onChange={changeMetaData}></Select>
           <Text size={12} contents={'2. 출생 지역을 알려주세요.'}></Text>
@@ -86,7 +86,7 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
           <Text size={12} contents={'3. 10년 이상 거주했던 지역이 있다면 알려주세요.'}></Text>
           <Select name={'location'} options={LOCATION} onChange={changeMetaData}></Select>
           <Button
-            content={'저장하고 테스트 시작하기'}
+            content={'저장하고 닫기'}
             handler={saveAndClose}
           ></Button>
           <Button

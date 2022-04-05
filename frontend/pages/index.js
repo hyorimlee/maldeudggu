@@ -108,7 +108,7 @@ function Home({ staticState, changeStaticState }) {
           name="description"
           content="말듣꾸는 한국어 사용자의 음성을 인공지능을 통해 분석하여 어느 지방의 사투리를 사용하는지 알려주는 서비스입니다. 내가 평소에 쓰는 억양은 어느 지방의 억양에 가까운지 한 번 알아보세요!"
         />
-        <meta name="keywords" content="AI, 사투리, 방언, 음성분석, 캐릭터"/>
+        <meta name="keywords" content="AI, 사투리, 방언, 음성분석, 캐릭터" />
         <meta property="og:title" content="말듣꾸 - AI방언분석" />
         <meta property="og:description" content="AI 방언분석 서비스 말듣꾸 입니다. 내가 평소에 쓰는 억양은 어느 지방의 억양에 가까운지 한 번 알아보세요!" />
       </Head>
@@ -121,7 +121,7 @@ function Home({ staticState, changeStaticState }) {
           <Text
             bold
             size={16}
-            contents='나는 어떤 억양을 사용할까?'
+            contents={'내 억양은 어느 지역의 사투리와 가장 비슷할까?'}
           ></Text>
           <Image
             type='logo'
@@ -131,10 +131,11 @@ function Home({ staticState, changeStaticState }) {
             contents={`지금까지 ${participant}명이 참여했어요!`}
           ></Text>
           <Text
-            contents={'말듣꾸는 나의 평소 말투를 인공지능이 분석하여 어느 지방의 억양을 사용하고 있는지 알려주는 서비스입니다.'}
-          ></Text>
-          <Text
-            contents={'테스트 결과를 통해 캐릭터를 꾸미고 공유할 수 있습니다.'}
+            contents={[
+              "말듣꾸는 '말하기, 듣기, 꾸미기'의 줄임말로 당신의 억양을 인공지능으로 분석하여 어느 지역의 사투리와 가장 닮아 있는지 알려주는 서비스입니다.",
+              <br />,
+              '테스트 결과를 확인하고, 각 지역을 모티브로 제작된 캐릭터를 꾸며 공유해보세요.'
+            ]}
           ></Text>
           <Input onChange={changeNickname} value={nickname}></Input>
           <Text
@@ -162,11 +163,11 @@ function Home({ staticState, changeStaticState }) {
             icon={faAnglesDown}
             className={styles.icon}
           ></FontAwesomeIcon>
-          <Text size={16} contents='실시간 생성된 캐릭터' ></Text>
+          <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
           {
             sharedImages.length
               ? (
-                <Suspense fallback={<Text contents='이미지를 불러오는 중이에요'></Text>}>
+                <Suspense fallback={<Text contents='이미지를 불러오고 있어요.'></Text>}>
                   <SharedImages data={sharedImages}></SharedImages>
                 </Suspense>
               )
