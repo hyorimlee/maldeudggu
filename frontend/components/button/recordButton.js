@@ -29,8 +29,8 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     }
   }, [])
 
-  console.log(audio)
-  console.log(browserOptions)
+  console.log('audio', audio)
+  console.log('browserOptions', browserOptions)
 
   useEffect(() => {
     console.log(audio)
@@ -104,6 +104,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       console.log(event)
 
       const audioEl = document.createElement('audio')
+      audioEl.preload = 'metadata'
       audioEl.src = URL.createObjectURL(event.data)
 
       console.log(audioEl)
