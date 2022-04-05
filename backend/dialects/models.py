@@ -26,3 +26,11 @@ class Audio(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     case = models.ForeignKey(Case, on_delete=models.CASCADE)
 
+class Survey(models.Model):
+    case = models.ForeignKey(Case, on_delete=models.CASCADE)
+    gender = models.SmallIntegerField()
+    age = models.SmallIntegerField()
+    born_in = models.SmallIntegerField()
+    lived_in = models.SmallIntegerField()
+    
+
