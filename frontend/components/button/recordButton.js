@@ -11,7 +11,7 @@ function getDate() {
   const year = date.getFullYear();
   const month = ("0" + (1 + date.getMonth())).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
-  
+
   return year + "-" + month + "-" + day;
 }
 
@@ -32,14 +32,14 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
   useEffect(() => {
     if (audio.audioUrl) {
       const today = getDate()
-      const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${browserOptions.audioType}`, { lastModified: new Date().getTime(), type: `audio/${browserOptions.audioType}`})
-      
+      const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${browserOptions.audioType}`, { lastModified: new Date().getTime(), type: `audio/${browserOptions.audioType}` })
+
       const url = URL.createObjectURL(audio.audioUrl)
-      
+
       changeStaticState('audioData', [url, sound]);
     }
   }, [audio.audioUrl])
-  
+
   // 컴포넌트에 onClick 으로 연결되는 함수, onRec에 따라 녹음을 시작/종료
   function changeRecordState() {
     // 애니메이션 실행위함
@@ -51,27 +51,27 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       stopRecord(audio)
     }
   }
-  
+
   // 녹음을 실행하는 함수
   async function startRecord() {
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const analyser = audioCtx.createScriptProcessor(0, 1, 1);
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })        
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}`})
-      
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}` })
+
       mediaRecorder.start();
       const source = audioCtx.createMediaStreamSource(stream);
-      
+
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
 
       setTimer(setTimeout(() => stopRecord({ mediaRecorder, analyser, source, stream }), 9900))
-      
+
       setAudio({ ...audio, stream, mediaRecorder, source, analyser })
     } catch (error) {
-      alert('녹음에 문제가 있어요')
+      alert('녹음에 문제가 있어요.')
       console.error(error)
     }
   }
@@ -82,27 +82,27 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     mediaRecorder.stop()
     analyser.disconnect();
     source.disconnect();
-    
+
     stream.getAudioTracks().forEach(function (track) {
       track.stop();
     });
-    
+
     mediaRecorder.ondataavailable = event => {
       const audioEl = document.createElement('audio')
       audioEl.src = URL.createObjectURL(event.data)
 
 
 
-      audioEl.onloadeddata = () => {        
+      audioEl.onloadeddata = () => {
         if (audioEl.duration === Infinity) {
           audioEl.currentTime = Number.MAX_SAFE_INTEGER
           audioEl.ontimeupdate = () => {
             audioEl.ontimeupdate = null
-            audioEl.duration >= 1.2 ? setAudio({...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({...audio, rerecord: true})
+            audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
             audioEl.currentTime = 0
           }
         } else {
-          audioEl.duration >= 1.2 ? setAudio({...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({...audio, rerecord: true})
+          audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
         }
       }
     }
@@ -110,7 +110,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
 
   return (
     <>
-      { audio.rerecord ? <Text contents='음성이 너무 짧아요! 다시 녹음해주세요' size={16} ></Text> : <></> }
+      {audio.rerecord ? <Text contents='음성이 너무 짧아요. 다시 녹음해주세요!' size={16} ></Text> : <></>}
       <div className={styles.container}>
         <svg className={styles.progressIcon} onClick={changeRecordState} viewBox="0 0 50 50">
           <motion.path

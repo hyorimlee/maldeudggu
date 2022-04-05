@@ -7,7 +7,7 @@ function Input({ value, onChange }) {
       <input
         type="text"
         id="nickname"
-        placeholder="별명"
+        placeholder="그대로 불러드릴게요."
         className={styles.input}
         value={value}
         onChange={onChange}

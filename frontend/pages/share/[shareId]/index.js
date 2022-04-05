@@ -19,7 +19,7 @@ const INDEX_URL = process.env.NEXT_PUBLIC_INDEX_URL
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { shareId: '0'} }
+      { params: { shareId: '0' } }
     ],
     fallback: true
   }
@@ -52,7 +52,7 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
 
   //페이지 없는 경우 띄우는 컴포넌트
   if (router.isFallback) {
-    return <ThreeDotsWave contents={'결과를 찾아오고 있어요!!'}></ThreeDotsWave>
+    return <ThreeDotsWave contents={'결과를 찾아오고 있어요.'}></ThreeDotsWave>
   }
 
   const korLocation = Object.keys(result)
@@ -73,22 +73,34 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
       window.open("http://www.facebook.com/sharer/sharer.php?u=" + INDEX_URL + '/share/' + caseId)
     } else if (id === 'link') {
       navigator.clipboard.writeText(INDEX_URL + '/share/' + caseId)
-      .then(() => alert('복사되었습니다.'))
-      .catch(error => alert('주소 복사에 실패했습니다.'))
+        .then(() => alert('복사되었습니다.'))
+        .catch(error => alert('주소 복사에 실패했습니다.'))
     } else if (id === 'download') {
       getRequest(`/${caseId}/download`)
-      .then(blob => {
-        const downloadUrl = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = downloadUrl
-        a.download = `말듣꾸-${caseId}.png`
-        a.click()
-      })
+        .then(blob => {
+          const downloadUrl = window.URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = downloadUrl
+          a.download = `말듣꾸-${caseId}.png`
+          a.click()
+        })
     }
   }
 
   return (
     <>
+      <Text
+        bold
+        size={16}
+        color={'orange'}
+        contents={`${nickname}`}
+      ></Text>
+      {/* 여기 여백 조정 할 거임 */}
+      <Text
+        bold
+        size={16}
+        contents={`님의 말듣꾸`}
+      ></Text>
       <Image type="myCharacter" path={imageUrl}></Image>
       <ResultProgress
         result={[
