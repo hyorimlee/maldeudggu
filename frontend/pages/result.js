@@ -1,31 +1,59 @@
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import Image from '../components/image/image'
 import Text from '../components/text/text'
 import Button from '../components/button/button'
 import ResultProgress from '../containers/progress/resultProgress'
 
+import { dialectsFeature, korToEng } from '../modules/locationText' 
 import styles from '../styles/result.module.css'
 
-const dialectsFeature = {
-  '서울/경기' : '대한민국의 표준어로 다른 방언에 비해 음의 높낮이가 일정합니다.\n대한민국의 가장 많은 인구가 사용하는 방언입니다.',
-  '강원' : '',
-  '충청' : '',
-  '경상' : '',
-  '전라' : '',
-  '제주' : '',
-}
-
 function Result({ staticState, changeStaticState }) {
+  const router = useRouter()
+  const resultKor = Object.keys({ ...staticState.result })
+
+  // 전역 state 값이 비어있으면 404 페이지로 이동
+  useEffect(() => {
+    if (staticState.caseId === -1 || staticState.sentences.length === 0 ) {
+      router.push({ pathname: '/404', query: { code: '0001' }})
+    }
+  }, [])
+
   return (
     <>
-      <>
-        퍼센트 시상식
-      </>
-      <Text size={20} bold contents='테스트 결과'></Text>
-      <ResultProgress result={[['서울/경기', 50], ['경상', 35], ['충청', 15]]}></ResultProgress>
-      <div>
-        <Text contents={`OOO 님의 목소리는 67% 로 경상도 방언을 주로 사용하시는군요! 그 외에 경기 23%, 강원도 10% 가 나왔습니다.`}></Text>
+      <div className={styles.standContainer}>
+        <Image
+          type={'result1'}
+          path={`/img/character/line/${korToEng[resultKor[0]]}-line.svg`}
+        ></Image>
+        <Image
+          type={'result2'}
+          path={`/img/character/line/${korToEng[resultKor[1]]}-line.svg`}
+        ></Image>
+        <Image
+          type={'result3'}
+          path={`/img/character/line/${korToEng[resultKor[2]]}-line.svg`}
+        ></Image>
+        <div className={styles.stand}></div>
       </div>
-      <Text contents={dialectsFeature['서울/경기']}></Text>
-      <Button link='/customize' content='내 캐릭터 꾸미기'></Button>
+      <Text size={20} bold contents='테스트 결과'></Text>
+      <ResultProgress
+        result={[
+          [resultKor[0], parseInt(staticState.result[resultKor[0]])],
+          [resultKor[1], parseInt(staticState.result[resultKor[1]])],
+          [resultKor[2], parseInt(staticState.result[resultKor[2]])]
+        ]}>
+      </ResultProgress>
+      <div>
+        <Text
+          contents={`
+            ${staticState.nickname} 님의 목소리는 ${resultKor[0]} 방언이 ${staticState.result[resultKor[0]]}% 로 주로 사용하시는군요!
+            그 외에 ${resultKor[1]} ${staticState.result[resultKor[1]]}%, ${resultKor[2]} ${staticState.result[resultKor[2]]}% 가 나왔습니다.
+          `}>
+        </Text>
+      </div>
+      <Text contents={dialectsFeature[resultKor[0]]}></Text>
+      <Button content='내 캐릭터 꾸미기' handler={() => router.push('/customize')}></Button>
     </>
   )
 }

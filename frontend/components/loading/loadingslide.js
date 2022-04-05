@@ -9,12 +9,9 @@ import { Autoplay, Pagination } from "swiper"
 // 전국 & 색상 전부 가져오기 (6*9)
 // 이미지 크기 맞춰야 함
 const images = [
-  '/img/1-1.svg',
-  '/img/2-3.svg',
-  '/img/3-8.svg',
-  '/img/4-2.svg',
-  '/img/5-4.svg',
-  '/img/6-6.svg',
+  '/img/character/gangwon/gangwon-1.svg',
+  '/img/character/gangwon/gangwon-2.svg',
+  '/img/character/gangwon/gangwon-3.svg',
 ]
 
 function LoadingSlide() {
@@ -31,8 +28,8 @@ function LoadingSlide() {
         modules={[Autoplay, Pagination]}
         className={styles.swiper}
       >
-        {images.map((image) => (
-          <SwiperSlide className={styles.swiperSlide}>
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className={styles.swiperSlide}>
             <img src={image} alt="image"></img>
           </SwiperSlide>
         ))}

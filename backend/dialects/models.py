@@ -17,7 +17,7 @@ class Sentence(models.Model):
 # fs = FileSystemStorage(location='/audio')
 
 def audio_file_path(instance, filename):
-    return f'user_{instance.pk}/{filename}'
+    return f'user_{instance.case.pk}/{filename}'
 
 class Audio(models.Model):
     # audio_path = models.FileField(storage=fs)
@@ -25,4 +25,12 @@ class Audio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     case = models.ForeignKey(Case, on_delete=models.CASCADE)
+
+class Survey(models.Model):
+    case = models.ForeignKey(Case, on_delete=models.CASCADE)
+    gender = models.SmallIntegerField()
+    age = models.SmallIntegerField()
+    born_in = models.SmallIntegerField()
+    lived_in = models.SmallIntegerField()
+    
 
