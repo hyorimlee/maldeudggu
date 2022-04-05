@@ -53,5 +53,14 @@
 }
 
 .sharedImage {
-  width: 25vw;
+  width: 20vw;
+  border-radius: 0.5rem;
+  transition-property: width, box-shadow;
+  transition-duration: 1s;
+  box-shadow: 0px 0px 0px 0px #FFFFFF;
+}
+
+.sharedImage:hover {
+  width: 30vw;
+  box-shadow: 3px 3px 3px 0 #999999;
 }
