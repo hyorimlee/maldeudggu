@@ -11,6 +11,7 @@ import { korToEng } from '../modules/locationText'
 import Canvas from '../containers/canvas/canvas'
 import ItemSelector from "../containers/itemSelector/itemSelector"
 import Button from '../components/button/button'
+import ThreeDotsWave from '../components/loading/loading'
 
 
 // firebase 초기화
@@ -28,8 +29,6 @@ export async function getStaticProps() {
 }
 
 function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) {
-  // 선택된 assets
-  // 선택된 애들 명시적으로 (css) 표시해줄 수 있었으면 좋겠음... 귀찮다
   const [filteredCharacters, setFilteredCharacters] = useState({})
   const [filteredItems, setFilteredItems] = useState({})
   const [color, setColor] = useState(`${korToEng[Object.keys(staticState.result)[0]]}-1.svg`)
@@ -144,7 +143,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   }
 
   return (
-    <div id='test'>
+    <> 
       <Canvas color={color} items={items} background={background} firstLocation={korToEng[Object.keys(staticState.result)[0]]}></Canvas>
       <ItemSelector
         color={color}
@@ -158,7 +157,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
         backgroundFiles={backgroundFiles}
       ></ItemSelector>
       <Button content='완성!' handler={clickedButton}></Button>
-    </div>
+    </>
   )
 }
 

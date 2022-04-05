@@ -28,8 +28,9 @@ const loadingCircleVariants = {
 };
 
 const loadingCircleTransition = {
-  duration: 0.8,
-  yoyo: Infinity,
+  duration: 2,
+  repeat: Infinity,
+  repeatType: 'loop',
   ease: "easeInOut"
 };
 

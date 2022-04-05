@@ -11,6 +11,8 @@ import { getRequest, postRequest } from "../../../modules/fetch";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import { randomDelay } from "../../../modules/delay";
+
 
 export async function getStaticPaths() {
   const sentences = await getRequest('/sentence')
@@ -38,38 +40,37 @@ function Record({ staticState, changeStaticState, sentence, id }) {
   const [pageFlip, setPageFlip] = useState(false)
   const router = useRouter()
 
+  console.log(pageFlip)
+
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
     if (staticState.caseId === -1 || staticState.sentences.length === 0) {
       router.push({ pathname: '/404', query: { code: '0001' } })
     }
+
+    router.events.on('routeChangeComplete', () => {
+      setPageFlip(false)
+    })
   }, [])
 
   let soundfiles = staticState.recordAudioFile
   let soundfile = soundfiles[soundfiles.length - 1]
 
   async function sendSoundFile() {
+    await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
+    
     if (staticState.recordCount < 4) {
       setPageFlip(true)
-      await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
       changeStaticState('recordCount', staticState.recordCount + 1)
       console.log('pageflip', pageFlip)
-      setTimeout(() => {
-        router.push(`/record/${staticState.sentences[staticState.recordCount + 1].id}`)
-      }, 1000 + Math.random() * 1000)
 
-      setPageFlip(false)
-      console.log('next')
+      randomDelay(1000, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
     } else {
       setIsEnd(true)
-      await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
-
       const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
       changeStaticState('result', testResult.result)
 
-      setTimeout(() => {
-        router.push('/result')
-      }, 5000)
+      randomDelay(2000, 1000, () => router.replace('/result'))
     }
   }
 
