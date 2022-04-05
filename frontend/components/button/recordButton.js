@@ -29,17 +29,14 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     }
   }, [])
 
-  console.log('audio', audio)
-  console.log('browserOptions', browserOptions)
-
   useEffect(() => {
-    console.log(audio)
+    alert(audio)
     if (audio.audioUrl) {
       const today = getDate()
       const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${browserOptions.audioType}`, { lastModified: new Date().getTime(), type: `audio/${browserOptions.audioType}` })
 
       const url = URL.createObjectURL(audio.audioUrl)
-      console.log(sound, url)
+      alert(url)
       changeStaticState('audioData', [url, sound]);
     }
   }, [audio.audioUrl])
@@ -65,7 +62,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}` })
 
-      console.log('mediarecorder 로딩 완료')
+      alert('mediarecorder 로딩 완료')
 
       mediaRecorder.start();
       const source = audioCtx.createMediaStreamSource(stream);
@@ -73,12 +70,12 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
 
-      console.log('analyser 연결 완료')
+      alert('analyser 연결 완료')
 
       setTimer(setTimeout(() => stopRecord({ mediaRecorder, analyser, source, stream }), 9900))
 
       setAudio({ ...audio, stream, mediaRecorder, source, analyser })
-      console.log('setaudio 완료')
+      alert('setaudio 완료')
     } catch (error) {
       alert('녹음에 문제가 있어요.')
       console.error(error)
@@ -92,16 +89,16 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     analyser.disconnect();
     source.disconnect();
 
-    console.log('disconnect 완료')
+    alert('disconnect 완료')
 
     stream.getAudioTracks().forEach(function (track) {
       track.stop();
     });
 
-    console.log('getaudiotracks 완료')
+    alert('getaudiotracks 완료')
 
     mediaRecorder.ondataavailable = event => {
-      console.log(event)
+      alert(event)
 
       const audioEl = document.createElement('audio')
       if (/iPhone/.test(navigator.userAgent)) {
@@ -109,13 +106,13 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       }
       audioEl.src = URL.createObjectURL(event.data)
 
-      console.log(audioEl)
+      alert(audioEl)
 
       audioEl.onloadeddata = () => {
-        console.log('onloadeddata 안에 들어옴')
+        alert('onloadeddata 안에 들어옴')
         if (audioEl.duration === Infinity) {
-          console.log('if문 진입')
-          console.log(audioEl.duration)
+          alert('if문 진입')
+          alert(audioEl.duration)
           audioEl.currentTime = Number.MAX_SAFE_INTEGER
           audioEl.ontimeupdate = () => {
             audioEl.ontimeupdate = null
@@ -123,8 +120,8 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
             audioEl.currentTime = 0
           }
         } else {
-          console.log('else문 진입')
-          console.log(audioEl.duration)
+          alert('else문 진입')
+          alert(audioEl.duration)
           audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
         }
       }
