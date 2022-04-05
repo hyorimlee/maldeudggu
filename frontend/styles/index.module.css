@@ -10,6 +10,19 @@
   font-size: 20px;
 }
 
+.index__container {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sharedImages__container {
+  height: 100vh;
+}
+
 /* 스크롤 막기 */
 .hidden {
   height: 100%;

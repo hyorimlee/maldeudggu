@@ -86,7 +86,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Layout>
       <Head>
-        <title>말듣꾸</title>
+        <title>말듣꾸 - AI방언분석</title>
       </Head>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
       <Component {...pageProps} staticState={staticState} changeStaticState={changeStaticState} />
