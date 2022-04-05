@@ -78,6 +78,10 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
     <div className={styles.overlay}>
       <div className={styles.wrapper} tabIndex="-1">
         <div className={styles.inner} tabIndex="0">
+          <Text
+            size={12}
+            contents={'인공지능 모델 재학습을 위하여 발화자의 정보를 수집하고 있어요.'}
+          ></Text>
           <Text size={12} contents={'1. 성별과 나이를 알려주세요.'}></Text>
           <Select name={'gender'} id={'gender'} options={GENDER} onChange={changeMetaData}></Select>
           <Select name={'age'} options={AGE} onChange={changeMetaData}></Select>
