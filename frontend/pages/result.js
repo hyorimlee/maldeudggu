@@ -47,7 +47,7 @@ function Result({ staticState, changeStaticState }) {
       <div>
         <Text
           contents={`
-            ${staticState.nickname} 님의 억양은 ${resultKor[0]}도 방언과의 유사도가 ${staticState.result[resultKor[0]]}% 가장 높아요.
+            ${staticState.nickname} 님의 억양은 ${resultKor[0]}도 방언과의 유사도가 ${staticState.result[resultKor[0]]}%로 가장 높아요.
             다음으로 ${resultKor[1]}도 ${staticState.result[resultKor[1]]}%, ${resultKor[2]}도 ${staticState.result[resultKor[2]]}% 순의 결과가 나왔습니다.
           `}>
         </Text>
