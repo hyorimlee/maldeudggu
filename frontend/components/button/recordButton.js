@@ -29,13 +29,17 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     }
   }, [])
 
+  console.log(audio)
+  console.log(browserOptions)
+
   useEffect(() => {
+    console.log(audio)
     if (audio.audioUrl) {
       const today = getDate()
       const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${browserOptions.audioType}`, { lastModified: new Date().getTime(), type: `audio/${browserOptions.audioType}` })
 
       const url = URL.createObjectURL(audio.audioUrl)
-
+      console.log(sound, url)
       changeStaticState('audioData', [url, sound]);
     }
   }, [audio.audioUrl])
@@ -97,11 +101,18 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     console.log('getaudiotracks 완료')
 
     mediaRecorder.ondataavailable = event => {
+      console.log(event)
+
       const audioEl = document.createElement('audio')
       audioEl.src = URL.createObjectURL(event.data)
 
+      console.log(audioEl)
+
       audioEl.onloadeddata = () => {
+        console.log('onloadeddata 안에 들어옴')
         if (audioEl.duration === Infinity) {
+          console.log('if문 진입')
+          console.log(audioEl.duration)
           audioEl.currentTime = Number.MAX_SAFE_INTEGER
           audioEl.ontimeupdate = () => {
             audioEl.ontimeupdate = null
@@ -109,6 +120,8 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
             audioEl.currentTime = 0
           }
         } else {
+          console.log('else문 진입')
+          console.log(audioEl.duration)
           audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
         }
       }
