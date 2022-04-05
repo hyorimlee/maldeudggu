@@ -68,10 +68,17 @@ def start_test(request):
     }
     return Response(data, status=status.HTTP_201_CREATED)
 
-
+from moviepy.editor import AudioFileClip
 @swagger_auto_schema(method='post',query_serializer=AudioQuerySerializer)
 @api_view(['POST'])     # request.FILES 사용하려면 POST 방식이어야 함
 def save_audio(request, case_pk):
+    """
+    case pk, sentence pk 받아서 오디오 저장
+    case pk 이름의 폴더 아래에, 날짜시각, sentence pk, 확장자로 이루어진 파일
+    저장된 audio pk 리턴
+
+    ** 오디오 저장 방법
+    """
     case = get_object_or_404(Case, pk=case_pk)
     sentence_pk = request.GET.get('sentence')
     sentence = get_object_or_404(Sentence, pk=sentence_pk)
@@ -79,15 +86,34 @@ def save_audio(request, case_pk):
     case.save()
 
     audio = get_object_or_404(Audio, case=case, sentence=sentence)
+    ## 테스트용
+    # sentence = Sentence()
+    # sentence.save()
+    # audio = Audio(case=case, sentence=sentence)
     audio.audio_path = request.FILES.get('audio')   # 프런트에서 날짜시각, sentence_pk, 확장자로 이루어진 파일명의 'audio' 전달    
     audio.save()
-    audioSegment = AudioSegment.from_file(audio.audio_path, 'webm')
+    try:
+        audio_path = str(audio.audio_path.name)
+        if 'webm' in audio_path:
+            file_ext = 'webm'
+            audioSegment = AudioSegment.from_file(audio.audio_path, 'webm')
+            new_file_path = 'media/' + audio_path.replace('webm', 'wav')
+            audioSegment.export(new_file_path, format='wav')
+        elif 'mp4' in audio_path:
+            file_ext = 'mp4'
+            sound = AudioFileClip('media/' + audio_path)
+            new_file_path = 'media/' + audio_path.replace('mp4', 'wav')
+            sound.write_audiofile(new_file_path, 16000, 2, 2000)
 
-    audio_path = str(audio.audio_path.name)
-    new_file_path = 'media/' + audio_path.replace('webm', 'wav')
-    audioSegment.export(new_file_path, format='wav')
+    except:
+        data = {
+            'message': 'audio file error'
+        }
+        audio.audio_path = None
+        audio.save()
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
     
-    audio.audio_path.name = audio_path.replace('webm', 'wav')
+    audio.audio_path.name = audio_path.replace(file_ext, 'wav')
     audio.save()
     
     data = {
@@ -136,9 +162,10 @@ def save_image(request, case_pk):
 @api_view(['POST'])
 def save_survey(request, case_pk):
     survey = Survey(case=Case(pk=case_pk))
+    print(request.data)
     survey.gender = request.data['gender']
     survey.age = request.data['age']
-    survey.born_in = request.data['birthlocation']
+    survey.born_in = request.data['birthLocation']
     survey.lived_in = request.data['location']
     survey.save()
     data = {
