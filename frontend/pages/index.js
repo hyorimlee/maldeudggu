@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react"
 import { useRouter } from "next/router"
-import Head from "next/head"
 
 // components & containers
 import Text from "../components/text/text"
@@ -75,8 +74,7 @@ function Home({ staticState, changeStaticState }) {
   const testStart = async () => {
     // 마이크 접근
     try {
-      const audioPermission = await navigator.mediaDevices.getUserMedia({ audio: true })
-      console.log(audioPermission)
+      await navigator.mediaDevices.getUserMedia({ audio: true })
       const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
       changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
 
@@ -103,77 +101,71 @@ function Home({ staticState, changeStaticState }) {
 
   return (
     <>
-      <Head>
-        <title>말듣꾸 - AI방언분석</title>
-        <meta
-          name="description"
-          content="말듣꾸는 한국어 사용자의 음성을 인공지능을 통해 분석하여 어느 지방의 사투리를 사용하는지 알려주는 서비스입니다. 내가 평소에 쓰는 억양은 어느 지방의 억양에 가까운지 한 번 알아보세요!"
-        />
-        <meta name="keywords" content="AI, 사투리, 방언, 음성분석, 캐릭터" />
-        <meta property="og:title" content="말듣꾸 - AI방언분석" />
-        <meta property="og:description" content="AI 방언분석 서비스 말듣꾸 입니다. 내가 평소에 쓰는 억양은 어느 지방의 억양에 가까운지 한 번 알아보세요!" />
-      </Head>
       {delay ? (
         <ThreeDotsWave
           contents='테스트를 준비중이에요.'
         ></ThreeDotsWave>
       ) : (
         <>
-          <Text
-            bold
-            size={16}
-            contents={'내 억양은 어느 지역의 사투리와 가장 비슷할까?'}
-          ></Text>
-          <Image
-            type='logo'
-            path='/img/logo/logo.png'
-          ></Image>
-          <Text
-            contents={`지금까지 ${participant}명이 참여했어요!`}
-          ></Text>
-          <Text
-            contents={[
-              "말듣꾸는 '말하기, 듣기, 꾸미기'의 줄임말로 당신의 억양을 인공지능으로 분석하여 어느 지역의 사투리와 가장 닮아 있는지 알려주는 서비스입니다.",
-              <br key="1" />,
-              '테스트 결과를 확인하고, 각 지역을 모티브로 제작된 캐릭터를 꾸며 공유해보세요.'
-            ]}
-          ></Text>
-          <Input onChange={changeNickname} value={nickname}></Input>
-          <Text
-            size={12}
-            color={'orange'}
-            contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
-          ></Text>
-          <Checkbox
-            checked={staticState.reuse}
-            onChange={() => changeStaticState('reuse', !staticState.reuse)}
-            contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
-          ></Checkbox>
-          <Modal
-            show={showModal}
-            onClose={() => setShowModal(false)}
-            staticState={staticState}
-            changeStaticState={changeStaticState}
-          ></Modal>
-          <Button
-            content={!nickname ? '별명을 입력해주세요' : '테스트 시작하기'}
-            handler={testStart}
-            disabled={!nickname}
-          ></Button>
-          <FontAwesomeIcon
-            icon={faAnglesDown}
-            className={styles.icon}
-          ></FontAwesomeIcon>
-          <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
-          {
-            sharedImages.length
-              ? (
-                <Suspense fallback={<Text contents='이미지를 불러오고 있어요.'></Text>}>
-                  <SharedImages data={sharedImages}></SharedImages>
-                </Suspense>
-              )
-              : <></>
-          }
+          <div className={styles.index__container}>
+            <Text
+              bold
+              size={16}
+              contents={'내 억양은 어느 지역의 사투리와 가장 비슷할까?'}
+            ></Text>
+            <Image
+              type='logo'
+              path='/img/logo/logo.png'
+            ></Image>
+            <Text
+              contents={`지금까지 ${participant}명이 참여했어요!`}
+            ></Text>
+            <Text
+              contents={[
+                "말듣꾸는 '말하기, 듣기, 꾸미기'의 줄임말로 당신의 억양을 인공지능으로 분석하여 어느 지역의 사투리와 가장 닮아 있는지 알려주는 서비스입니다.",
+                <br key="1" />,
+                '테스트 결과를 확인하고, 각 지역을 모티브로 제작된 캐릭터를 꾸며 공유해보세요.'
+              ]}
+            ></Text>
+            <Input onChange={changeNickname} value={nickname}></Input>
+            <Text
+              size={12}
+              color={'orange'}
+              contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
+            ></Text>
+            <Checkbox
+              checked={staticState.reuse}
+              onChange={() => changeStaticState('reuse', !staticState.reuse)}
+              contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
+            ></Checkbox>
+            <Modal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              staticState={staticState}
+              changeStaticState={changeStaticState}
+            ></Modal>
+            <Button
+              content={!nickname ? '별명을 입력해주세요' : '테스트 시작하기'}
+              handler={testStart}
+              disabled={!nickname}
+            ></Button>
+            <FontAwesomeIcon
+              icon={faAnglesDown}
+              className={styles.icon}
+            ></FontAwesomeIcon>
+          </div>
+          <div className={styles.sharedImages__container}>
+            <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
+            {
+              sharedImages.length
+                ? (
+                  <Suspense fallback={<Text contents='이미지를 불러오고 있어요.'></Text>}>
+                    <SharedImages data={sharedImages}></SharedImages>
+                  </Suspense>
+                )
+                : <></>
+            }
+          </div>
         </>
       )
       }

@@ -1,10 +1,24 @@
+.recordPageLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
 .sampleSentence {
   position: relative;
+  margin: 1rem;
 }
 
 .sampleSentence > p {
   position: absolute;
-  top: 35%;
+  width: 60vw;
+  top: 33%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.audioPlayButton {
+  margin-bottom: 1rem;
 }
