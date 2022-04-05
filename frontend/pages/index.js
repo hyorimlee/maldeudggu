@@ -84,7 +84,7 @@ function Home({ staticState, changeStaticState }) {
   
   useEffect(() => {
     if (staticState.caseId !== -1) {
-      randomDelay(2000, 1000, () => router.push(`/record/${staticState.sentences[0].id}`))
+      randomDelay(2000, 1000, () => router.replace(`/record/${staticState.sentences[0].id}`))
     }
   }, [staticState])
 
