@@ -8,7 +8,7 @@ import styles from "./loading.module.css"
 const loadingContainerVariants = {
   start: {
     transition: {
-      staggerChildren: 0.4
+      staggerChildren: 1
     }
   },
   end: {
@@ -20,23 +20,23 @@ const loadingContainerVariants = {
 
 const loadingCircleVariants = {
   start: {
-    y: "50%"
+    y: "70%"
   },
   end: {
-    y: "150%"
+    y: "220%"
   }
 };
 
 const loadingCircleTransition = {
-  duration: 2,
+  duration: 0.9,
   repeat: Infinity,
-  repeatType: 'loop',
+  repeatType: 'reverse',
   ease: "easeInOut"
 };
 
 export default function ThreeDotsWave({ contents }) {
   return (
-    <>
+    <article className={styles.container}>
       <motion.div
         className={styles.loadingContainer}
         variants={loadingContainerVariants}
@@ -87,6 +87,6 @@ export default function ThreeDotsWave({ contents }) {
           transition={loadingCircleTransition}
           />
       </motion.div>
-    </>
+    </article>
   );
 }
