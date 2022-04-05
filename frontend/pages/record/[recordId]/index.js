@@ -40,8 +40,6 @@ function Record({ staticState, changeStaticState, sentence, id }) {
   const [pageFlip, setPageFlip] = useState(false)
   const router = useRouter()
 
-  console.log(pageFlip)
-
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
     if (staticState.caseId === -1 || staticState.sentences.length === 0) {
@@ -62,7 +60,6 @@ function Record({ staticState, changeStaticState, sentence, id }) {
     if (staticState.recordCount < 4) {
       setPageFlip(true)
       changeStaticState('recordCount', staticState.recordCount + 1)
-      console.log('pageflip', pageFlip)
 
       randomDelay(1000, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
     } else {
