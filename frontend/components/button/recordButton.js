@@ -61,15 +61,20 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}` })
 
+      console.log('mediarecorder 로딩 완료')
+
       mediaRecorder.start();
       const source = audioCtx.createMediaStreamSource(stream);
 
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
 
+      console.log('analyser 연결 완료')
+
       setTimer(setTimeout(() => stopRecord({ mediaRecorder, analyser, source, stream }), 9900))
 
       setAudio({ ...audio, stream, mediaRecorder, source, analyser })
+      console.log('setaudio 완료')
     } catch (error) {
       alert('녹음에 문제가 있어요.')
       console.error(error)
@@ -83,15 +88,17 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     analyser.disconnect();
     source.disconnect();
 
+    console.log('disconnect 완료')
+
     stream.getAudioTracks().forEach(function (track) {
       track.stop();
     });
 
+    console.log('getaudiotracks 완료')
+
     mediaRecorder.ondataavailable = event => {
       const audioEl = document.createElement('audio')
       audioEl.src = URL.createObjectURL(event.data)
-
-
 
       audioEl.onloadeddata = () => {
         if (audioEl.duration === Infinity) {
