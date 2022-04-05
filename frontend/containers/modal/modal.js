@@ -8,8 +8,8 @@ import Button from '../../components/button/button'
 import styles from './modal.module.css'
 
 const GENDER = [
-  { value: 'man', name: '남자' },
-  { value: 'woman', name: '여자' },
+  { value: 0 , name: '남자' },
+  { value: 1 , name: '여자' },
 ]
 
 const AGE = [
@@ -21,33 +21,33 @@ const AGE = [
 ]
 
 const BIRTHLOCATION = [
-  { value: 'gyeonggi', name: '경기' },
-  { value: 'gangwon', name: '강원' },
-  { value: 'chungcheong', name: '충청' },
-  { value: 'jeolla', name: '전라' },
-  { value: 'gyeongsang', name: '경상' },
-  { value: 'jeju', name: '제주' },
-  { value: 'unknown', name: '모름' },
+  { value: 1, name: '경기' },
+  { value: 2, name: '강원' },
+  { value: 3, name: '충청' },
+  { value: 4, name: '전라' },
+  { value: 5, name: '경상' },
+  { value: 6, name: '제주' },
+  { value: 0, name: '모름' },
 ]
 
 const LOCATION = [
-  { value: 'gyeonggi', name: '경기' },
-  { value: 'gangwon', name: '강원' },
-  { value: 'chungcheong', name: '충청' },
-  { value: 'jeolla', name: '전라' },
-  { value: 'gyeongsang', name: '경상' },
-  { value: 'jeju', name: '제주' },
-  { value: 'no', name: '없음' },
+  { value: 1, name: '경기' },
+  { value: 2, name: '강원' },
+  { value: 3, name: '충청' },
+  { value: 4, name: '전라' },
+  { value: 5, name: '경상' },
+  { value: 6, name: '제주' },
+  { value: 0, name: '없음' },
 ]
 
 function Modal({ show, onClose, staticState, changeStaticState }) {
   const [isBrower, setIsBrowser] = useState(false)
   // 여기 기본값 null로 해놓기 vs 미리 지정해두기...
   const [metaData, setMetaData] = useState({
-    gender: 'man',
+    gender: 0,
     age: 10,
-    birthLocation: 'gyeonggi',
-    location: 'gyeonggi'
+    birthLocation: 1,
+    location: 1
   })
 
   useEffect(() => {
