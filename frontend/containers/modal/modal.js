@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 
 import Text from '../../components/text/text'
@@ -50,8 +50,11 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
     location: 1
   })
 
+  const body = useRef(null)
+
   useEffect(() => {
     setIsBrowser(true)
+    body.current = document.querySelector('body')
   }, [])
 
   const changeMetaData = (type, data) => {
@@ -62,6 +65,7 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
 
   const saveAndClose = () => {
     changeStaticState('metaData', metaData)
+    body.current.classList.remove('disableScroll')
     onClose()
   }
 

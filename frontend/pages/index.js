@@ -57,6 +57,7 @@ function Home({ staticState, changeStaticState }) {
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
   useEffect(() => {
     staticState.reuse === true ? body.current.classList.add('disableScroll') : body.current.classList.remove('disableScroll')
+    window.scrollTo(0, 0)
     setShowModal(staticState.reuse)
   }, [staticState.reuse])
 
