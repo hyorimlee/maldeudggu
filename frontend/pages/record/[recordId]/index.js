@@ -58,7 +58,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
 
   async function sendSoundFile() {
     await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
-    
+
     if (staticState.recordCount < 4) {
       setPageFlip(true)
       changeStaticState('recordCount', staticState.recordCount + 1)
@@ -89,7 +89,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
               <Text
                 size={18}
                 bold={true}
-                contents={'결과를 분석하고 있습니다.'}
+                contents={['결과를 분석하고 있습니다.', <br />, '잠시만 기다려주세요!']}
               ></Text>
             </>
           )
@@ -109,7 +109,11 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                 ></Text>
                 <Text
                   size={16}
-                  contents={'아래의 문장을 평소 말투로 녹음해주세요'}
+                  contents={'녹음 버튼을 눌러 아래의 문장을 평소 말투로 녹음해주세요.'}
+                ></Text>
+                <Text
+                  size={12}
+                  contents={'문장을 다 읽고 버튼을 다시 눌러 녹음을 종료해주세요.'}
                 ></Text>
                 <div className={styles.sampleSentence}>
                   <Image
@@ -129,7 +133,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                       <>
                         <AudioProgressBar staticState={staticState} />
                         <Button
-                          content={'여기를 눌러서 다시 녹음하기'}
+                          content={'여기를 눌러 다시 녹음하기'}
                           handler={reRecord}
                         ></Button>
                         <Button

@@ -8,6 +8,7 @@ import { getBackgroundList, getFileList } from "../modules/filelist"
 import { patchRequest, getRequest } from '../modules/fetch'
 import { korToEng } from '../modules/locationText'
 
+import Text from "../components/text/text";
 import Canvas from '../containers/canvas/canvas'
 import ItemSelector from "../containers/itemSelector/itemSelector"
 import Button from '../components/button/button'
@@ -86,7 +87,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     if (initialLength === changedLength && changedLength < 3) {
       setItems(isDuplication.concat({ location: location, item: file, id: id.notUse.shift() }))
     } else if (initialLength === changedLength) {
-      alert('아이템은 3개 이상 추가할 수 없어요.')
+      alert('아이템은 3개까지만 추가할 수 있어요.')
       setItems(isDuplication)
     } else {
       setItems(isDuplication)
@@ -143,7 +144,16 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   }
 
   return (
-    <> 
+    <>
+      <Text
+        bold
+        contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
+      ></Text>
+      {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
+      <Text
+        size={12}
+        contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
+      ></Text>
       <Canvas color={color} items={items} background={background} firstLocation={korToEng[Object.keys(staticState.result)[0]]}></Canvas>
       <ItemSelector
         color={color}
