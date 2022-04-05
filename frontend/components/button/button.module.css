@@ -29,3 +29,8 @@
 .grey:hover {
   background-color: #9b9999;
 }
+
+.none {
+  background-color: #F3F3F3;
+  color: #000000;
+}
