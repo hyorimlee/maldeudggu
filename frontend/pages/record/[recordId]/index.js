@@ -77,6 +77,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
 
   return (
     <>
+      <div className={styles.recordPageLayout}>
       {
         isEnd
           ?
@@ -106,11 +107,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                 ></Text>
                 <Text
                   size={16}
-                  contents={'녹음 버튼을 눌러 아래의 문장을 평소 말투로 녹음해주세요.'}
-                ></Text>
-                <Text
-                  size={12}
-                  contents={'문장을 다 읽고 버튼을 다시 눌러 녹음을 종료해주세요.'}
+                  contents={'아래의 문장을 평소 말투로 녹음해주세요.'}
                 ></Text>
                 <div className={styles.sampleSentence}>
                   <Image
@@ -128,10 +125,13 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                     ?
                     (
                       <>
-                        <AudioProgressBar staticState={staticState} />
+                        <div className={styles.audioPlayButton}>
+                          <AudioProgressBar staticState={staticState} />
+                        </div>
                         <Button
-                          content={'여기를 눌러 다시 녹음하기'}
+                          content={'다시 녹음하기'}
                           handler={reRecord}
+                          color={'none'}
                         ></Button>
                         <Button
                           content={'다음으로 넘어가기'}
@@ -145,6 +145,10 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                         <RecordButton sentenceId={`${id}`} staticState={staticState} changeStaticState={(type, data) => {
                           changeStaticState(type, data)
                         }} />
+                        <Text
+                          size={12}
+                          contents={['위 버튼을 누른 뒤 문장을 읽고', <br key="1" />, '버튼을 다시 눌러 녹음을 종료해주세요.']}
+                        ></Text>
                         <Button
                           content={'음성을 녹음해주세요'}
                           disabled
@@ -155,6 +159,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
               </>
             )
       }
+      </div>
     </>
   )
 }
