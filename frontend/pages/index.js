@@ -20,6 +20,7 @@ import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
 // modules
 import { getRequest, postRequest } from '../modules/fetch'
 import { stringifyQuery } from "next/dist/server/server-route-utils"
+import { randomDelay } from "../modules/delay"
 
 
 const SharedImages = lazy(() => import('../containers/sharedImages/sharedImages'))
@@ -71,39 +72,32 @@ function Home({ staticState, changeStaticState }) {
 
   const testStart = async () => {
     // 마이크 접근
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
-      console.log('User Audio Access Confirmed')
-    }).catch(() => {
-      console.log('User Audio Access Denied')
-      alert('마이크 접근 설정을 허용으로 바꿔주세요.')
-    })
+    try {
+      const audioPermission = await navigator.mediaDevices.getUserMedia({ audio: true })
+      console.log(audioPermission)
+      const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
+      changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
 
-    const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
-    changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
-
-    if (staticState.reuse) {
-      let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
-      postRequest(`/${response.case_id}/survey/`, metaData).then(
-        setTimeout(() => {
+      if (staticState.reuse) {
+        let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
+        postRequest(`/${response.case_id}/survey/`, metaData).then(
           setDelay(true)
-        }, 1000 + Math.random() * 1000)
-      ).catch(
-        setTimeout(() => {
+        ).catch(
           setDelay(true)
-        }, 1000 + Math.random() * 1000)
-      )
-    } else {
-      setTimeout(() => {
+        )
+      } else {
         setDelay(true)
-      }, 1000 + Math.random() * 1000)
+      }
+    } catch (error) {
+      alert('음성 권한을 허용해주세요')
     }
   }
 
   useEffect(() => {
-    if (delay === true && staticState.caseId !== -1) {
-      router.push(`/record/${staticState.sentences[0].id}`)
+    if (staticState.caseId !== -1) {
+      randomDelay(2000, 1000, () => router.push(`/record/${staticState.sentences[0].id}`))
     }
-  }, [staticState, delay])
+  }, [staticState])
 
   return (
     <>
@@ -119,18 +113,18 @@ function Home({ staticState, changeStaticState }) {
       </Head>
       {delay ? (
         <ThreeDotsWave
-          contents={'테스트를 준비중이에요.'}
+          contents='테스트를 준비중이에요.'
         ></ThreeDotsWave>
       ) : (
         <>
           <Text
             bold
             size={16}
-            contents={'나는 어떤 억양을 사용할까?'}
+            contents='나는 어떤 억양을 사용할까?'
           ></Text>
           <Image
-            type={'logo'}
-            path={'/img/logo/logo.png'}
+            type='logo'
+            path='/img/logo/logo.png'
           ></Image>
           <Text
             contents={`지금까지 ${participant}명이 참여했어요!`}

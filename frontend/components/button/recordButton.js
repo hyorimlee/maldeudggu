@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from "framer-motion"
+import { motion, resolveMotionValue } from "framer-motion"
 
 import Text from '../text/text'
 
@@ -78,8 +78,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
 
   function stopRecord({ mediaRecorder, analyser, source, stream }) {
     clearTimeout(timer)
-    console.log(mediaRecorder)
-    console.log(analyser)
+
     mediaRecorder.stop()
     analyser.disconnect();
     source.disconnect();
@@ -91,7 +90,21 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
     mediaRecorder.ondataavailable = event => {
       const audioEl = document.createElement('audio')
       audioEl.src = URL.createObjectURL(event.data)
-      audioEl.onloadeddata = () => audioEl.duration >= 1.2 ? setAudio({...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({...audio, rerecord: true})      
+
+
+
+      audioEl.onloadeddata = () => {        
+        if (audioEl.duration === Infinity) {
+          audioEl.currentTime = Number.MAX_SAFE_INTEGER
+          audioEl.ontimeupdate = () => {
+            audioEl.ontimeupdate = null
+            audioEl.duration >= 1.2 ? setAudio({...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({...audio, rerecord: true})
+            audioEl.currentTime = 0
+          }
+        } else {
+          audioEl.duration >= 1.2 ? setAudio({...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({...audio, rerecord: true})
+        }
+      }
     }
   }
 
