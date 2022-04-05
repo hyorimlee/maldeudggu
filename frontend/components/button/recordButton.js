@@ -56,18 +56,25 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
   // 녹음을 실행하는 함수
   async function startRecord() {
     try {
+      alert('녹음 첫 시작')
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      alert('audioCtx 성공')
       const analyser = audioCtx.createScriptProcessor(0, 1, 1);
+      alert('analyser 성공')
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      alert('stream 성공')
       const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}` })
 
       alert('mediarecorder 로딩 완료')
 
       mediaRecorder.start();
+      alert('mediarecorder start 완료')
       const source = audioCtx.createMediaStreamSource(stream);
+      alert('source 완료')
 
       source.connect(analyser);
+      alert('source connect 완료')
       analyser.connect(audioCtx.destination);
 
       alert('analyser 연결 완료')
