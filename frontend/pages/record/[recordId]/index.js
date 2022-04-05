@@ -89,7 +89,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
               <Text
                 size={18}
                 bold={true}
-                contents={['결과를 분석하고 있습니다.', <br />, '잠시만 기다려주세요!']}
+                contents={['결과를 분석하고 있습니다.', <br key="1" />, '잠시만 기다려주세요!']}
               ></Text>
             </>
           )
