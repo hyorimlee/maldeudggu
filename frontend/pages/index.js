@@ -68,6 +68,7 @@ function Home({ staticState, changeStaticState }) {
       alert('별명이 너무 길어요!')
     } else {
       setNickname(event.target.value)
+      changeStaticState('nickname', event.target.value)
     }
   }
 
