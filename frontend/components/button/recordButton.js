@@ -104,7 +104,9 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       console.log(event)
 
       const audioEl = document.createElement('audio')
-      audioEl.preload = 'metadata'
+      if (/iPhone/.test(navigator.userAgent)) {
+        audioEl.autoplay = true
+      }
       audioEl.src = URL.createObjectURL(event.data)
 
       console.log(audioEl)
