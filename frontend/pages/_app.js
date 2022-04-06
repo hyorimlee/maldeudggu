@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [staticState, setStaticState] = useState({
     settings: {
-      nightMode: true,
+      nightMode: false,
     },
     caseId: -1,
     nickname: '',
@@ -49,6 +49,12 @@ function MyApp({ Component, pageProps }) {
         setStaticState({
           ...staticState, recordAudio, recordAudioFile
         })
+      } else if (type === 'settings') {
+        if (type2) {
+          let settings = { [type2]: data }
+          console.log(settings)
+          setStaticState({ ...staticState, settings})
+        }
       } else {
         if (type2) {
           setStaticState({ ...staticState, [type]: data, [type2]: data2 })
