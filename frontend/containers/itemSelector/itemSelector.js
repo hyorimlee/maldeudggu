@@ -7,7 +7,8 @@ import Image from "../../components/image/image"
 
 function ItemSelector({
   handleColorChange, handleItemChange, handleBackgroundChange,
-  filteredCharacters, filteredItems, backgroundFiles
+  filteredCharacters, filteredItems, backgroundFiles,
+  staticState
 }) {
   const [tab, setTab] = useState(0)
 
@@ -61,7 +62,7 @@ function ItemSelector({
             return (
               <Image
                 key={bg}
-                type={'items'}
+                type={'backgroundItems'}
                 path={`/img/background/${bg}`}
                 onClick={() => handleBackgroundChange(bg)}
               ></Image>
@@ -74,7 +75,7 @@ function ItemSelector({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
       <div className={styles.tabs}>
         <Text
           size={12}
