@@ -4,15 +4,16 @@ import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { firebaseConfig } from '../../../firebaseConfig'
 
-import { getBackgroundList, getFileList } from "../../../modules/filelist"
-import { patchRequest, getRequest } from '../../../modules/fetch'
-import { korToEng } from '../../../modules/locationText'
-
 import Text from "../../../components/text/text";
 import Canvas from '../../../containers/canvas/canvas'
 import ItemSelector from "../../../containers/itemSelector/itemSelector"
 import Button from '../../../components/button/button'
 import ThreeDotsWave from '../../../components/loading/loading'
+
+import { getBackgroundList, getFileList } from "../../../modules/filelist"
+import { patchRequest } from '../../../modules/fetch'
+import { randomDelay } from "../../../modules/delay"
+
 
 
 // firebase 초기화
@@ -44,9 +45,10 @@ export async function getStaticProps({ params }) {
 }
 
 function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) {
-  const [color, setColor] = useState(`${korToEng[Object.keys(staticState.result)[0]]}-1.svg`)
+  const [color, setColor] = useState(`${Object.keys(characterFiles)[0]}-1.svg`)
   const [items, setItems] = useState([])
   const [background, setBackground] = useState('')
+  const [delay, setDelay] = useState(false)
   const router = useRouter()
 
   // 전역 state 값이 비어있으면 404 페이지로 이동
@@ -87,8 +89,8 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   const handleBackgroundChange = (file) => {
     setBackground(file)
   }
-
-  const clickedButton = (event) => {
+  
+  const clickedButton = () => {
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
     const canvasSize = getComputedStyle(document.querySelector('#canvas')).width.slice(0, -2)
@@ -99,6 +101,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
     const useIdx = Object.keys(imgAll).filter(k => {
       if (!imgAll[k].className.includes('none')) {
+        console.log(imgAll[k].currentSrc)
         return k
       }
     })
@@ -115,17 +118,16 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
         context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
 
         cnt += 1
-        if (cnt === useIdx.length) {
-          canvas.toBlob(blob => {
+        if (cnt >= useIdx.length) {
+          context.canvas.toBlob(blob => {
+            setDelay(true)
             uploadBytes(storageRef, blob)
-              .then((snapshot) => {
+              .then(() => {
                 getDownloadURL(storageRef)
                   .then((url) => {
                     patchRequest(`/${staticState.caseId}/image`, url)
                       .then((response) => {
-                        const location = Object.keys(staticState.result)
-
-                        router.push(`/share/${response.case_id}`)
+                        randomDelay(500, 1000, () => router.push(`/share/${response.case_id}`))
                       })
                   })
               })
@@ -137,28 +139,42 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
   return (
     <>
-      <Text
-        bold
-        contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
-      ></Text>
-      {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
-      <Text
-        size={12}
-        contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
-      ></Text>
-      <Canvas color={color} items={items} background={background} firstLocation={korToEng[Object.keys(staticState.result)[0]]}></Canvas>
-      <ItemSelector
-        color={color}
-        items={items}
-        background={background}
-        handleColorChange={handleColorChange}
-        handleItemChange={handleItemChange}
-        handleBackgroundChange={handleBackgroundChange}
-        filteredCharacters={characterFiles}
-        filteredItems={itemFiles}
-        backgroundFiles={backgroundFiles}
-      ></ItemSelector>
-      <Button content='완성!' handler={clickedButton}></Button>
+      {
+        delay
+        ?
+        (
+          <>
+            <ThreeDotsWave contents={'이미지를 제작하는 중이에요.'}></ThreeDotsWave>
+          </>
+        )
+        :
+        (
+          <>
+            <Text
+              bold
+              contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
+            ></Text>
+            {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
+            <Text
+              size={12}
+              contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
+            ></Text>
+            <Canvas color={color} items={items} background={background} firstLocation={Object.keys(characterFiles)[0]}></Canvas>
+            <ItemSelector
+              color={color}
+              items={items}
+              background={background}
+              handleColorChange={handleColorChange}
+              handleItemChange={handleItemChange}
+              handleBackgroundChange={handleBackgroundChange}
+              filteredCharacters={characterFiles}
+              filteredItems={itemFiles}
+              backgroundFiles={backgroundFiles}
+            ></ItemSelector>
+            <Button content='완성!' handler={clickedButton}></Button>
+          </>
+        )
+      }
     </>
   )
 }
