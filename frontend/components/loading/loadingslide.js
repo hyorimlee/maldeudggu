@@ -8,11 +8,24 @@ import { Autoplay, Pagination } from "swiper"
 
 // 전국 & 색상 전부 가져오기 (6*9)
 // 이미지 크기 맞춰야 함
-const images = [
-  '/img/character/gangwon/gangwon-1.svg',
-  '/img/character/gangwon/gangwon-2.svg',
-  '/img/character/gangwon/gangwon-3.svg',
+const locations = [
+  'gyeonggi',
+  'gangwon',
+  'chungcheong',
+  'gyeongsang',
+  'jeolla',
+  'jeju',
 ]
+
+const images = []
+
+for (let location of locations) {
+  for (let idx = 1; idx < 10; idx++) {
+    images.push(`/img/character/${location}/${location}-${idx}.svg`)
+  }
+}
+
+images.sort(() => Math.random() - 0.5);
 
 function LoadingSlide() {
   return (
