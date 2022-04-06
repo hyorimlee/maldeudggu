@@ -14,7 +14,7 @@ import ThreeDotsWave from '../components/loading/loading'
 // styles
 import styles from "../styles/index.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faAnglesDown } from "@fortawesome/free-solid-svg-icons"
+import { faAnglesDown, faSun, faMoon } from "@fortawesome/free-solid-svg-icons"
 
 // modules
 import { getRequest, postRequest } from '../modules/fetch'
@@ -88,6 +88,10 @@ function Home({ staticState, changeStaticState }) {
     }
   }
 
+  const handleNightMode = () => {
+    changeStaticState('settings', !staticState.settings.nightMode, 'nightMode')
+  }
+
   const testStart = async () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
     .then(() => {
@@ -134,10 +138,25 @@ function Home({ staticState, changeStaticState }) {
               size={16}
               contents={'내 억양은 어느 지역의 사투리와 가장 비슷할까?'}
             ></Text>
-            <Image
-              type='logo'
-              path='/img/logo/logo.png'
-            ></Image>
+            <div>
+              <Image
+                type='logo'
+                path='/img/logo/logo.png'
+              ></Image>
+              {staticState.settings.nightMode ?
+                <FontAwesomeIcon
+                icon={faSun}
+                className={styles.nightModeButton}
+                onClick={handleNightMode}
+                ></FontAwesomeIcon>
+                :
+                <FontAwesomeIcon
+                icon={faMoon}
+                className={styles.nightModeButton}
+                onClick={handleNightMode}
+              ></FontAwesomeIcon>
+              }
+            </div>
             <div className={styles.participant}>
               <Text inline contents={'지금까지 '}></Text>
               <Text inline color={'orange'} size={18} font contents={participant}></Text>
