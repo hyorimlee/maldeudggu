@@ -53,9 +53,9 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
-    if (staticState.caseId === -1 || staticState.sentences.length === 0) {
-      router.push({ pathname: '/404', query: { code: '0001' } })
-    }
+    // if (staticState.caseId === -1 || staticState.sentences.length === 0) {
+    //   router.push({ pathname: '/404', query: { code: '0001' } })
+    // }
     if (staticState.settings.nightMode) {
       setBackground(`background-11.svg`)
     } else {
@@ -138,7 +138,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
                     .then((url) => {
                       patchRequest(`/${staticState.caseId}/image`, url)
                         .then((response) => {
-                          randomDelay(200000, 300000, () => router.push(`/share/${response.case_id}`))
+                          randomDelay(500, 700, () => router.push(`/share/${response.case_id}`))
                         })
                     })
                 })

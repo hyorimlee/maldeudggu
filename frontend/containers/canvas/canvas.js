@@ -69,23 +69,26 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
     }
   }
 
-  const mouseDown = event => {
-    console.log('mouseUp')
-    console.log(event)
-    // const difX = event.pageX - event.target.offsetLeft
-    // const difY = event.pageY - event.target.offsetTop
-
-    // setCoordinatesDiff({ x: difX, y: difY })
+  const dragStart = event => {
+    setCoordinatesDiff({ x: event.clientX, y: event.clientY })
   }
 
   const drag = event => {
-    // console.log('mouseMove')
-    // console.log(event)
+    console.log(event)
+    event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
+    event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+
+    setCoordinatesDiff({x: event.clientX, y: event.clientY})
   }
 
-  const mouseUp = event => {
-    // console.log('mouseDown')
-    // console.log(event)
+  const dragEnd = event => {
+    if (event.target.parentElement.offsetTop < event.clientY &&
+      event.target.parentElement.offsetLeft < event.clientX &&
+      event.target.parentElement.offsetTop + event.target.parentElement.offsetHeight > event.clientY &&
+      event.target.parentElement.offsetLeft + event.target.parentElement.offsetWidth > event.clientX) {
+        event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
+        event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+      }
   }
 
   // 색상 변경시에만 실행됨
@@ -139,9 +142,9 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
         id='character'
         ref={character}
         className={styles.none}
-        onMouseDown={mouseDown}
+        onDragStart={dragStart}
         onDrag={drag}
-        onMouseUp={mouseUp}
+        onDragEnd={dragEnd}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -150,9 +153,9 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
         id='item1'
         ref={item1}
         className={styles.none}
-        onMouseDown={mouseDown}
+        onDragStart={dragStart}
         onDrag={drag}
-        onMouseUp={mouseUp}
+        onDragEnd={dragEnd}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -161,9 +164,9 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
         id='item2'
         ref={item2}
         className={styles.none}
-        onMouseDown={mouseDown}
+        onDragStart={dragStart}
         onDrag={drag}
-        onMouseUp={mouseUp}
+        onDragEnd={dragEnd}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -172,9 +175,9 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
         id='item3'
         ref={item3}
         className={styles.none}
-        onMouseDown={mouseDown}
+        onDragStart={dragStart}
         onDrag={drag}
-        onMouseUp={mouseUp}
+        onDragEnd={dragEnd}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
