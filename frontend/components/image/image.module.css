@@ -25,6 +25,10 @@
   height: 20vh;
 }
 
+.playPause {
+  width: 15vw;
+}
+
 .sentenceBackground {
   width: 80vw;
   z-index: 0;
