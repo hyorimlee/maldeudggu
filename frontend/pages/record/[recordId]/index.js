@@ -137,7 +137,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                             // 밑줄 쳐서 버튼인거 티나게 하기?
                             content={'다시 녹음하기'}
                             handler={reRecord}
-                            color={'none'}
+                            color={staticState.settings.nightMode ? 'nightMode' : 'none'}
                           ></Button>
                           <Button
                             content={'다음으로 넘어가기'}

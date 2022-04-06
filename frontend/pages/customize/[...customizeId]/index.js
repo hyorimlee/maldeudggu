@@ -102,7 +102,10 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     canvas.width = canvasSize
     canvas.height = canvasSize
 
-    const imgAll = document.querySelectorAll('#canvas img')
+    const backgroundImg = document.querySelector('#canvas .background')
+    const imgAll = document.querySelectorAll('#canvas > img')
+    console.log(backgroundImg)
+    console.log(imgAll)
 
     const useIdx = Object.keys(imgAll).filter(k => {
       if (!imgAll[k].className.includes('none')) {
@@ -110,6 +113,8 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
         return k
       }
     })
+
+    console.log(useIdx)
 
     const storageRef = ref(storage, `${staticState.caseId}.png`)
 
