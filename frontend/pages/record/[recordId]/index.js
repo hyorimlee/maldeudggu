@@ -43,7 +43,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
     if (staticState.caseId === -1 || staticState.sentences.length === 0) {
-      router.push({ pathname: '/404', query: { code: '0001' } })
+      router.replace({ pathname: '/404', query: { code: '0001' } })
     }
 
     router.events.on('routeChangeComplete', () => {
@@ -55,19 +55,23 @@ function Record({ staticState, changeStaticState, sentence, id }) {
   let soundfile = soundfiles[soundfiles.length - 1]
 
   async function sendSoundFile() {
-    await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
-
-    if (staticState.recordCount < 4) {
-      setPageFlip(true)
-      changeStaticState('recordCount', staticState.recordCount + 1)
-
-      randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
-    } else {
-      setIsEnd(true)
-      const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
-      changeStaticState('result', testResult.result)
-
-      randomDelay(1500, 1000, () => router.replace('/result'))
+    try {
+      await postRequest(`/${staticState.caseId}/?sentence=${id}`, [["audio", soundfile]])
+  
+      if (staticState.recordCount < 4) {
+        setPageFlip(true)
+        changeStaticState('recordCount', staticState.recordCount + 1)
+  
+        randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
+      } else {
+        setIsEnd(true)
+        const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
+        changeStaticState('result', testResult.result)
+  
+        randomDelay(1500, 1000, () => router.replace('/result'))
+      }
+    } catch {
+      router.push({ pathname: '/404', query: { code: '0502' } })
     }
   }
 

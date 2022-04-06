@@ -32,7 +32,8 @@ async function getRequest(url, params = {}) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
-    return null
+    console.log(response)
+    return { status: response.status, message: response.message }
   } catch (error) {
     console.error(error)
     return null
@@ -67,7 +68,7 @@ async function postRequest(url, datas = []) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
-    return null
+    return { status: response.status, message: response.message }
   } catch (error) {
     console.error(error)
     return null
@@ -100,7 +101,7 @@ async function patchRequest(url, image_url) {
       return data
     }
     console.log('fetch 모듈 응답 Not Ok')
-    return null
+    return { status: response.status, message: response.message }
   } catch (error) {
     console.error(error)
     return null
