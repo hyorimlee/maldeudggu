@@ -18,3 +18,11 @@
   align-items: center;
   justify-items: center;
 }
+
+.nightMode {
+  background-color: rgb(142, 142, 147) !important;
+}
+
+.nightMode div {
+  background-color: rgb(142, 142, 147) !important;
+}

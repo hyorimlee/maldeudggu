@@ -35,6 +35,13 @@
   background-color: rgb(58, 58, 60) !important;
 }
 
+.nightModeButton {
+  position: absolute;
+  z-index: 1;
+  font-size: 1.5rem;
+  transform: translate(-120%, 30%);
+}
+
 /* 스크롤 막기 */
 .hidden {
   height: 100%;

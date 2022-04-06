@@ -3,7 +3,7 @@ import Image from '../../components/image/image'
 
 import styles from './canvas.module.css'
 
-function Canvas({ color, items, background, firstLocation }) {
+function Canvas({ color, items, background, firstLocation, staticState }) {
   const [coordinatesDiff, setCoordinatesDiff] = useState({})
   const character = useRef()
   const container = useRef()
@@ -72,8 +72,8 @@ function Canvas({ color, items, background, firstLocation }) {
   const mouseDown = event => {
     console.log('mouseUp')
     console.log(event)
-    // const difX = event.targetTouches[0].clientX - event.target.offsetLeft
-    // const difY = event.targetTouches[0].clientY - event.target.offsetTop
+    // const difX = event.pageX - event.target.offsetLeft
+    // const difY = event.pageY - event.target.offsetTop
 
     // setCoordinatesDiff({ x: difX, y: difY })
   }
@@ -130,7 +130,7 @@ function Canvas({ color, items, background, firstLocation }) {
   }, [items])
 
   return (
-    <div id='canvas' className={styles.container} ref={container}>
+    <div id='canvas' className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`} ref={container}>
       {background ? <div className='background'><Image
         type={'background'}
         path={`/img/background/${background}`}
