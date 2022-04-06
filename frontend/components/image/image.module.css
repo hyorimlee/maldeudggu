@@ -21,7 +21,7 @@
 }
 
 .logo {
-  width: 70%;
+  height: 20%;
 }
 
 .sentenceBackground {
@@ -62,5 +62,5 @@
 
 .sharedImage:hover {
   width: 30vw;
-  box-shadow: 3px 3px 3px 0 #999999;
+  box-shadow: 3px 3px 3px 1px #bcbcbc;
 }

@@ -1,17 +1,21 @@
 .select {
-  font-family: 'Noto Sans KR';
-  font-size: 12px;
-  background-color: #FFFFFF;
-  border: 2px solid #FFAE4A;
+  font-family: 'NEXON Lv1 Gothic OTF';
+  font-size: 0.7rem;
+  background-color: #ffffff;
+  border: 2px solid #ffae4a;
   border-radius: 5px;
-  padding: 3px 5px;
-  display: block;
+  padding: 0.2rem 0.4rem;
   margin: auto;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.inline {
+  display: inline;
+  margin: 0 0.2rem 0.5rem 0.2rem;
 }
 
 .option {
-  background: #F3F3F3;
+  background: #f3f3f3;
   text-align: center;
 }
 
