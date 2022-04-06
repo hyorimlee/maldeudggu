@@ -26,6 +26,15 @@
   box-shadow: 3px 3px 15px 0px #e9e1e1;
 }
 
+.nightMode {
+  background-color: rgb(58, 58, 60) !important;
+  box-shadow: 3px 3px 15px 0 #000000 !important;
+}
+
+.nightMode article {
+  background-color: rgb(58, 58, 60) !important;
+}
+
 /* 스크롤 막기 */
 .hidden {
   height: 100%;

@@ -122,6 +122,7 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
       </div>
       <Image type="myCharacter" path={imageUrl}></Image>
       <ResultProgress
+      staticState={staticState}
         result={[
           [korLocation[0], parseInt(result[korLocation[0]])],
           [korLocation[1], parseInt(result[korLocation[1]])],

@@ -14,7 +14,7 @@ import { getBackgroundList, getFileList } from "../../../modules/filelist"
 import { patchRequest } from '../../../modules/fetch'
 import { randomDelay } from "../../../modules/delay"
 
-
+import styles from '../../../styles/customize.module.css'
 
 // firebase 초기화
 const storage = getStorage(initializeApp(firebaseConfig));
@@ -142,7 +142,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   }
 
   return (
-    <>
+    <main className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
       {
         delay
         ?
@@ -179,7 +179,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
           </>
         )
       }
-    </>
+    </main>
   )
 }
 

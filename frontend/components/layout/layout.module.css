@@ -4,3 +4,33 @@
   align-items: center;
   padding: 0 1.5rem;
 }
+
+.nightMode {
+  background-color: rgb(28, 28, 30);
+  color: #DDDDDD;
+}
+
+.nightMode div {
+  background-color: rgb(28, 28, 30);
+  color: #DDDDDD;
+}
+
+.nightMode article {
+  background-color: rgb(28, 28, 30);
+  box-shadow: none;
+  color: #DDDDDD;
+}
+
+.nightMode article article {
+  background-color: rgb(28, 28, 30);
+  box-shadow: none;
+  color: #DDDDDD;
+}
+
+.nightMode article img {
+  box-shadow: none !important;
+}
+
+.nightMode article img:hover {
+  box-shadow: 3px 3px 3px 0 #000000 !important;
+}
