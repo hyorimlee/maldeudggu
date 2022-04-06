@@ -80,24 +80,27 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
         <div className={styles.inner} tabIndex="0">
           <Text
             size={12}
-            contents={'인공지능 모델 재학습을 위하여 발화자의 정보를 수집하고 있어요.'}
+            margin={'mb20'}
+            contents={'보다 정확한 방언 분류를 위해 발화자의 정보를 수집하고 있어요. 입력해주신 정보는 안전하게 보관할게요.'}
           ></Text>
-          <Text size={12} contents={'1. 성별과 나이를 알려주세요.'}></Text>
-          <Select name={'gender'} id={'gender'} options={GENDER} onChange={changeMetaData}></Select>
-          <Select name={'age'} options={AGE} onChange={changeMetaData}></Select>
-          <Text size={12} contents={'2. 출생 지역을 알려주세요.'}></Text>
+          <Text size={12} margin={5} contents={'1. 성별과 나이를 알려주세요.'}></Text>
+          <Select name={'gender'} inline id={'gender'} options={GENDER} onChange={changeMetaData}></Select>
+          <Select name={'age'} inline options={AGE} onChange={changeMetaData}></Select>
+          <Text size={12} margin={5} contents={'2. 출생 지역을 알려주세요.'}></Text>
           <Select name={'birthLocation'} options={BIRTHLOCATION} onChange={changeMetaData}></Select>
-          <Text size={12} contents={'3. 10년 이상 거주했던 지역이 있다면 알려주세요.'}></Text>
+          <Text size={12} margin={5} contents={'3. 10년 이상 거주했던 지역이 있다면 알려주세요.'}></Text>
           <Select name={'location'} options={LOCATION} onChange={changeMetaData}></Select>
-          <Button
-            content={'저장하고 닫기'}
-            handler={saveAndClose}
-          ></Button>
-          <Button
-            color={'grey'}
-            content={'닫기'}
-            handler={justClose}
-          ></Button>
+          <div className={styles.buttonWrapper}>
+            <Button
+              content={'저장하고 닫기'}
+              handler={saveAndClose}
+            ></Button>
+            <Button
+              color={'grey'}
+              content={'닫기'}
+              handler={justClose}
+            ></Button>
+          </div>
         </div>
       </div>
     </div >
