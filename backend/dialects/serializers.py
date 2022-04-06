@@ -19,7 +19,7 @@ class ImageListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Case
-        exclude = ('result', )
+        exclude = ('result', 'sentences',)
 
 
 class AudioQuerySerializer(serializers.Serializer):
