@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
   const result = await getRequest(`/${params.shareId}/result`)
 
   if (image.status === 500 || result.status === 500) {
-    return { props: { notFoundCode: '0002' }}
+    return { props: { notFoundCode: '0002' } }
   }
 
   return {
@@ -107,8 +107,9 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
       <div>
         <Text
           bold
+          font
           inline
-          size={18}
+          size={20}
           color={'orange'}
           contents={`${nickname}`}
         ></Text>
@@ -127,16 +128,20 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
           [korLocation[2], parseInt(result[korLocation[2]])],
         ]}
       ></ResultProgress>
-      <Text
-        contents={`
-          ${nickname} 님의 억양은 ${korLocation[0]}도 방언과의 유사도가 ${result[korLocation[0]]}%로 가장 높아요.
-          다음으로 ${korLocation[1]}도 ${result[korLocation[1]]}%, ${korLocation[2]}도 ${result[korLocation[2]]}% 순의 결과가 나왔습니다.
-        `}>
-      </Text>
-      <Text contents={dialectsFeature[korLocation[0]]}></Text>
+      <div className={styles.textContainer}>
+        <Text
+          contents={`
+            ${nickname} 님의 억양은 ${korLocation[0]}도 방언과의 유사도가 ${result[korLocation[0]]}%로 가장 높아요.
+            다음으로 ${korLocation[1]}도 ${result[korLocation[1]]}%, ${korLocation[2]}도 ${result[korLocation[2]]}% 순의 결과가 나왔습니다.
+          `}>
+        </Text>
+        <Text contents={dialectsFeature[korLocation[0]]}></Text>
+      </div>
       <Button content={'테스트 다시하기'} handler={() => router.push('/')}></Button>
-      <Text size={12} contents={'친구에게 공유하기'}></Text>
-      <SNSContainer onClick={clickedShare}></SNSContainer>
+      <div className={styles.buttonContainer}>
+        <Text size={12} contents={'친구에게 공유하기'}></Text>
+        <SNSContainer onClick={clickedShare}></SNSContainer>
+      </div>
     </div>
   )
 }

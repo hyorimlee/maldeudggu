@@ -6,7 +6,7 @@ color     : '' | grey | white | orange
 contents  : string
 size      : 12 | 14 (기본값) | 16 | 18 | 20 | 22
 */
-function Text({ bold, color, contents, size = 14, onClick, margin, inline }) {
+function Text({ bold, color, contents, size = 14, onClick, margin, inline, font }) {
   return (
     <p
       onClick={onClick}
@@ -15,6 +15,7 @@ function Text({ bold, color, contents, size = 14, onClick, margin, inline }) {
                   ${color === 'grey' ? styles.grey : color === 'white' ? styles.white : color === 'orange' ? styles.orange : ''}
                   ${margin === 5 ? styles.m5 : margin === 'mb20' ? styles.mb20 : ''}
                   ${inline ? styles.inline : ''}
+                  ${font ? styles.font : ''}
                 `}>
       {contents}
     </p>
