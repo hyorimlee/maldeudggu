@@ -79,25 +79,29 @@ function Home({ staticState, changeStaticState }) {
   }
 
   const testStart = async () => {
-    // 마이크 접근
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true })
-      const response = await postRequest('/start/', [['nickname', nickname.trim()]])      // 닉네임 양끝 공백 제거
-      changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
+    navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(() => {
+      postRequest('/start/', [['nickname', nickname.trim()]])
+      .then((response) => {
+        changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
 
-      if (staticState.reuse) {
-        let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
-        postRequest(`/${response.case_id}/survey/`, metaData).then(
+        if (staticState.reuse) {
+          let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
+          postRequest(`/${response.case_id}/survey/`, metaData)
+          .then(
+            setDelay(true)
+          )
+        } else {
           setDelay(true)
-        ).catch(
-          setDelay(true)
-        )
-      } else {
-        setDelay(true)
-      }
-    } catch (error) {
+        }
+      })
+      .catch(() => {
+        router.push({ pathname: '/404', query: { code: '0502' } })
+      })
+    })
+    .catch(() => {
       alert('음성 권한을 허용해주세요')
-    }
+    })
   }
 
   useEffect(() => {
