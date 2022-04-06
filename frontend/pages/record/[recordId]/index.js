@@ -61,13 +61,13 @@ function Record({ staticState, changeStaticState, sentence, id }) {
       setPageFlip(true)
       changeStaticState('recordCount', staticState.recordCount + 1)
 
-      randomDelay(1000, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
+      randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
     } else {
       setIsEnd(true)
       const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
       changeStaticState('result', testResult.result)
 
-      randomDelay(2000, 1000, () => router.replace('/result'))
+      randomDelay(1500, 1000, () => router.replace('/result'))
     }
   }
 
