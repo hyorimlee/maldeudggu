@@ -1,6 +1,6 @@
 .swiper {
   width: 100vw;
-  height: 100%;
+  height: 30vh;
 }
 
 .swiperSlide {
@@ -22,5 +22,5 @@
 
 .swiperSlide img {
   display: block;
-  width: 20%;
+  height: 30vh;
 }
