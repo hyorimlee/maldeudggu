@@ -58,6 +58,16 @@ function Home({ staticState, changeStaticState }) {
         router.push({ pathname: '/404', query: { code } })
       })
     body.current = document.querySelector('body')
+
+    if (navigator.userAgent.indexOf("Chrome") > -1) {
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari를 통해 접속해주세요!')
+      }
+    } else if (navigator.userAgent.indexOf("Safari") > -1) {
+      if (/Android/i.test(navigator.userAgent)) {
+        alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome을 통해 접속해주세요!')
+      }
+    }
   }, [])
 
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기

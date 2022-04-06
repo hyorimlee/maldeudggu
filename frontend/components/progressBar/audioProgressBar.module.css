@@ -9,13 +9,8 @@
 }
 
 .playPause {
-  background: var(--primary);
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 30px;
-  color: var(--secondary);
   justify-content: center;
   align-items:center;
 }
