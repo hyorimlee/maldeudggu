@@ -165,7 +165,7 @@ function Home({ staticState, changeStaticState }) {
               className={styles.icon}
             ></FontAwesomeIcon>
           </div>
-          <div className={styles.sharedImages__container}>
+          <article className={`${styles.sharedImages__container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
             <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
             {
               sharedImages.length
@@ -176,7 +176,7 @@ function Home({ staticState, changeStaticState }) {
                 )
                 : <></>
             }
-          </div>
+          </article>
         </>
       )
       }

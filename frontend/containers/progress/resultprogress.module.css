@@ -8,3 +8,11 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.nightMode div div {
+  background-color: rgb(72, 72, 74);
+}
+
+.nightMode div div div {
+  background-color: #FB7D1E;
+}

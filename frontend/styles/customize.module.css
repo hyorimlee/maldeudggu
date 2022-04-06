@@ -1,0 +1,7 @@
+.container {
+  height: 100vh;
+}
+
+.nightMode div {
+  background-color: rgb(99, 99, 102);
+}

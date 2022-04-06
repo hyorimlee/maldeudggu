@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [staticState, setStaticState] = useState({
     settings: {
-      nightMode: false,
+      nightMode: true,
     },
     caseId: -1,
     nickname: '',
@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-    <Layout>
+    <Layout nightMode={staticState.settings.nightMode}>
       <Head>
         <title>말듣꾸 - AI방언분석</title>
       </Head>
