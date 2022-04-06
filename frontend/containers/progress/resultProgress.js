@@ -7,15 +7,15 @@ function ResultProgress({ result, staticState }) {
   return (
     <section className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
       <div className={styles.barContainer}>
-        <Text contents={result[0][0]} size={16}></Text>
+        <Text bold contents={result[0][0]}></Text>
         <Progress percent={result[0][1]}></Progress>
       </div>
       <div className={styles.barContainer}>
-        <Text contents={result[1][0]} size={16}></Text>
+        <Text bold contents={result[1][0]}></Text>
         <Progress percent={result[1][1]}></Progress>
       </div>
       <div className={styles.barContainer}>
-        <Text contents={result[2][0]} size={16}></Text>
+        <Text bold contents={result[2][0]}></Text>
         <Progress percent={result[2][1]}></Progress>
       </div>
     </section>

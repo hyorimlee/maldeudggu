@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
   const result = await getRequest(`/${params.shareId}/result`)
 
   if (image.status === 500 || result.status === 500) {
-    return { props: { notFoundCode: '0002' }}
+    return { props: { notFoundCode: '0002' } }
   }
 
   return {
@@ -103,19 +103,23 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
   }
 
   return (
-    <>
-      <Text
-        bold
-        size={16}
-        color={'orange'}
-        contents={`${nickname}`}
-      ></Text>
-      {/* 여기 여백 조정 할 거임 */}
-      <Text
-        bold
-        size={16}
-        contents={`님의 말듣꾸`}
-      ></Text>
+    <div className={styles.container}>
+      <div className={styles.nickname}>
+        <Text
+          bold
+          font
+          inline
+          size={20}
+          color={'orange'}
+          contents={`${nickname}`}
+        ></Text>
+        <Text
+          bold
+          inline
+          size={16}
+          contents={`님의 말듣꾸`}
+        ></Text>
+      </div>
       <Image type="myCharacter" path={imageUrl}></Image>
       <ResultProgress
       staticState={staticState}
@@ -125,17 +129,21 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
           [korLocation[2], parseInt(result[korLocation[2]])],
         ]}
       ></ResultProgress>
-      <Text
-        contents={`
-          ${nickname} 님의 목소리는 ${korLocation[0]} 방언이 ${result[korLocation[0]]}% 로 주로 사용하시는군요!
-          그 외에 ${korLocation[1]} ${result[korLocation[1]]}%, ${korLocation[2]} ${result[korLocation[2]]}% 가 나왔습니다.
-        `}>
-      </Text>
-      <Text contents={dialectsFeature[korLocation[0]]}></Text>
+      <div className={styles.textContainer}>
+        <Text
+          contents={`
+            ${nickname} 님의 억양은 ${korLocation[0]}도 방언과의 유사도가 ${result[korLocation[0]]}%로 가장 높아요.
+            다음으로 ${korLocation[1]}도 ${result[korLocation[1]]}%, ${korLocation[2]}도 ${result[korLocation[2]]}% 순의 결과가 나왔습니다.
+          `}>
+        </Text>
+        <Text contents={dialectsFeature[korLocation[0]]}></Text>
+      </div>
       <Button content={'테스트 다시하기'} handler={() => router.push('/')}></Button>
-      <Text size={12} contents={'친구에게 공유하기'}></Text>
-      <SNSContainer onClick={clickedShare}></SNSContainer>
-    </>
+      <div className={styles.buttonContainer}>
+        <Text size={12} contents={'친구에게 공유하기'}></Text>
+        <SNSContainer onClick={clickedShare}></SNSContainer>
+      </div>
+    </div>
   )
 }
 

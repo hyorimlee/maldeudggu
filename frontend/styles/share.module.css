@@ -1,0 +1,18 @@
+.container {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.nickname {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textContainer {
+  margin: 1.5rem 0;
+}
+
+.buttonContainer {
+  margin-top: 1.5rem;
+}

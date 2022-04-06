@@ -58,6 +58,16 @@ function Home({ staticState, changeStaticState }) {
         router.push({ pathname: '/404', query: { code } })
       })
     body.current = document.querySelector('body')
+
+    if (navigator.userAgent.indexOf("Chrome") > -1) {
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari를 통해 접속해주세요!')
+      }
+    } else if (navigator.userAgent.indexOf("Safari") > -1) {
+      if (/Android/i.test(navigator.userAgent)) {
+        alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome을 통해 접속해주세요!')
+      }
+    }
   }, [])
 
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
@@ -128,9 +138,11 @@ function Home({ staticState, changeStaticState }) {
               type='logo'
               path='/img/logo/logo.png'
             ></Image>
-            <Text
-              contents={`지금까지 ${participant}명이 참여했어요!`}
-            ></Text>
+            <div className={styles.participant}>
+              <Text inline contents={'지금까지 '}></Text>
+              <Text inline color={'orange'} size={18} font contents={participant}></Text>
+              <Text inline contents={'명이 참여했어요!'}></Text>
+            </div>
             <Text
               contents={[
                 "말듣꾸는 '말하기, 듣기, 꾸미기'의 줄임말로 당신의 억양을 인공지능으로 분석하여 어느 지역의 사투리와 가장 닮아 있는지 알려주는 서비스입니다.",

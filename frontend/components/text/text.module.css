@@ -1,3 +1,11 @@
+.font {
+  font-family: 'BRBA_B';
+}
+
+.inline {
+  display: inline-block;
+}
+
 .p12 {
   font-size: 0.7rem;
   text-align: center;
@@ -6,7 +14,7 @@
 .p14 {
   font-size: 0.85rem;
   text-align: center;
-  margin: 0.5rem;
+  margin: 0.7rem 0.3rem 0.5rem 0.3rem;
 }
 
 .p16 {
@@ -18,13 +26,13 @@
 .p18 {
   font-size: 1.1rem;
   text-align: center;
-  margin: 0.5rem;
+  margin: 0.8rem 0.1rem 0.5rem 0.1rem;
 }
 
 .p20 {
   font-size: 1.2rem;
   text-align: center;
-  margin: 2rem 0 0 0;
+  margin: 0;
 }
 
 .p22 {
@@ -33,7 +41,7 @@
 }
 
 .m5 {
-  margin: 0.5rem 0;
+  margin: 0.5rem;
 }
 
 .mb20 {
