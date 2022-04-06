@@ -3,9 +3,11 @@
   flex-direction: column;
   align-items: center;
   padding: 0 1.5rem;
+  overflow: auto;
 }
 
 .nightMode {
+  height: 100%;
   background-color: rgb(28, 28, 30);
   color: #DDDDDD;
 }

@@ -35,3 +35,9 @@
   color: #000000;
   text-decoration: underline;
 }
+
+.nightMode {
+  background-color: rgb(28, 28, 30);
+  color: #DDDDDD;
+  text-decoration: underline;
+}

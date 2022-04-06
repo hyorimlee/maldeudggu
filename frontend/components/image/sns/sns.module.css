@@ -32,3 +32,13 @@
   background-image: url(../../../public/sns/icon-download.png);
   background-repeat: no-repeat;
 }
+
+.link_night {
+  background-image: url(../../../public/sns/icon-link_night.png);
+  background-repeat: no-repeat;
+}
+
+.download_night {
+  background-image: url(../../../public/sns/icon-download_night.png);
+  background-repeat: no-repeat;
+}

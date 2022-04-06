@@ -67,7 +67,25 @@ function Canvas({ color, items, background, firstLocation }) {
         event.target.style.left = (canvasRight - event.target.offsetWidth) + 'px'
       }
     }
+  }
 
+  const mouseDown = event => {
+    console.log('mouseUp')
+    console.log(event)
+    // const difX = event.targetTouches[0].clientX - event.target.offsetLeft
+    // const difY = event.targetTouches[0].clientY - event.target.offsetTop
+
+    // setCoordinatesDiff({ x: difX, y: difY })
+  }
+
+  const drag = event => {
+    // console.log('mouseMove')
+    // console.log(event)
+  }
+
+  const mouseUp = event => {
+    // console.log('mouseDown')
+    // console.log(event)
   }
 
   // 색상 변경시에만 실행됨
@@ -113,14 +131,17 @@ function Canvas({ color, items, background, firstLocation }) {
 
   return (
     <div id='canvas' className={styles.container} ref={container}>
-      {background ? <Image
+      {background ? <div className='background'><Image
         type={'background'}
         path={`/img/background/${background}`}
-      ></Image> : <div></div>}
+      ></Image></div> : <></>}
       <img
         id='character'
         ref={character}
         className={styles.none}
+        onMouseDown={mouseDown}
+        onDrag={drag}
+        onMouseUp={mouseUp}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -129,6 +150,9 @@ function Canvas({ color, items, background, firstLocation }) {
         id='item1'
         ref={item1}
         className={styles.none}
+        onMouseDown={mouseDown}
+        onDrag={drag}
+        onMouseUp={mouseUp}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -137,6 +161,9 @@ function Canvas({ color, items, background, firstLocation }) {
         id='item2'
         ref={item2}
         className={styles.none}
+        onMouseDown={mouseDown}
+        onDrag={drag}
+        onMouseUp={mouseUp}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}
@@ -145,6 +172,9 @@ function Canvas({ color, items, background, firstLocation }) {
         id='item3'
         ref={item3}
         className={styles.none}
+        onMouseDown={mouseDown}
+        onDrag={drag}
+        onMouseUp={mouseUp}
         onTouchStart={touched}
         onTouchMove={moveItem}
         onTouchEnd={touchEnd}

@@ -141,7 +141,7 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
       <Button content={'테스트 다시하기'} handler={() => router.push('/')}></Button>
       <div className={styles.buttonContainer}>
         <Text size={12} contents={'친구에게 공유하기'}></Text>
-        <SNSContainer onClick={clickedShare}></SNSContainer>
+        <SNSContainer onClick={clickedShare} staticState={staticState}></SNSContainer>
       </div>
     </div>
   )
