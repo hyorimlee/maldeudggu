@@ -104,7 +104,7 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.nickname}>
         <Text
           bold
           font
@@ -116,7 +116,7 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
         <Text
           bold
           inline
-          size={18}
+          size={16}
           contents={`님의 말듣꾸`}
         ></Text>
       </div>
