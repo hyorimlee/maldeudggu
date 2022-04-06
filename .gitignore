@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,python,django,react,nextjs
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,python,django,react,nextjs
-
+*.sh
 ### Django ###
 *.log
 *.pot
