@@ -26,6 +26,7 @@
 
 .sentenceBackground {
   width: 80vw;
+  z-index: 0;
 }
 
 .result1 {
