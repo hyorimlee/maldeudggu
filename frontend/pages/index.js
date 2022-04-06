@@ -29,6 +29,10 @@ async function getDatas() {
   const sharedImages = await getRequest('/shared')
   const participant = await getRequest('/participant')
 
+  if (sharedImages === null || participant === null) {
+    throw '0502'
+  }
+
   return {
     sharedImages,
     'participant': participant.count
@@ -49,6 +53,9 @@ function Home({ staticState, changeStaticState }) {
       .then(response => {
         setParticipant(response.participant)
         setSharedImages(response.sharedImages)
+      })
+      .catch((code) => {
+        router.push({ pathname: '/404', query: { code } })
       })
     body.current = document.querySelector('body')
   }, [])

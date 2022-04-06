@@ -8,9 +8,10 @@ import Image from '../components/image/image'
 import styles from '../styles/404.module.css'
 
 const NOT_FOUND_CODE = {
-  '0000': ['요청하신 페이지가 존재하지 않네요', '접속 주소를 다시 한번 확인해주세요'],
-  '0001': ['해당 페이지를 바로 접속할 수 없어요', '메인 페이지에서 시작해주세요'],
-  '0002': ['', ''],
+  '0000': ['요청하신 페이지가 존재하지 않아요.', <br key={1} />, '접속 주소를 다시 한번 확인해주세요.'],
+  '0001': ['해당 페이지를 바로 접속할 수 없어요.', <br key={1} />, '메인 페이지에서 시작해주세요.'],
+  '0002': ['찾으시는 결과가 존재하지 않아요.', <br key={1} />, '접속 주소를 다시 한번 확인해주세요.'],
+  '0502': ['서버에서 문제가 있어요.', <br key={1} />, '잠시후에 다시 시도해주세요.'],
 }
 
 
@@ -24,14 +25,12 @@ function Custom404() {
     }
   }, [router])
 
-  const texts = NOT_FOUND_CODE[code].map((t, idx) => <Text key={t.slice(0,3) + idx} size={idx === 0 ? 16 : 14} contents={t}></Text>)
-
   return (
-    <>
+    <main className={styles.container}>
       <Image type='logo' path='/img/logo/logo.png'></Image>
-      {texts}
+      <Text contents={NOT_FOUND_CODE[code]}></Text>
       <Button content='메인 페이지로 이동하기' handler={() => router.push('/')}></Button>
-    </>
+    </main>
   )
 }
 

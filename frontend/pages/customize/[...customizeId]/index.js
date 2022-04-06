@@ -109,32 +109,36 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     const storageRef = ref(storage, `${staticState.caseId}.png`)
 
     let cnt = 0
-    useIdx.forEach(idx => {
-      const img = new Image()
-      const style = imgAll[idx].style
-
-      img.src = imgAll[idx].src
-      img.onload = () => {
-        context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
-
-        cnt += 1
-        if (cnt >= useIdx.length) {
-          context.canvas.toBlob(blob => {
-            setDelay(true)
-            uploadBytes(storageRef, blob)
-              .then(() => {
-                getDownloadURL(storageRef)
-                  .then((url) => {
-                    patchRequest(`/${staticState.caseId}/image`, url)
-                      .then((response) => {
-                        randomDelay(500, 1000, () => router.push(`/share/${response.case_id}`))
-                      })
-                  })
-              })
-          }, 'image/png')
+    try {
+      useIdx.forEach(idx => {
+        const img = new Image()
+        const style = imgAll[idx].style
+  
+        img.src = imgAll[idx].src
+        img.onload = () => {
+          context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
+  
+          cnt += 1
+          if (cnt >= useIdx.length) {
+            context.canvas.toBlob(blob => {
+              setDelay(true)
+              uploadBytes(storageRef, blob)
+                .then(() => {
+                  getDownloadURL(storageRef)
+                    .then((url) => {
+                      patchRequest(`/${staticState.caseId}/image`, url)
+                        .then((response) => {
+                          randomDelay(500, 1000, () => router.push(`/share/${response.case_id}`))
+                        })
+                    })
+                })
+            }, 'image/png')
+          }
         }
-      }
-    })
+      })
+    } catch {
+      router.push({ pathname: '/404', query: { code: '0502' } })
+    }
   }
 
   return (
