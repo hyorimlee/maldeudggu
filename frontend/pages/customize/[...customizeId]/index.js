@@ -24,9 +24,9 @@ export async function getStaticPaths() {
   const num = [...Array(10).keys()]
 
   const paths = province.reduce((preValue, currentValue, idx) => {
-    return [...preValue, ...num.map(num => ({ params: {customizeId: [currentValue, num.toString()]}}))]
+    return [...preValue, ...num.map(num => ({ params: { customizeId: [currentValue, num.toString()] } }))]
   }, [])
-  
+
   return {
     paths,
     fallback: false
@@ -38,7 +38,7 @@ export async function getStaticProps({ params }) {
   const characterFiles = await getFileList('character', params.customizeId)
   const itemFiles = await getFileList('items', params.customizeId)
   const backgroundFiles = await getBackgroundList()
-  
+
   return {
     props: { characterFiles, itemFiles, backgroundFiles }
   }
@@ -55,6 +55,11 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   useEffect(() => {
     if (staticState.caseId === -1 || staticState.sentences.length === 0) {
       router.push({ pathname: '/404', query: { code: '0001' } })
+    }
+    if (staticState.settings.nightMode) {
+      setBackground(`background-11.svg`)
+    } else {
+      setBackground(`background-12.svg`)
     }
   }, [])
 
@@ -89,7 +94,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   const handleBackgroundChange = (file) => {
     setBackground(file)
   }
-  
+
   const clickedButton = () => {
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
@@ -113,11 +118,11 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
       useIdx.forEach(idx => {
         const img = new Image()
         const style = imgAll[idx].style
-  
+
         img.src = imgAll[idx].src
         img.onload = () => {
           context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
-  
+
           cnt += 1
           if (cnt >= useIdx.length) {
             context.canvas.toBlob(blob => {
@@ -128,7 +133,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
                     .then((url) => {
                       patchRequest(`/${staticState.caseId}/image`, url)
                         .then((response) => {
-                          randomDelay(500, 1000, () => router.push(`/share/${response.case_id}`))
+                          randomDelay(200000, 300000, () => router.push(`/share/${response.case_id}`))
                         })
                     })
                 })
@@ -142,42 +147,47 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   }
 
   return (
-    <main className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
+    <main className={styles.container}>
       {
         delay
-        ?
-        (
-          <>
+          ?
+          (
             <ThreeDotsWave contents={'이미지를 제작하는 중이에요.'}></ThreeDotsWave>
-          </>
-        )
-        :
-        (
-          <>
-            <Text
-              bold
-              contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
-            ></Text>
-            {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
-            <Text
-              size={12}
-              contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
-            ></Text>
-            <Canvas color={color} items={items} background={background} firstLocation={Object.keys(characterFiles)[0]}></Canvas>
-            <ItemSelector
-              color={color}
-              items={items}
-              background={background}
-              handleColorChange={handleColorChange}
-              handleItemChange={handleItemChange}
-              handleBackgroundChange={handleBackgroundChange}
-              filteredCharacters={characterFiles}
-              filteredItems={itemFiles}
-              backgroundFiles={backgroundFiles}
-            ></ItemSelector>
-            <Button content='완성!' handler={clickedButton}></Button>
-          </>
-        )
+          )
+          :
+          (
+            <>
+              <Text
+                bold
+                contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
+              ></Text>
+              {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
+              <Text
+                size={12}
+                contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
+              ></Text>
+              <Canvas
+                color={color}
+                items={items}
+                staticState={staticState}
+                background={background}
+                firstLocation={Object.keys(characterFiles)[0]}
+              ></Canvas>
+              <ItemSelector
+                color={color}
+                items={items}
+                background={background}
+                staticState={staticState}
+                handleColorChange={handleColorChange}
+                handleItemChange={handleItemChange}
+                handleBackgroundChange={handleBackgroundChange}
+                filteredCharacters={characterFiles}
+                filteredItems={itemFiles}
+                backgroundFiles={backgroundFiles}
+              ></ItemSelector>
+              <Button content='완성!' handler={clickedButton}></Button>
+            </>
+          )
       }
     </main>
   )

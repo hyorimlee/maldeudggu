@@ -16,6 +16,13 @@
   margin: 10px;
 }
 
+.backgroundItems {
+  width: 70%;
+  margin: 10px;
+  border: 1px dashed black;
+  border-radius: 0.5rem;
+}
+
 .background {
   width: 101%;
   z-index: 1;
