@@ -32,7 +32,7 @@ def get_sentence(request, sentence_pk):
 
 @api_view()
 def get_images(request):
-    cases = get_list_or_404(Case, image_url__isnull=False)
+    cases = get_list_or_404(Case.objects.order_by('-pk'), image_url__isnull=False)[:12]
     serializer = ImageListSerializer(cases, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
