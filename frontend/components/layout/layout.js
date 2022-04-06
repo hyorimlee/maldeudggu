@@ -1,8 +1,8 @@
 import styles from './layout.module.css'
 
-function Layout({ children }) {
+function Layout({ children, nightMode }) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${nightMode ? styles.nightMode : ''}`}>
       {children}
     </div>
   )

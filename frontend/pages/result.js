@@ -67,6 +67,7 @@ function Result({ staticState, changeStaticState }) {
               </div>
               <Text size={20} bold contents='테스트 결과'></Text>
               <ResultProgress
+                staticState={staticState}
                 result={[
                   [resultKor[0], parseInt(staticState.result[resultKor[0]])],
                   [resultKor[1], parseInt(staticState.result[resultKor[1]])],

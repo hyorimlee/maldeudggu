@@ -75,7 +75,7 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
   }
 
   const modalContent = show ? (
-    <div className={styles.overlay}>
+    <article className={`${styles.overlay} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
       <div className={styles.wrapper} tabIndex="-1">
         <div className={styles.inner} tabIndex="0">
           <Text
@@ -103,7 +103,7 @@ function Modal({ show, onClose, staticState, changeStaticState }) {
           </div>
         </div>
       </div>
-    </div >
+    </article >
   ) : null
 
   if (isBrower) {

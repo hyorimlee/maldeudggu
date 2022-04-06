@@ -27,3 +27,8 @@
 .buttonWrapper {
   margin: 1rem 0;
 }
+
+.nightMode div {
+  background-color: rgb(44, 44, 46);
+  color: #DDDDDD;
+}
