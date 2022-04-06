@@ -2,6 +2,7 @@ import { withRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import Text from '../../../components/text/text'
+import Button from '../../../components/button/button'
 import SNSContainer from '../../../containers/sns/snsContainer'
 import Image from '../../../components/image/image'
 import ResultProgress from '../../../containers/progress/resultProgress'
@@ -33,6 +34,10 @@ export async function getStaticProps({ params }) {
   const image = await getRequest(`/${params.shareId}/my`)
   const result = await getRequest(`/${params.shareId}/result`)
 
+  if (image.status === 500 || result.status === 500) {
+    return { props: { notFoundCode: '0002' }}
+  }
+
   return {
     props: {
       caseId: params.shareId,
@@ -43,12 +48,22 @@ export async function getStaticProps({ params }) {
   }
 }
 
-function Share({ staticState, changeStaticState, nickname, imageUrl, result, router, caseId }) {
+function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, result, router, notFoundCode }) {
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init(KAKAO_API_KEY)
     }
   }, [])
+
+  useEffect(() => {
+    if (notFoundCode === '0002') {
+      router.replace({ pathname: '/404', query: { code: notFoundCode } })
+    }
+  }, [notFoundCode])
+
+  if (notFoundCode === '0002') {
+    return <></>
+  }
 
   //페이지 없는 경우 띄우는 컴포넌트
   if (router.isFallback) {
@@ -119,6 +134,7 @@ function Share({ staticState, changeStaticState, nickname, imageUrl, result, rou
         `}>
       </Text>
       <Text contents={dialectsFeature[korLocation[0]]}></Text>
+      <Button content={'테스트 다시하기'} handler={() => router.push('/')}></Button>
       <Text size={12} contents={'친구에게 공유하기'}></Text>
       <SNSContainer onClick={clickedShare}></SNSContainer>
     </div>

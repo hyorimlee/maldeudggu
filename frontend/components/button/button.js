@@ -1,6 +1,6 @@
 import styles from './button.module.css';
 
-function Button({ link, content, color = 'orange', disabled, handler }) {
+function Button({ content, color = 'orange', disabled, handler }) {
 
   return (
     <button
