@@ -61,13 +61,13 @@ function Record({ staticState, changeStaticState, sentence, id }) {
       setPageFlip(true)
       changeStaticState('recordCount', staticState.recordCount + 1)
 
-      randomDelay(1000, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
+      randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[staticState.recordCount + 1].id}`))
     } else {
       setIsEnd(true)
       const testResult = await getRequest(`/${staticState.caseId}/result/?reuse=${staticState.reuse}`)
       changeStaticState('result', testResult.result)
 
-      randomDelay(2000, 1000, () => router.replace('/result'))
+      randomDelay(1500, 1000, () => router.replace('/result'))
     }
   }
 
@@ -78,87 +78,89 @@ function Record({ staticState, changeStaticState, sentence, id }) {
   return (
     <>
       <div className={styles.recordPageLayout}>
-      {
-        isEnd
-          ?
-          (
-            <>
-              <LoadingSlide />
-              <Text
-                size={18}
-                bold={true}
-                contents={['결과를 분석하고 있습니다.', <br key="1" />, '잠시만 기다려주세요!']}
-              ></Text>
-            </>
-          )
-          : pageFlip
+        {
+          isEnd
             ?
             (
-              <ThreeDotsWave
-                contents={'다음 녹음을 준비중이에요.'}
-              ></ThreeDotsWave>
-            )
-            :
-            (
               <>
+                <LoadingSlide />
                 <Text
-                  size={16}
-                  contents={`${staticState.recordCount + 1}/5`}
+                  size={18}
+                  bold={true}
+                  contents={['결과를 분석하고 있습니다.', <br key="1" />, '잠시만 기다려주세요!']}
                 ></Text>
-                <Text
-                  size={16}
-                  contents={'아래의 문장을 평소 말투로 녹음해주세요.'}
-                ></Text>
-                <div className={styles.sampleSentence}>
-                  <Image
-                    type={'sentenceBackground'}
-                    path={'/img/logo/text-background.png'}
-                  ></Image>
-                  <Text
-                    color={'white'}
-                    size={18}
-                    contents={`${sentence}`}
-                  ></Text>
-                </div>
-                {
-                  staticState.recordAudio.length === staticState.recordCount + 1
-                    ?
-                    (
-                      <>
-                        <div className={styles.audioPlayButton}>
-                          <AudioProgressBar staticState={staticState} />
-                        </div>
-                        <Button
-                          content={'다시 녹음하기'}
-                          handler={reRecord}
-                          color={'none'}
-                        ></Button>
-                        <Button
-                          content={'다음으로 넘어가기'}
-                          handler={sendSoundFile}
-                        />
-                      </>
-                    )
-                    :
-                    (
-                      <>
-                        <RecordButton sentenceId={`${id}`} staticState={staticState} changeStaticState={(type, data) => {
-                          changeStaticState(type, data)
-                        }} />
-                        <Text
-                          size={12}
-                          contents={['위 버튼을 누른 뒤 문장을 읽고', <br key="1" />, '버튼을 다시 눌러 녹음을 종료해주세요.']}
-                        ></Text>
-                        <Button
-                          content={'음성을 녹음해주세요'}
-                          disabled
-                        ></Button>
-                      </>
-                    )
-                }
               </>
             )
-      }
+            : pageFlip
+              ?
+              (
+                <ThreeDotsWave
+                  contents={'다음 녹음을 준비중이에요.'}
+                ></ThreeDotsWave>
+              )
+              :
+              (
+                <>
+                  <Text
+                    size={16}
+                    contents={`${staticState.recordCount + 1}/5`}
+                  ></Text>
+                  <Text
+                    size={16}
+                    contents={'아래의 문장을 평소 말투로 녹음해주세요.'}
+                  ></Text>
+                  <div className={styles.sampleSentence}>
+                    <Image
+                      type={'sentenceBackground'}
+                      path={'/img/logo/text-background.png'}
+                    ></Image>
+                    <Text
+                      color={'white'}
+                      size={18}
+                      contents={`${sentence}`}
+                    ></Text>
+
+                  </div>
+                  {
+                    staticState.recordAudio.length === staticState.recordCount + 1
+                      ?
+                      (
+                        <>
+                          <div className={styles.audioPlayButton}>
+                            <AudioProgressBar staticState={staticState} />
+                          </div>
+                          <Button
+                            // 밑줄 쳐서 버튼인거 티나게 하기?
+                            content={'다시 녹음하기'}
+                            handler={reRecord}
+                            color={'none'}
+                          ></Button>
+                          <Button
+                            content={'다음으로 넘어가기'}
+                            handler={sendSoundFile}
+                          />
+                        </>
+                      )
+                      :
+                      (
+                        <>
+                          <RecordButton sentenceId={`${id}`} staticState={staticState} changeStaticState={(type, data) => {
+                            changeStaticState(type, data)
+                          }} />
+                          <Text
+                            size={12}
+                            contents={['위 버튼을 누른 뒤 문장을 읽고', <br key="1" />, '버튼을 다시 눌러 녹음을 종료해주세요.']}
+                          ></Text>
+                          <Button
+                            content={'음성을 녹음해주세요'}
+                            disabled
+                          ></Button>
+                        </>
+                      )
+                  }
+                </>
+              )
+        }
       </div>
     </>
   )

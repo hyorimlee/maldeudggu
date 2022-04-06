@@ -32,4 +32,81 @@ const shareText = `
 평소 말투를 분석하여 어느 지방의 방언을 사용하는지 알려주는 서비스입니다!
 `
 
-export { korToEng, engToKor, dialectsFeature, shareText }
+
+const locationComb = {
+  'gangwon': [
+    [ 'gangwon', 'chungcheong', 'gyeonggi' ],
+    [ 'gangwon', 'chungcheong', 'gyeongsang' ],
+    [ 'gangwon', 'chungcheong', 'jeju' ],
+    [ 'gangwon', 'chungcheong', 'jeolla' ],
+    [ 'gangwon', 'gyeonggi', 'gyeongsang' ],
+    [ 'gangwon', 'gyeonggi', 'jeju' ],
+    [ 'gangwon', 'gyeonggi', 'jeolla' ],
+    [ 'gangwon', 'gyeongsang', 'jeju' ],
+    [ 'gangwon', 'gyeongsang', 'jeolla' ],
+    [ 'gangwon', 'jeju', 'jeolla' ]
+  ],
+  'chungcheong': [
+    [ 'chungcheong', 'gangwon', 'gyeonggi' ],
+    [ 'chungcheong', 'gangwon', 'gyeongsang' ],
+    [ 'chungcheong', 'gangwon', 'jeju' ],
+    [ 'chungcheong', 'gangwon', 'jeolla' ],
+    [ 'chungcheong', 'gyeonggi', 'gyeongsang' ],
+    [ 'chungcheong', 'gyeonggi', 'jeju' ],
+    [ 'chungcheong', 'gyeonggi', 'jeolla' ],
+    [ 'chungcheong', 'gyeongsang', 'jeju' ],
+    [ 'chungcheong', 'gyeongsang', 'jeolla' ],
+    [ 'chungcheong', 'jeju', 'jeolla' ]
+  ],
+  'gyeonggi': [
+    [ 'gyeonggi', 'gangwon', 'chungcheong' ],
+    [ 'gyeonggi', 'gangwon', 'gyeongsang' ],
+    [ 'gyeonggi', 'gangwon', 'jeju' ],
+    [ 'gyeonggi', 'gangwon', 'jeolla' ],
+    [ 'gyeonggi', 'chungcheong', 'gyeongsang' ],
+    [ 'gyeonggi', 'chungcheong', 'jeju' ],
+    [ 'gyeonggi', 'chungcheong', 'jeolla' ],
+    [ 'gyeonggi', 'gyeongsang', 'jeju' ],
+    [ 'gyeonggi', 'gyeongsang', 'jeolla' ],
+    [ 'gyeonggi', 'jeju', 'jeolla' ]
+  ],
+  'gyeongsang': [
+    [ 'gyeongsang', 'gangwon', 'chungcheong' ],
+    [ 'gyeongsang', 'gangwon', 'gyeonggi' ],
+    [ 'gyeongsang', 'gangwon', 'jeju' ],
+    [ 'gyeongsang', 'gangwon', 'jeolla' ],
+    [ 'gyeongsang', 'chungcheong', 'gyeonggi' ],
+    [ 'gyeongsang', 'chungcheong', 'jeju' ],
+    [ 'gyeongsang', 'chungcheong', 'jeolla' ],
+    [ 'gyeongsang', 'gyeonggi', 'jeju' ],
+    [ 'gyeongsang', 'gyeonggi', 'jeolla' ],
+    [ 'gyeongsang', 'jeju', 'jeolla' ]
+  ],
+  'jeju': [
+    [ 'jeju', 'gangwon', 'chungcheong' ],
+    [ 'jeju', 'gangwon', 'gyeonggi' ],
+    [ 'jeju', 'gangwon', 'gyeongsang' ],
+    [ 'jeju', 'gangwon', 'jeolla' ],
+    [ 'jeju', 'chungcheong', 'gyeonggi' ],
+    [ 'jeju', 'chungcheong', 'gyeongsang' ],
+    [ 'jeju', 'chungcheong', 'jeolla' ],
+    [ 'jeju', 'gyeonggi', 'gyeongsang' ],
+    [ 'jeju', 'gyeonggi', 'jeolla' ],
+    [ 'jeju', 'gyeongsang', 'jeolla' ]
+  ],
+  'jeolla': [
+    [ 'jeolla', 'gangwon', 'chungcheong' ],
+    [ 'jeolla', 'gangwon', 'gyeonggi' ],
+    [ 'jeolla', 'gangwon', 'gyeongsang' ],
+    [ 'jeolla', 'gangwon', 'jeju' ],
+    [ 'jeolla', 'chungcheong', 'gyeonggi' ],
+    [ 'jeolla', 'chungcheong', 'gyeongsang' ],
+    [ 'jeolla', 'chungcheong', 'jeju' ],
+    [ 'jeolla', 'gyeonggi', 'gyeongsang' ],
+    [ 'jeolla', 'gyeonggi', 'jeju' ],
+    [ 'jeolla', 'gyeongsang', 'jeju' ]
+  ]
+}
+
+
+export { korToEng, engToKor, dialectsFeature, shareText, locationComb }
