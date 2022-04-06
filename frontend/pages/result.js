@@ -6,6 +6,8 @@ import Button from '../components/button/button'
 import ResultProgress from '../containers/progress/resultProgress'
 
 import { dialectsFeature, korToEng } from '../modules/locationText'
+// import { comb } from '../modules/filelist'
+
 import styles from '../styles/result.module.css'
 
 function Result({ staticState, changeStaticState }) {
@@ -18,6 +20,19 @@ function Result({ staticState, changeStaticState }) {
       router.push({ pathname: '/404', query: { code: '0001' } })
     }
   }, [])
+
+  const routeCustomize = () => {
+    const first = korToEng[resultKor[0]]
+    let id = -1
+
+    // comb[first].forEach((arr, idx) => {
+    //   if (arr.includes(korToEng[resultKor[1]]) && arr.includes(korToEng[resultKor[2]])) {
+    //     id = idx
+    //   }
+    // })
+
+    router.push(`/customize/${first}/${id}`)
+  }
 
   return (
     <>
@@ -53,7 +68,7 @@ function Result({ staticState, changeStaticState }) {
         </Text>
         <Text contents={dialectsFeature[resultKor[0]]}></Text>
       </div>
-      <Button content='내 캐릭터 꾸미기' handler={() => router.push('/customize')}></Button>
+      <Button content='내 캐릭터 꾸미기' handler={routeCustomize}></Button>
     </>
   )
 }

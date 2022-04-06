@@ -2,36 +2,48 @@ import { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { firebaseConfig } from '../firebaseConfig'
+import { firebaseConfig } from '../../../firebaseConfig'
 
-import { getBackgroundList, getFileList } from "../modules/filelist"
-import { patchRequest, getRequest } from '../modules/fetch'
-import { korToEng } from '../modules/locationText'
+import { getBackgroundList, getFileList } from "../../../modules/filelist"
+import { patchRequest, getRequest } from '../../../modules/fetch'
+import { korToEng } from '../../../modules/locationText'
 
-import Text from "../components/text/text";
-import Canvas from '../containers/canvas/canvas'
-import ItemSelector from "../containers/itemSelector/itemSelector"
-import Button from '../components/button/button'
-import ThreeDotsWave from '../components/loading/loading'
+import Text from "../../../components/text/text";
+import Canvas from '../../../containers/canvas/canvas'
+import ItemSelector from "../../../containers/itemSelector/itemSelector"
+import Button from '../../../components/button/button'
+import ThreeDotsWave from '../../../components/loading/loading'
 
 
 // firebase 초기화
 const storage = getStorage(initializeApp(firebaseConfig));
 
-// 특정 폴더에서 이미지 이름 전부 가져오기 ({지역: [파일명]})
-export async function getStaticProps() {
-  const characterFiles = await getFileList('character')
-  const itemFiles = await getFileList('items')
-  const backgroundFiles = await getBackgroundList()
+export async function getStaticPaths() {
+  const province = ['gangwon', 'chungcheong', 'gyeonggi', 'gyeongsang', 'jeju', 'jeolla']
+  const num = [...Array(10).keys()]
 
+  const paths = province.reduce((preValue, currentValue, idx) => {
+    return [...preValue, ...num.map(num => ({ params: {customizeId: [currentValue, num.toString()]}}))]
+  }, [])
+  
+  return {
+    paths,
+    fallback: false
+  }
+}
+
+// 특정 폴더에서 이미지 이름 전부 가져오기 ({지역: [파일명]})
+export async function getStaticProps({ params }) {
+  const characterFiles = await getFileList('character', params.customizeId)
+  const itemFiles = await getFileList('items', params.customizeId)
+  const backgroundFiles = await getBackgroundList()
+  
   return {
     props: { characterFiles, itemFiles, backgroundFiles }
   }
 }
 
 function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) {
-  const [filteredCharacters, setFilteredCharacters] = useState({})
-  const [filteredItems, setFilteredItems] = useState({})
   const [color, setColor] = useState(`${korToEng[Object.keys(staticState.result)[0]]}-1.svg`)
   const [items, setItems] = useState([])
   const [background, setBackground] = useState('')
@@ -42,28 +54,6 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     if (staticState.caseId === -1 || staticState.sentences.length === 0) {
       router.push({ pathname: '/404', query: { code: '0001' } })
     }
-  }, [])
-
-  // 사용자 결과 3개에 맞게 필터링, 아이템은 '전체'까지 추가
-  useEffect(() => {
-    const location = Object.keys(staticState.result)
-    const locationForItems = location.concat('전체')
-
-    setFilteredCharacters(
-      location.slice(0, 1).reduce((preValue, currentValue) => {
-        return {
-          ...preValue, [korToEng[currentValue]]: [...characterFiles[korToEng[currentValue]]]
-        }
-      }, {})
-    )
-
-    setFilteredItems(
-      locationForItems.reduce((preValue, currentValue) => {
-        return {
-          ...preValue, [korToEng[currentValue]]: [...itemFiles[korToEng[currentValue]]]
-        }
-      }, {})
-    )
   }, [])
 
   // 캐릭터 클릭시
@@ -115,6 +105,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
     const storageRef = ref(storage, `${staticState.caseId}.png`)
 
+    let cnt = 0
     useIdx.forEach(idx => {
       const img = new Image()
       const style = imgAll[idx].style
@@ -123,7 +114,8 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
       img.onload = () => {
         context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
 
-        if (useIdx.slice(-1).includes(idx) === true) {
+        cnt += 1
+        if (cnt === useIdx.length) {
           canvas.toBlob(blob => {
             uploadBytes(storageRef, blob)
               .then((snapshot) => {
@@ -162,8 +154,8 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
         handleColorChange={handleColorChange}
         handleItemChange={handleItemChange}
         handleBackgroundChange={handleBackgroundChange}
-        filteredCharacters={filteredCharacters}
-        filteredItems={filteredItems}
+        filteredCharacters={characterFiles}
+        filteredItems={itemFiles}
         backgroundFiles={backgroundFiles}
       ></ItemSelector>
       <Button content='완성!' handler={clickedButton}></Button>
