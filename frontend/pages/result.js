@@ -20,7 +20,7 @@ function Result({ staticState, changeStaticState }) {
   }, [])
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.standContainer}>
         <Image
           type={'result1'}
@@ -44,7 +44,7 @@ function Result({ staticState, changeStaticState }) {
           [resultKor[2], parseInt(staticState.result[resultKor[2]])]
         ]}>
       </ResultProgress>
-      <div>
+      <div className={styles.textContainer}>
         <Text
           contents={`
             ${staticState.nickname} 님의 억양은 ${resultKor[0]}도 방언과의 유사도가 ${staticState.result[resultKor[0]]}%로 가장 높아요.
@@ -54,7 +54,7 @@ function Result({ staticState, changeStaticState }) {
         <Text contents={dialectsFeature[resultKor[0]]}></Text>
       </div>
       <Button content='내 캐릭터 꾸미기' handler={() => router.push('/customize')}></Button>
-    </>
+    </div>
   )
 }
 
