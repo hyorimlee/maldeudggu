@@ -138,9 +138,11 @@ function Home({ staticState, changeStaticState }) {
               type='logo'
               path='/img/logo/logo.png'
             ></Image>
-            <Text
-              contents={`지금까지 ${participant}명이 참여했어요!`}
-            ></Text>
+            <div className={styles.participant}>
+              <Text inline contents={'지금까지 '}></Text>
+              <Text inline color={'orange'} size={18} font contents={participant}></Text>
+              <Text inline contents={'명이 참여했어요!'}></Text>
+            </div>
             <Text
               contents={[
                 "말듣꾸는 '말하기, 듣기, 꾸미기'의 줄임말로 당신의 억양을 인공지능으로 분석하여 어느 지역의 사투리와 가장 닮아 있는지 알려주는 서비스입니다.",

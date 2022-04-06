@@ -3,6 +3,12 @@
   font-size: 20px;
 }
 
+.participant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .index__container {
   height: 100vh;
   padding: 1.5rem 0;
