@@ -136,7 +136,7 @@ function Home({ staticState, changeStaticState }) {
             <Checkbox
               checked={staticState.reuse}
               onChange={() => changeStaticState('reuse', !staticState.reuse)}
-              contents={'(선택) 음성 데이터를 추가적인 학습에 활용하는 데 동의합니다.'}
+              contents={'(선택) 음성 데이터를 학습에 활용하는 데 동의합니다.'}
             ></Checkbox>
             <Modal
               show={showModal}
@@ -155,7 +155,7 @@ function Home({ staticState, changeStaticState }) {
             ></FontAwesomeIcon>
           </div>
           <div className={styles.sharedImages__container}>
-            <Text bold size={18} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
+            <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
             {
               sharedImages.length
                 ? (

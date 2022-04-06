@@ -1,21 +1,24 @@
 .p12 {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-align: center;
 }
 
 .p14 {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: center;
+  margin: 0.5rem;
 }
 
 .p16 {
-  font-size: 1rem;
+  font-size: 0.94rem;
   text-align: center;
+  margin: 0.5rem;
 }
 
 .p18 {
   font-size: 1.1rem;
   text-align: center;
+  margin: 0.5rem;
 }
 
 .p20 {
@@ -29,7 +32,11 @@
 }
 
 .m5 {
-  margin: 5px;
+  margin: 0.5rem 0;
+}
+
+.mb20 {
+  margin-bottom: 1.25rem;
 }
 
 .bold {
