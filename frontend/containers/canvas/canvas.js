@@ -3,7 +3,7 @@ import Image from '../../components/image/image'
 
 import styles from './canvas.module.css'
 
-function Canvas({ color, items, background, firstLocation }) {
+function Canvas({ color, items, background, firstLocation, staticState }) {
   const [coordinatesDiff, setCoordinatesDiff] = useState({})
   const character = useRef()
   const container = useRef()
@@ -112,7 +112,7 @@ function Canvas({ color, items, background, firstLocation }) {
   }, [items])
 
   return (
-    <div id='canvas' className={styles.container} ref={container}>
+    <div id='canvas' className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`} ref={container}>
       {background ? <Image
         type={'background'}
         path={`/img/background/${background}`}
