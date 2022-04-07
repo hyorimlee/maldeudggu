@@ -134,10 +134,15 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
 
   return (
     <div id='canvas' className={`${styles.container} ${staticState.settings.nightMode ? styles.nightMode : ''}`} ref={container}>
-      {background ? <div className='background'><Image
-        type={'background'}
-        path={`/img/background/${background}`}
-      ></Image></div> : <></>}
+      {
+        background
+        ?
+          <div className='background'>
+            <Image type={'background'} path={`/img/background/${background}`}></Image>
+          </div>
+        :
+          <></>
+      }
       <img
         id='character'
         ref={character}
