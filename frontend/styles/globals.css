@@ -4,7 +4,10 @@ body {
   margin: 0;
   font-family: 'NEXON Lv1 Gothic OTF', sans-serif, Roboto;
   line-height: 1.7;
-  background-color: #f3f3f3;
+}
+
+body > #__next {
+  height: 100%;
 }
 
 a {

@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [staticState, setStaticState] = useState({
     settings: {
-      nightMode: true,
+      nightMode: false,
       browser: {}
     },
     caseId: -1,
@@ -54,6 +54,22 @@ function MyApp({ Component, pageProps }) {
         if (type2) {
           setStaticState({ ...staticState, settings: { ...staticState.settings, [type2]: data }})
         }
+      } else if (type === 'reset') {
+        setStaticState({
+          settings: {
+            nightMode: false,
+            browser: {}
+          },
+          caseId: -1,
+          nickname: '',
+          sentences: [],
+          recordCount: 0,
+          recordAudio: [],
+          recordAudioFile: [],
+          result: {},
+          reuse: false,
+          metaData: {}
+        })
       } else {
         if (type2) {
           setStaticState({ ...staticState, [type]: data, [type2]: data2 })
@@ -97,6 +113,16 @@ function MyApp({ Component, pageProps }) {
     window.addEventListener('beforeunload', reloadHandler)
     router.beforePopState(before)
   }, [])
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+
+    if (staticState.settings.nightMode === false) {
+      body.style.backgroundColor = '#f3f3f3'
+    } else {
+      body.style.backgroundColor = 'rgb(28, 28, 30)'
+    }
+  }, [staticState.settings.nightMode])
 
   return (
     <Layout nightMode={staticState.settings.nightMode}>
