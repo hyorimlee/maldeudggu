@@ -18,9 +18,7 @@ import { faAnglesDown, faSun, faMoon } from "@fortawesome/free-solid-svg-icons"
 
 // modules
 import { getRequest, postRequest } from '../modules/fetch'
-import { stringifyQuery } from "next/dist/server/server-route-utils"
 import { randomDelay } from "../modules/delay"
-import { stat } from "fs"
 
 
 const SharedImages = lazy(() => import('../containers/sharedImages/sharedImages'))
