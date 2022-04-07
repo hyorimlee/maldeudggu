@@ -28,7 +28,7 @@ async function getDatas() {
   const sharedImages = await getRequest('/shared')
   const participant = await getRequest('/participant')
 
-  if (sharedImages === null || participant === null) {
+  if (sharedImages === null || participant === null || sharedImages.status === '502' || participant.status === '502') {
     throw '0502'
   }
 
