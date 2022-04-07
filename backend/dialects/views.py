@@ -140,6 +140,14 @@ def get_result(request, case_pk):
     # 3)
     case.result = '\t'.join([f'{k} {v}' for k, v in result.items()])
     case.save()
+    
+    # 가중치 주기 
+    remain = 100 - sum(result.values())
+    
+    for k in result:
+        result[k] += remain
+        break
+
     data = {
         'case_id': case.pk,
         'result': result
