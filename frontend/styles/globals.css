@@ -4,7 +4,15 @@ body {
   margin: 0;
   font-family: 'NEXON Lv1 Gothic OTF', sans-serif, Roboto;
   line-height: 1.7;
-  background-color: #f3f3f3;
+}
+
+@media screen and (min-width: 450px) {
+  html, body {
+    padding: 0;
+    margin: 0;
+    font-family: 'NEXON Lv1 Gothic OTF', sans-serif, Roboto;
+    line-height: 1.7;
+  }
 }
 
 a {
