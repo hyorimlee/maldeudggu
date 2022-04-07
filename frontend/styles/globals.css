@@ -4,8 +4,6 @@ body {
   margin: 0;
   font-family: 'NEXON Lv1 Gothic OTF', sans-serif, Roboto;
   line-height: 1.7;
-  background-color: #f3f3f3;
-  height: 100vh;
 }
 
 body > #__next {

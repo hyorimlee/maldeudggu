@@ -64,7 +64,10 @@ function Home({ staticState, changeStaticState }) {
       } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari 및 다른 브라우저를 통해 접속해주세요!')
       }
+    } else if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      alert('말듣꾸 방언분석 서비스는 모바일 환경에 최적화 되어 있습니다. 가능하다면 모바일 기기를 통해 접속해주세요!')
     }
+
   }, [])
 
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
