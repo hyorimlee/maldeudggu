@@ -1,0 +1,18 @@
+.container {
+  margin: 0.5rem 0;
+}
+
+.barContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.nightMode div div {
+  background-color: rgb(72, 72, 74);
+}
+
+.nightMode div div div {
+  background-color: #FB7D1E;
+}

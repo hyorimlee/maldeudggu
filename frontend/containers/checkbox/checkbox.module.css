@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  border: #fb7d12;
+  position: relative;
+  margin: 12px 5px 5px 5px;
+}
+
+.checkbox > input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  outline: none;
+  background: #ffffff;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: box-shadow .3s;
+  box-shadow: inset 0 0 0 var(--s, 1px) #fb7d12;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox > input:hover {
+  --s: 2px;
+}
+
+.checkbox > input:checked {
+  --s: 11px;
+  --b: var(--border);
+}
+
+.checkbox > input:checked + svg {
+  animation: bounce 0.4s linear forwards 0.2s;
+}
+
+.checkbox > svg {
+  display: block;
+  pointer-events: none;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 19px;
+  transform: scale(var(--scale, 1)) translateZ(0);
+  --scale: 0;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(1.2);
+  }
+  75% {
+    transform: scale(.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* .box {
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #fb7d12;
+  border-radius: 3px;
+}
+
+.checkedBox {
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #fb7d12;
+  border-radius: 3px;
+  background-color: #fb7d12;
+} */

@@ -1,0 +1,80 @@
+.myCharacter {
+  width: 80vw;
+  height: 80vw;
+  margin-top: 1rem;
+}
+
+.shareCharacter {
+  width: 77px;
+  height: 77px;
+  margin: 15px;
+}
+
+/* itemSelector */
+.items {
+  width: 70%;
+  margin: 10px;
+}
+
+.backgroundItems {
+  width: 70%;
+  margin: 10px;
+  border: 1px dashed black;
+  border-radius: 0.5rem;
+}
+
+.background {
+  width: 101%;
+  z-index: 1;
+}
+
+.logo {
+  height: 20vh;
+}
+
+.playPause {
+  width: 15vw;
+}
+
+.sentenceBackground {
+  width: 80vw;
+  z-index: 0;
+  margin: 1rem 0 !important;
+}
+
+.result1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result2 {
+  position: absolute;
+  left: 20%;
+  top: 60%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result3 {
+  position: absolute;
+  right: 20%;
+  top: 65%;
+  transform: translate(50%, -80%);
+  width: 30%;
+}
+
+.sharedImage {
+  width: 20vw;
+  border-radius: 0.5rem;
+  transition-property: width, box-shadow;
+  transition-duration: 1s;
+  box-shadow: 0px 0px 0px 0px #FFFFFF;
+}
+
+.sharedImage:hover {
+  width: 30vw;
+  box-shadow: 3px 3px 3px 1px #bcbcbc;
+}

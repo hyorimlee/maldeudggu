@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-height: 700px) {
+  .container {
+    margin: 1.5rem 0;
+  }
+}
+
+.nightMode div {
+  height: 100vh;
+}

@@ -1,0 +1,43 @@
+.button {
+  display: block;
+  border-style: none;
+  border-radius: 100rem;
+  font-family: 'NEXON Lv1 Gothic OTF'; 
+  font-weight: bold;
+  padding: 0.7rem 1.5rem;
+  margin: 0.5rem auto;
+}
+
+.orange {
+  background-color: #FB7D1E;
+  color: #FFFFFF;
+}
+
+.orange:hover {
+  background-color: #FFAE4A;
+}
+
+.orange:disabled {
+  background-color: #9b9999;
+}
+
+.grey {
+  background-color: #B5B5B5;
+  color: #FFFFFF;
+}
+
+.grey:hover {
+  background-color: #9b9999;
+}
+
+.none {
+  background-color: #F3F3F3;
+  color: #000000;
+  text-decoration: underline;
+}
+
+.nightMode {
+  background-color: rgb(28, 28, 30);
+  color: #DDDDDD;
+  text-decoration: underline;
+}

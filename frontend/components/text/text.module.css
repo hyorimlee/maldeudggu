@@ -1,0 +1,65 @@
+.font {
+  font-family: 'BRBA_B';
+}
+
+.inline {
+  display: inline-block;
+}
+
+.p12 {
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.p14 {
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.7rem 0.3rem 0.5rem 0.3rem;
+}
+
+.p16 {
+  font-size: 0.94rem;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.p18 {
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0.8rem 0.1rem 0.5rem 0.1rem;
+}
+
+.p20 {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0;
+}
+
+.p22 {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.m5 {
+  margin: 0.5rem;
+}
+
+.mb20 {
+  margin-bottom: 1.25rem;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.grey {
+  color: #c5c5c5;
+}
+
+.white {
+  color: white;
+}
+
+.orange {
+  color: #FB7D1E;
+}

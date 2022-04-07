@@ -1,0 +1,50 @@
+.icon {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 5px 7px;
+  object-fit: fill;
+}
+
+@media screen and (min-width: 400px) {
+  .icon {
+    margin: 5px 10px;
+  }
+}
+
+.twitter {
+  background-image: url(../../../public/sns/icon-twitter.png);
+  background-repeat: no-repeat;
+}
+
+.facebook {
+  background-image: url(../../../public/sns/icon-facebook.png);
+  background-repeat: no-repeat;
+}
+
+.kakao {
+  background-image: url(../../../public/sns/icon-kakao.png);
+  background-repeat: no-repeat;
+}
+
+.link {
+  background-image: url(../../../public/sns/icon-link.png);
+  background-repeat: no-repeat;
+
+}
+
+.download {
+  background-image: url(../../../public/sns/icon-download.png);
+  background-repeat: no-repeat;
+}
+
+.link_night {
+  background-image: url(../../../public/sns/icon-link_night.png);
+  background-repeat: no-repeat;
+}
+
+.download_night {
+  background-image: url(../../../public/sns/icon-download_night.png);
+  background-repeat: no-repeat;
+}

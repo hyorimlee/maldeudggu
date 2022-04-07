@@ -1,0 +1,28 @@
+.container {
+  width: 80vw;
+  padding: 15px;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0;
+  grid-auto-flow: row;
+  align-items: center;
+  justify-items: center;
+}
+
+.nightMode {
+  background-color: rgb(142, 142, 147) !important;
+}
+
+.nightMode div {
+  background-color: rgb(142, 142, 147) !important;
+}

@@ -1,0 +1,29 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'NEXON Lv1 Gothic OTF', sans-serif, Roboto;
+  line-height: 1.7;
+}
+
+body > #__next {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.disableScroll {
+  height: 100%;
+  overflow: hidden;
+}

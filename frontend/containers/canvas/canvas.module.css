@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  width: 80vw;
+  height: 80vw;
+  background-color: white;
+  margin: 20px 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.character {
+  position: absolute;
+  width: 60%;
+  z-index: 2;
+  cursor: grab;
+}
+
+.item {
+  position: absolute;
+  width: 35%;
+  z-index: 2;
+}
+
+.none {
+  width: 0;
+  height: 0;
+}
+
+.nightMode {
+  background-color: rgb(142, 142, 147) !important;
+}

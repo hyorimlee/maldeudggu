@@ -1,0 +1,26 @@
+.inputLabel {
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+.input {
+  height: 2.2rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1.5rem 0;
+  font-family: 'NEXON Lv1 Gothic OTF';
+  font-size: 0.85rem;
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #000000;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: 2px solid #fb7d12;
+}
+
+.input::placeholder {
+  font-size: 0.7rem;
+}

@@ -1,0 +1,23 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingContainer {
+  width: 20vw;
+  height: 20vw;
+  display: flex;
+  justify-content: space-around;
+  background-color: transparent;
+}
+
+.loadingCircle {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background-color: #FB7D1E;
+  border-radius: 50%;
+}
