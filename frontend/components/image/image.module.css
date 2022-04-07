@@ -39,6 +39,7 @@
 .sentenceBackground {
   width: 80vw;
   z-index: 0;
+  margin: 1rem 0 !important;
 }
 
 .result1 {
