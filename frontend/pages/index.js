@@ -59,9 +59,9 @@ function Home({ staticState, changeStaticState }) {
     body.current = document.querySelector('body')
 
     if (navigator.userAgent.indexOf("KAKAOTALK") > -1) {
-      if (staticState.browser.name === 'android') {
+      if (/Android/i.test(navigator.userAgent)) {
         alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome 및 다른 브라우저를 통해 접속해주세요!')
-      } else if (staticState.browser.name === 'ios') {
+      } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari 및 다른 브라우저를 통해 접속해주세요!')
       }
     }
@@ -120,7 +120,7 @@ function Home({ staticState, changeStaticState }) {
       randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[0].id}`))
     }
   }, [staticState])
-  
+  console.log(staticState)
   return (
     <>
       {delay ? (
