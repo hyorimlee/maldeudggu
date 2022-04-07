@@ -12,7 +12,7 @@ import numpy as np
 # 음성 데이터 경로
 NUM_CLASSES = 6
 
-MODEL_PATH = './dialects/audio_ai/model_state_dict.pt'
+MODEL_PATH = './dialects/audio_ai/esnet/model_state_dict.pt'
 
 # 오디오 파일 기준 길이
 audio_standard_length = 128000
@@ -109,7 +109,11 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # 모델 생성, 메모리에 얹어놓기
-model = CustomMobilenetV2(NUM_CLASSES)
+# model = CustomMobilenetV2(NUM_CLASSES)
+
+from .esnet import CustomESNet
+model = CustomESNet(NUM_CLASSES)
+
 load_model(model)
 model.eval()
 
