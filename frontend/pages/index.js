@@ -67,7 +67,12 @@ function Home({ staticState, changeStaticState }) {
       if (/Android/i.test(navigator.userAgent)) {
         alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome을 통해 접속해주세요!')
       }
+    } else if (staticState.settings.browser.name === 'KakaoTalk') {
+      alert('카카오')
+      alert(navigator.userAgent)
     }
+
+
   }, [])
 
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
@@ -123,7 +128,7 @@ function Home({ staticState, changeStaticState }) {
       randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[0].id}`))
     }
   }, [staticState])
-
+  
   return (
     <>
       {delay ? (
