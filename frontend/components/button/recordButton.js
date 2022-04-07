@@ -17,22 +17,13 @@ function getDate() {
 
 function RecordButton({ sentenceId, staticState, changeStaticState }) {
   const [animateOptions, setAnimateOptions] = useState({ pathLength: 0, transitionTime: 0, buttonColor: '#ccc' })
-  const [browserOptions, setBrowserOptions] = useState({})
   const [timer, setTimer] = useState(null)
   const [audio, setAudio] = useState({ rerecord: false })
 
   useEffect(() => {
-    if (navigator.userAgent.indexOf("Chrome") > -1) {
-      setBrowserOptions({ name: 'Chrome', audioType: 'webm' })
-    } else if (navigator.userAgent.indexOf("Safari") > -1) {
-      setBrowserOptions({ name: 'Safari', audioType: 'mp4' })
-    }
-  }, [])
-
-  useEffect(() => {
     if (audio.audioUrl) {
       const today = getDate()
-      const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${browserOptions.audioType}`, { lastModified: new Date().getTime(), type: `audio/${browserOptions.audioType}` })
+      const sound = new File([audio.audioUrl], `${today}-${sentenceId}.${staticState.settings.browser.audioType}`, { lastModified: new Date().getTime(), type: `audio/${staticState.settings.browser.audioType}` })
 
       const url = URL.createObjectURL(audio.audioUrl)
       changeStaticState('audioData', [url, sound]);
@@ -58,7 +49,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
       const analyser = audioCtx.createScriptProcessor(0, 1, 1);
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${browserOptions.audioType}` })
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: `audio/${staticState.settings.browser.audioType}` })
 
       mediaRecorder.start();
       const source = audioCtx.createMediaStreamSource(stream);
