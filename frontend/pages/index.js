@@ -20,6 +20,7 @@ import { faAnglesDown, faSun, faMoon } from "@fortawesome/free-solid-svg-icons"
 import { getRequest, postRequest } from '../modules/fetch'
 import { stringifyQuery } from "next/dist/server/server-route-utils"
 import { randomDelay } from "../modules/delay"
+import { stat } from "fs"
 
 
 const SharedImages = lazy(() => import('../containers/sharedImages/sharedImages'))
@@ -59,20 +60,13 @@ function Home({ staticState, changeStaticState }) {
       })
     body.current = document.querySelector('body')
 
-    if (navigator.userAgent.indexOf("Chrome") > -1) {
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari를 통해 접속해주세요!')
+    if (navigator.userAgent.indexOf("KAKAOTALK") > -1) {
+      if (staticState.browser.name === 'android') {
+        alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome 및 다른 브라우저를 통해 접속해주세요!')
+      } else if (staticState.browser.name === 'ios') {
+        alert('말듣꾸 방언분석 서비스는 Safari 환경에 최적화 되어 있습니다. 가능하다면 Safari 및 다른 브라우저를 통해 접속해주세요!')
       }
-    } else if (navigator.userAgent.indexOf("Safari") > -1) {
-      if (/Android/i.test(navigator.userAgent)) {
-        alert('말듣꾸 방언분석 서비스는 Chrome 환경에 최적화 되어 있습니다. 가능하다면 Chrome을 통해 접속해주세요!')
-      }
-    } else if (staticState.settings.browser.name === 'KakaoTalk') {
-      alert('카카오')
-      alert(navigator.userAgent)
     }
-
-
   }, [])
 
   // (선택) 재사용 동의 체크한 경우 무조건 modal 열리게 & modal 열리면 스크롤 막기
