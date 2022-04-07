@@ -53,9 +53,9 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
 
   // 전역 state 값이 비어있으면 404 페이지로 이동
   useEffect(() => {
-    // if (staticState.caseId === -1 || staticState.sentences.length === 0) {
-    //   router.push({ pathname: '/404', query: { code: '0001' } })
-    // }
+    if (staticState.caseId === -1 || staticState.sentences.length === 0) {
+      router.push({ pathname: '/404', query: { code: '0001' } })
+    }
     if (staticState.settings.nightMode) {
       setBackground(`background-11.svg`)
     } else {
@@ -102,10 +102,8 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
     canvas.width = canvasSize
     canvas.height = canvasSize
 
-    const backgroundImg = document.querySelector('#canvas .background')
+    const backgroundImg = document.querySelector('#canvas .background img')
     const imgAll = document.querySelectorAll('#canvas > img')
-    console.log(backgroundImg)
-    console.log(imgAll)
 
     const useIdx = Object.keys(imgAll).filter(k => {
       if (!imgAll[k].className.includes('none')) {
@@ -114,40 +112,46 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
       }
     })
 
-    console.log(useIdx)
-
     const storageRef = ref(storage, `${staticState.caseId}.png`)
 
-    let cnt = 0
-    try {
-      useIdx.forEach(idx => {
-        const img = new Image()
-        const style = imgAll[idx].style
+    const img = new Image()
+    const style = backgroundImg.style
 
-        img.src = imgAll[idx].src
-        img.onload = () => {
-          context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
+    img.src = backgroundImg.src
+    img.onload = () => {
+      context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(backgroundImg).width.slice(0, -2), getComputedStyle(backgroundImg).height.slice(0, -2))
 
-          cnt += 1
-          if (cnt >= useIdx.length) {
-            context.canvas.toBlob(blob => {
-              setDelay(true)
-              uploadBytes(storageRef, blob)
-                .then(() => {
-                  getDownloadURL(storageRef)
-                    .then((url) => {
-                      patchRequest(`/${staticState.caseId}/image`, url)
-                        .then((response) => {
-                          randomDelay(500, 700, () => router.push(`/share/${response.case_id}`))
-                        })
-                    })
-                })
-            }, 'image/png')
+      let cnt = 0
+      try {
+        useIdx.forEach(idx => {
+          const img = new Image()
+          const style = imgAll[idx].style
+  
+          img.src = imgAll[idx].src
+          img.onload = () => {
+            context.drawImage(img, style.left.slice(0, -2), style.top.slice(0, -2), getComputedStyle(imgAll[idx]).width.slice(0, -2), getComputedStyle(imgAll[idx]).height.slice(0, -2))
+  
+            cnt += 1
+            if (cnt >= useIdx.length) {
+              context.canvas.toBlob(blob => {
+                setDelay(true)
+                uploadBytes(storageRef, blob)
+                  .then(() => {
+                    getDownloadURL(storageRef)
+                      .then((url) => {
+                        patchRequest(`/${staticState.caseId}/image`, url)
+                          .then((response) => {
+                            randomDelay(500, 700, () => router.push(`/share/${response.case_id}`))
+                          })
+                      })
+                  })
+              }, 'image/png')
+            }
           }
-        }
-      })
-    } catch {
-      router.push({ pathname: '/404', query: { code: '0502' } })
+        })
+      } catch {
+        router.push({ pathname: '/404', query: { code: '0502' } })
+      }
     }
   }
 

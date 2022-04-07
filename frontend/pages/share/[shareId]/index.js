@@ -102,6 +102,13 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
     }
   }
 
+  const routeIndex = () => {
+    if (staticState.caseId !== -1) {
+      changeStaticState('reset')
+    }
+    router.push('/')
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.nickname}>
@@ -138,7 +145,7 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
         </Text>
         <Text contents={dialectsFeature[korLocation[0]]}></Text>
       </div>
-      <Button content={'테스트 다시하기'} handler={() => router.push('/')}></Button>
+      <Button content={'테스트 다시하기'} handler={routeIndex}></Button>
       <div className={styles.buttonContainer}>
         <Text size={12} contents={'친구에게 공유하기'}></Text>
         <SNSContainer onClick={clickedShare} staticState={staticState}></SNSContainer>

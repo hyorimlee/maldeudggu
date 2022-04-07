@@ -11,9 +11,13 @@
 }
 
 .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background: white;
   width: 80vw;
-  height: 70vh;
+  height: 80vh;
   border-radius: 15px;
   padding: 1rem;
   display: flex;
