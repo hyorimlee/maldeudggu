@@ -86,13 +86,14 @@ function MyApp({ Component, pageProps }) {
       return true
     }
 
-    if (navigator.userAgent.indexOf("Chrome") > -1) {
-      // setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'Chrome', audioType: 'webm' }}})
-      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'Chrome', audioType: 'mp4' }}})
+    if (/Android/i.test(navigator.userAgent)) {
+      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'android', audioType: 'webm' }}})
+    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'ios', audioType: 'mp4' }}})
+    } else if (navigator.userAgent.indexOf("Chrome") > -1) {
+      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'chrome', audioType: 'webm' }}})
     } else if (navigator.userAgent.indexOf("Safari") > -1) {
-      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'Safari', audioType: 'mp4' }}})
-    } else if (navigator.userAgent.indexOf('KAKAOTALK') > -1) {
-      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'KakaoTalk', audioType: 'mp4' }}})
+      setStaticState({...staticState, settings: { ...staticState.settings, browser: { name: 'safari', audioType: 'mp4' }}})
     }
 
     window.addEventListener('beforeunload', reloadHandler)
