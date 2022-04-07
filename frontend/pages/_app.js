@@ -52,9 +52,7 @@ function MyApp({ Component, pageProps }) {
         })
       } else if (type === 'settings') {
         if (type2) {
-          let settings = { [type2]: data }
-          console.log(settings)
-          setStaticState({ ...staticState, settings})
+          setStaticState({ ...staticState, settings: { ...staticState.settings, [type2]: data }})
         }
       } else {
         if (type2) {
