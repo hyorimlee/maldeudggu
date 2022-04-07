@@ -91,28 +91,28 @@ function Home({ staticState, changeStaticState }) {
 
   const testStart = async () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(() => {
-      postRequest('/start/', [['nickname', nickname.trim()]])
-      .then((response) => {
-        changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
+      .then(() => {
+        postRequest('/start/', [['nickname', nickname.trim()]])
+          .then((response) => {
+            changeStaticState('sentences', response.sentences, 'caseId', response.case_id)
 
-        if (staticState.reuse) {
-          let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
-          postRequest(`/${response.case_id}/survey/`, metaData)
-          .then(
-            setDelay(true)
-          )
-        } else {
-          setDelay(true)
-        }
+            if (staticState.reuse) {
+              let metaData = Object.entries(staticState.metaData).map(data => [data[0], parseInt(data[1])])
+              postRequest(`/${response.case_id}/survey/`, metaData)
+                .then(
+                  setDelay(true)
+                )
+            } else {
+              setDelay(true)
+            }
+          })
+          .catch(() => {
+            router.push({ pathname: '/404', query: { code: '0502' } })
+          })
       })
       .catch(() => {
-        router.push({ pathname: '/404', query: { code: '0502' } })
+        alert('음성 권한을 허용해주세요')
       })
-    })
-    .catch(() => {
-      alert('음성 권한을 허용해주세요')
-    })
   }
 
   useEffect(() => {
@@ -129,31 +129,28 @@ function Home({ staticState, changeStaticState }) {
         ></ThreeDotsWave>
       ) : (
         <>
+          {staticState.settings.nightMode ?
+            <FontAwesomeIcon
+              icon={faSun}
+              className={styles.nightModeButton}
+              onClick={handleNightMode}
+            ></FontAwesomeIcon>
+            :
+            <FontAwesomeIcon
+              icon={faMoon}
+              className={styles.nightModeButton}
+              onClick={handleNightMode}
+            ></FontAwesomeIcon>
+          }
           <div className={styles.index__container}>
             <Text
               bold
-              size={16}
-              contents={'내 억양은 어느 지역의 사투리와 가장 비슷할까?'}
+              contents={['내 억양은 어느 지역의 사투리와', <br key="1" />, '가장 비슷할까?']}
             ></Text>
-            <div>
-              <Image
-                type='logo'
-                path='/img/logo/logo.png'
-              ></Image>
-              {staticState.settings.nightMode ?
-                <FontAwesomeIcon
-                icon={faSun}
-                className={styles.nightModeButton}
-                onClick={handleNightMode}
-                ></FontAwesomeIcon>
-                :
-                <FontAwesomeIcon
-                icon={faMoon}
-                className={styles.nightModeButton}
-                onClick={handleNightMode}
-              ></FontAwesomeIcon>
-              }
-            </div>
+            <Image
+              type='logo'
+              path='/img/logo/logo.png'
+            ></Image>
             <div className={styles.participant}>
               <Text inline contents={'지금까지 '}></Text>
               <Text inline color={'orange'} size={18} font contents={participant}></Text>
@@ -170,12 +167,12 @@ function Home({ staticState, changeStaticState }) {
             <Text
               size={12}
               color={'orange'}
-              contents={'말듣꾸는 사용자의 발화 분석을 위해 음성 데이터를 수집합니다.'}
+              contents={'말듣꾸는 발화 분석을 위해 음성 데이터를 수집합니다.'}
             ></Text>
             <Checkbox
               checked={staticState.reuse}
               onChange={() => changeStaticState('reuse', !staticState.reuse)}
-              contents={'(선택) 음성 데이터를 학습에 활용하는 데 동의합니다.'}
+              contents={'(선택) 데이터를 학습에 활용하는 데 동의합니다.'}
             ></Checkbox>
             <Modal
               show={showModal}
@@ -194,7 +191,7 @@ function Home({ staticState, changeStaticState }) {
             ></FontAwesomeIcon>
           </div>
           <article className={`${styles.sharedImages__container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
-            <Text bold size={16} contents='🎨 다른 유저들의 실시간 말듣꾸' ></Text>
+            <Text bold size={16} contents='🎨 다른 유저들의 말듣꾸' ></Text>
             {
               sharedImages.length
                 ? (
