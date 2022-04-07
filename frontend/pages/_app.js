@@ -54,6 +54,22 @@ function MyApp({ Component, pageProps }) {
         if (type2) {
           setStaticState({ ...staticState, settings: { ...staticState.settings, [type2]: data }})
         }
+      } else if (type === 'reset') {
+        setStaticState({
+          settings: {
+            nightMode: true,
+            browser: {}
+          },
+          caseId: -1,
+          nickname: '',
+          sentences: [],
+          recordCount: 0,
+          recordAudio: [],
+          recordAudioFile: [],
+          result: {},
+          reuse: false,
+          metaData: {}
+        })
       } else {
         if (type2) {
           setStaticState({ ...staticState, [type]: data, [type2]: data2 })

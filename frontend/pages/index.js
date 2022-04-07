@@ -120,7 +120,7 @@ function Home({ staticState, changeStaticState }) {
       randomDelay(500, 1000, () => router.replace(`/record/${staticState.sentences[0].id}`))
     }
   }, [staticState])
-  console.log(staticState)
+  
   return (
     <>
       {delay ? (
