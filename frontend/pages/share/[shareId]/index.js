@@ -147,8 +147,17 @@ function Share({ staticState, changeStaticState, caseId, nickname, imageUrl, res
       </div>
       <Button content={'테스트 다시하기'} handler={routeIndex}></Button>
       <div className={styles.buttonContainer}>
-        <Text size={12} contents={'친구에게 공유하기'}></Text>
-        <SNSContainer onClick={clickedShare} staticState={staticState}></SNSContainer>
+        {
+          staticState.caseId.toString() === caseId
+          ?
+          (
+            <>
+              <Text size={12} contents={'친구에게 공유하기'}></Text>
+              <SNSContainer onClick={clickedShare} staticState={staticState}></SNSContainer>
+            </>
+          )
+          : <></>
+        }
       </div>
     </div>
   )
