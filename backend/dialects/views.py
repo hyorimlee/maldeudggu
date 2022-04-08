@@ -133,10 +133,10 @@ def get_result(request, case_pk):
     
     # 결과가 이미 저장되어있을 경우 다시 계산하지 않음
     if case.result:
-        data = {'case_id': case.pk}
+        data = {'case_id': case.pk, 'result': {}}
         for r in case.result.split('\t'):
             k, v = r.split()
-            data[k] = v
+            data['result'][k] = v
         return Response(data, status=status.HTTP_200_OK)
 
     # 2)
@@ -147,15 +147,16 @@ def get_result(request, case_pk):
     result = inference(audio_files)
     
     # 3)
-    case.result = '\t'.join([f'{k} {v}' for k, v in result.items()])
-    case.save()
-    
+
     # 가중치 주기 
     remain = 100 - sum(result.values())
     
     for k in result:
         result[k] += remain
         break
+    case.result = '\t'.join([f'{k} {v}' for k, v in result.items()])
+    case.save()
+    
 
     data = {
         'case_id': case.pk,
