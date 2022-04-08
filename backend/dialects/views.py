@@ -130,6 +130,15 @@ def get_result(request, case_pk):
     case = get_object_or_404(Case, pk=case_pk)
     case.reuse = request.GET.get('reuse')
     case.save()
+    
+    # 결과가 이미 저장되어있을 경우 다시 계산하지 않음
+    if case.result:
+        data = {'case_id': case.pk}
+        for r in case.result.split('\t'):
+            k, v = r.split()
+            data[k] = v
+        return Response(data, status=status.HTTP_200_OK)
+
     # 2)
     audio_objs = case.audio_set.all()
     audio_files = []
