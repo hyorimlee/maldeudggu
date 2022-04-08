@@ -85,7 +85,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const reloadHandler = (event) => {
       // 공유 페이지 제외한 모든 페이지 새로고침시 확인 메시지 띄움
-      if (event.target.location.pathname.slice(0, 6) !== '/share') {
+      console.log(event.target.location.pathname)
+      if (event.target.location.pathname.slice(0, 6) !== '/share' && event.target.location.pathname.slice(0, 6) !== '/') {
         event.preventDefault()
         event.returnValue = ''
       }
