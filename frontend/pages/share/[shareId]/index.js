@@ -34,7 +34,7 @@ export async function getStaticProps({ params }) {
   const image = await getRequest(`/${params.shareId}/my`)
   const result = await getRequest(`/${params.shareId}/result`)
 
-  if (image.status === 500 || result.status === 500 || image === null || result === null) {
+  if (image.status === 500 || result.status === 500 || image === null || result === null || image.status === 404 || result.status === 404) {
     return { props: { notFoundCode: '0002' } }
   }
 
