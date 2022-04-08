@@ -74,7 +74,6 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
   }
 
   const drag = event => {
-    console.log(event)
     event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
     event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
 
@@ -88,6 +87,10 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
       event.target.parentElement.offsetLeft + event.target.parentElement.offsetWidth > event.clientX) {
         event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
         event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+      } else {
+        alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+        event.target.style.left = `${event.target.parentElement.offsetLeft}px`
+        event.target.style.top = `${event.target.parentElement.offsetTop}px`
       }
   }
 
