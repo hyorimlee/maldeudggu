@@ -1,9 +1,11 @@
 # 팀 '코코' ☕
-- 도메인: 인공지능 음성
-- 기획: 사용자 발화에 대해 지역 방언과의 유사도를 알려주는 서비스
+<div align=center><img src="/assets/logo2.png" width="50%"></div>
 
-<div align=center><img src="./assets/MobileNet_V2.png" width="300"></div>
-<!-- ![mobilenetv2](./assets/MobileNet_V2.png =250x100) -->
+<div align=center>사용자 발화에 대해 지역 방언과의 유사도를 알려주고<br>캐릭터 이미지를 사용자화 할 수 있는 서비스 <h4>'말듣꾸'</h4></div>
+
+- 도메인: 인공지능 음성
+- 프로젝트에 대한 상세 정보는 <mark><a href="https://lab.ssafy.com/s06-ai-speech-sub2/S06P22A203/-/wikis/home">Wiki</a><mark> 를 통해 확인하실 수 있습니다 🙂
+
 
 - 관련 링크
     - 일정 관리 및 메모: [Notion](https://www.notion.so/2-3-6831bb2eec164531af14b0296e39d1aa)
@@ -12,7 +14,5 @@
     - 이슈 관리: [Jira](https://jira.ssafy.com/secure/RapidBoard.jspa?rapidView=11328&projectKey=S06P22A203&view=planning.nodetail&issueLimit=100)
     - ERD 설계: [ERD Cloud](https://www.erdcloud.com/d/M2S4jr4ra8ruhDFGX)
       <div align=center><img src="/assets/ERD.png" width="50%"></div>
-    - RESTful API: [API 문서](https://scalloped-fox-c83.notion.site/API-313fbc4f31314f148b3c750e86ff26f7)
 
-    ​
 
