@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, resolveMotionValue } from "framer-motion"
+import { useRouter } from 'next/router'
 
 import Text from '../text/text'
 
@@ -19,6 +20,7 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
   const [animateOptions, setAnimateOptions] = useState({ pathLength: 0, transitionTime: 0, buttonColor: '#ccc' })
   const [timer, setTimer] = useState(null)
   const [audio, setAudio] = useState({ rerecord: false })
+  const router = useRouter()
 
   useEffect(() => {
     if (audio.audioUrl) {
@@ -61,8 +63,8 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
 
       setAudio({ ...audio, stream, mediaRecorder, source, analyser })
     } catch (error) {
-      alert('녹음에 문제가 있어요.')
-      console.error(error)
+      alert('음성 녹음에 문제가 생겼어요.')
+      router.replace({ pathname: '/404', query: { code: '0003' } })
     }
   }
 
