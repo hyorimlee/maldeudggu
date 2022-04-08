@@ -23,3 +23,7 @@
 .audioPlayButton {
   margin-bottom: 1rem;
 }
+
+.end {
+  touch-action: none;
+}

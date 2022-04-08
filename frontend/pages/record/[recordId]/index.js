@@ -81,7 +81,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
 
   return (
     <>
-      <div className={styles.recordPageLayout}>
+      <div className={`${styles.recordPageLayout} ${isEnd ? styles.end : ''}`}>
         {
           isEnd
             ?
