@@ -182,15 +182,18 @@ def save_survey(request, case_pk):
     }
     return Response(data, status=status.HTTP_201_CREATED)
 
-
+import os
 def download_image(request, case_pk):
     case = get_object_or_404(Case, pk=case_pk)
-    urllib.request.urlretrieve(case.image_url, f'{case.pk}_img.png')
+    img_name = f'{case.pk}_img.png'
+    urllib.request.urlretrieve(case.image_url, img_name)
 
-    img = Image.open(f'{case.pk}_img.png')
+    img = Image.open(img_name)
+    os.remove(img_name)
     img_file = BytesIO()
     img.save(img_file, 'png')
     image_file_size = img_file.tell()
+    
 
     response = HttpResponse()
     response['content-type'] = 'image/png'
