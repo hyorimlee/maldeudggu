@@ -1,11 +1,15 @@
 .container {
   position: relative;
   width: 80vw;
+  min-width: 216px;
+  max-width: 360px;
   height: 80vw;
+  min-height: 216px;
+  max-height: 360px;
   background-color: white;
   margin: 20px 0;
-  overflow: hidden;
   touch-action: none;
+  overflow: hidden;
 }
 
 .character {
@@ -19,6 +23,7 @@
   position: absolute;
   width: 35%;
   z-index: 2;
+  cursor: grab;
 }
 
 .none {
@@ -26,6 +31,7 @@
   height: 0;
 }
 
+/* 
 .nightMode {
   background-color: rgb(142, 142, 147) !important;
-}
+} */

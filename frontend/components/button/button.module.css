@@ -8,6 +8,14 @@
   margin: 0.5rem auto;
 }
 
+/* theme */
+.nightMode {
+  background-color: rgb(28, 28, 30);
+  color: #DDDDDD;
+  text-decoration: underline;
+}
+
+/* color */
 .orange {
   background-color: #FB7D1E;
   color: #FFFFFF;
@@ -36,8 +44,7 @@
   text-decoration: underline;
 }
 
-.nightMode {
-  background-color: rgb(28, 28, 30);
-  color: #DDDDDD;
-  text-decoration: underline;
-}
+/* margin */
+
+
+/* padding */

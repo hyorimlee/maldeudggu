@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './audioProgressBar.module.css'
 import Image from '../image/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons"
 
 const AudioProgressBar = ({ staticState }) => {
   // state

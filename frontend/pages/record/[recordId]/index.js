@@ -81,13 +81,13 @@ function Record({ staticState, changeStaticState, sentence, id }) {
 
   return (
     <>
-      <div className={`${styles.recordPageLayout} ${isEnd ? styles.end : ''}`}>
+      <section className={`${styles.container} ${isEnd ? styles.end : ''}`}>
         {
           isEnd
             ?
             (
               <>
-                <LoadingSlide />
+                <LoadingSlide nightMode={staticState.settings.nightMode} />
                 <Text
                   size={18}
                   bold={true}
@@ -165,7 +165,7 @@ function Record({ staticState, changeStaticState, sentence, id }) {
                 </>
               )
         }
-      </div>
+      </section>
     </>
   )
 }
