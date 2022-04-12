@@ -49,8 +49,8 @@ function Result({ staticState, changeStaticState }) {
           )
           :
           (
-            <div className={styles.container}>
-              <div className={styles.standContainer}>
+            <section className={styles.container}>
+              <section className={styles.stand}>
                 <Image
                   type={'result1'}
                   path={`/img/character/line/${korToEng[resultKor[0]]}-line.svg`}
@@ -63,8 +63,7 @@ function Result({ staticState, changeStaticState }) {
                   type={'result3'}
                   path={`/img/character/line/${korToEng[resultKor[2]]}-line.svg`}
                 ></Image>
-                <div className={styles.stand}></div>
-              </div>
+              </section>
               <Text size={20} bold contents='테스트 결과'></Text>
               <ResultProgress
                 staticState={staticState}
@@ -74,7 +73,7 @@ function Result({ staticState, changeStaticState }) {
                   [resultKor[2], parseInt(staticState.result[resultKor[2]])]
                 ]}>
               </ResultProgress>
-              <div className={styles.textContainer}>
+              <section className={styles.textContainer}>
                 <Text
                   contents={`
                   ${staticState.nickname} 님의 억양은 ${resultKor[0]}도 방언과의 유사도가 ${staticState.result[resultKor[0]]}%로 가장 높아요.
@@ -82,9 +81,9 @@ function Result({ staticState, changeStaticState }) {
                 `}>
                 </Text>
                 <Text contents={dialectsFeature[resultKor[0]]}></Text>
-              </div>
+              </section>
               <Button content='내 캐릭터 꾸미기' handler={routeCustomize}></Button>
-            </div>
+            </section>
           )
       }
     </>

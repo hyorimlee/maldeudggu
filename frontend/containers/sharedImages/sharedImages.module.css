@@ -1,10 +1,18 @@
 .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5vw;
+  grid-gap: 5%;
   grid-auto-flow: row;
   align-items: center;
   justify-items: center;
 
   background-color: #FFFFFF;
-}
+} */

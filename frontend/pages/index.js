@@ -132,20 +132,12 @@ function Home({ staticState, changeStaticState }) {
         ></ThreeDotsWave>
       ) : (
         <>
-          {staticState.settings.nightMode ?
+          <section className={styles.section}>
             <FontAwesomeIcon
-              icon={faSun}
+              icon={staticState.settings.nightMode ? faSun : faMoon}
               className={styles.nightModeButton}
               onClick={handleNightMode}
             ></FontAwesomeIcon>
-            :
-            <FontAwesomeIcon
-              icon={faMoon}
-              className={styles.nightModeButton}
-              onClick={handleNightMode}
-            ></FontAwesomeIcon>
-          }
-          <div className={styles.index__container}>
             <Text
               bold
               contents={['내 억양은 어느 지역의 사투리와', <br key="1" />, '가장 비슷할까?']}
@@ -192,19 +184,19 @@ function Home({ staticState, changeStaticState }) {
               icon={faAnglesDown}
               className={styles.icon}
             ></FontAwesomeIcon>
-          </div>
-          <article className={`${styles.sharedImages__container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
+          </section>
+          <section className={`${styles.section} ${styles.sharedImages__container} ${staticState.settings.nightMode ? styles.nightMode : ''}`}>
             <Text bold size={16} contents='🎨 다른 유저들의 말듣꾸' ></Text>
             {
               sharedImages.length
                 ? (
                   <Suspense fallback={<Text contents='이미지를 불러오고 있어요.'></Text>}>
-                    <SharedImages data={sharedImages}></SharedImages>
+                    <SharedImages data={sharedImages} staticState={staticState}></SharedImages>
                   </Suspense>
                 )
                 : <></>
             }
-          </article>
+          </section>
         </>
       )
       }

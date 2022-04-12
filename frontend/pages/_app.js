@@ -129,6 +129,7 @@ function MyApp({ Component, pageProps }) {
     <Layout nightMode={staticState.settings.nightMode}>
       <Head>
         <title>말듣꾸 - AI방언분석</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0 user-scalable=no' />
       </Head>
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy='beforeInteractive'></Script>
       <Component {...pageProps} staticState={staticState} changeStaticState={changeStaticState} />

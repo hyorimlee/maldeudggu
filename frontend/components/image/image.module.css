@@ -1,19 +1,76 @@
-.myCharacter {
-  width: 80vw;
-  height: 80vw;
-  margin-top: 1rem;
+.logo {
+  width: 80%;
 }
 
-.shareCharacter {
-  width: 77px;
-  height: 77px;
-  margin: 15px;
+.sharedImage {
+  width: 28%;
+  margin: 1.5%;
+  border-radius: 0.5rem;
+  transition-property: width, box-shadow;
+  transition-duration: 1s;
 }
 
-/* itemSelector */
-.items {
-  width: 70%;
-  margin: 10px;
+.sharedImage:hover {
+  width: 32%;
+  box-shadow: 3px 3px 3px 1px #bcbcbc;
+}
+
+.nightModeSharedImage {
+  width: 28%;
+  margin: 1.5%;
+  border-radius: 0.5rem;
+  transition-property: width, box-shadow;
+  transition-duration: 1s;
+}
+
+.nightModeSharedImage:hover {
+  width: 32%;
+  box-shadow: 3px 3px 15px 0 #000000;
+}
+
+.sentenceBackground {
+  width: 100%;
+  z-index: 0;
+  margin: 1rem 0 !important;
+}
+
+.playPause {
+  width: 20%;
+}
+
+@media screen and (min-width: 450px) {
+  .playPause {
+    width: 87.5px;
+  }
+}
+
+.result1 {
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result2 {
+  position: absolute;
+  left: 22%;
+  bottom: -35%;
+  transform: translate(-50%, -80%);
+  width: 30%;
+}
+
+.result3 {
+  position: absolute;
+  right: 22%;
+  bottom: -45%;
+  transform: translate(50%, -80%);
+  width: 30%;
+}
+
+.background {
+  width: 102%;
+  z-index: 1;
 }
 
 .backgroundItems {
@@ -23,58 +80,25 @@
   border-radius: 0.5rem;
 }
 
-.background {
-  width: 101%;
-  z-index: 1;
-}
-
-.logo {
-  height: 20vh;
-}
-
-.playPause {
-  width: 15vw;
-}
-
-.sentenceBackground {
+.myCharacter {
   width: 80vw;
-  z-index: 0;
-  margin: 1rem 0 !important;
+  min-width: 216px;
+  max-width: 360px;
+  height: 80vw;
+  min-height: 216px;
+  max-height: 360px;
+  margin-top: 1rem;
 }
 
-.result1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -80%);
-  width: 30%;
+/* 
+.shareCharacter {
+  width: 77px;
+  height: 77px;
+  margin: 15px;
 }
 
-.result2 {
-  position: absolute;
-  left: 20%;
-  top: 60%;
-  transform: translate(-50%, -80%);
-  width: 30%;
+.items {
+  width: 70%;
+  margin: 10px;
 }
-
-.result3 {
-  position: absolute;
-  right: 20%;
-  top: 65%;
-  transform: translate(50%, -80%);
-  width: 30%;
-}
-
-.sharedImage {
-  width: 20vw;
-  border-radius: 0.5rem;
-  transition-property: width, box-shadow;
-  transition-duration: 1s;
-  box-shadow: 0px 0px 0px 0px #FFFFFF;
-}
-
-.sharedImage:hover {
-  width: 30vw;
-  box-shadow: 3px 3px 3px 1px #bcbcbc;
-}
+*/

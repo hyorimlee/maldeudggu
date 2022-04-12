@@ -1,23 +1,22 @@
-.container {
+.main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 0 1.5rem;
-  overflow: auto;
+  align-items: center;
+}
+
+@media (min-width: 450px) {
+  .main {
+    width: 450px;
+  }
 }
 
 .nightMode {
-  height: 100%;
   background-color: rgb(28, 28, 30);
   color: #DDDDDD;
 }
 
-.nightMode div {
-  background-color: rgb(28, 28, 30);
-  color: #DDDDDD;
-}
-
+/*
 .nightMode article {
   background-color: rgb(28, 28, 30);
   box-shadow: none;
@@ -36,4 +35,4 @@
 
 .nightMode article img:hover {
   box-shadow: 3px 3px 3px 0 #000000 !important;
-}
+} */

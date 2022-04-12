@@ -1,23 +1,43 @@
-.recordPageLayout {
+.container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   align-items: center;
   justify-content: center;
 }
 
+@media (min-height: 455px) {
+  .container {
+    height: 100vh;
+  }
+}
+
 .sampleSentence {
   position: relative;
+  width: 90%;
+  min-width: calc(320px * 0.8);
   margin: 1rem;
 }
 
 .sampleSentence > p {
   position: absolute;
-  width: 60vw;
+  width: 80%;
+  max-width: 315px;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+}
+
+@media (min-width: 450px) {
+  .sampleSentence {
+    width: 359.7px;
+  }
+}
+
+@media (max-width: 340px) {
+  .sampleSentence > p {
+    font-size: 1rem;
+  }
 }
 
 .audioPlayButton {

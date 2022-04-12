@@ -55,7 +55,7 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
     if (itemTop < -halfHeight || itemBottom > canvasBottom || itemLeft < -halfWidth || itemRight > canvasRight) {
       alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
       if (itemTop < -halfHeight) {
-        event.target.style.top = -halfHeight + 'px'
+        event.target.style.top = -parseInt(event.target.offsetHeight / 3) + 'px'
       }
       if (itemBottom > canvasBottom) {
         event.target.style.top = (canvasBottom - event.target.offsetHeight) + 'px'
@@ -81,17 +81,59 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
   }
 
   const dragEnd = event => {
-    if (event.target.parentElement.offsetTop < event.clientY &&
-      event.target.parentElement.offsetLeft < event.clientX &&
-      event.target.parentElement.offsetTop + event.target.parentElement.offsetHeight > event.clientY &&
-      event.target.parentElement.offsetLeft + event.target.parentElement.offsetWidth > event.clientX) {
-        event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
-        event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
-      } else {
-        alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
-        event.target.style.left = `${event.target.parentElement.offsetLeft}px`
-        event.target.style.top = `${event.target.parentElement.offsetTop}px`
-      }
+    // 왼쪽 위
+    if (event.target.offsetTop + event.clientY < -parseInt(event.target.offsetHeight/2) && event.target.offsetLeft + event.clientX < -parseInt(event.target.offsetWidth/2)) {
+      event.target.style.top = `${-parseInt(event.target.offsetHeight/3)}px`
+      event.target.style.left = `${-parseInt(event.target.offsetHeight/3)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 오른쪽 위
+    } else if (event.target.offsetTop + event.clientY < -parseInt(event.target.offsetHeight/2) && event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/2) < event.target.offsetLeft + event.clientX) {
+      event.target.style.top = `${-parseInt(event.target.offsetHeight/3)}px`
+      event.target.style.left = `${event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/1.5)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 왼쪽 아래
+    } else if (event.target.offsetLeft + event.clientX < -parseInt(event.target.offsetWidth/2) && event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/2) < event.target.offsetTop + event.clientY) {
+      event.target.style.top = `${event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/1.5)}px`
+      event.target.style.left = `${-parseInt(event.target.offsetHeight/3)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 오른쪽 아래
+    } else if (event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/2) < event.target.offsetTop + event.clientY && event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/2) < event.target.offsetLeft + event.clientX) {
+      event.target.style.top = `${event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/1.5)}px`
+      event.target.style.left = `${event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/1.5)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+    
+    // 위
+    } else if (event.target.offsetTop + event.clientY < -parseInt(event.target.offsetHeight/2)) {
+      event.target.style.top = `${-parseInt(event.target.offsetHeight/2)}px`
+      event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 왼쪽
+    } else if (event.target.offsetLeft + event.clientX < -parseInt(event.target.offsetWidth/2)) {
+      event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+      event.target.style.left = `${-parseInt(event.target.offsetHeight/2)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 아래
+    } else if (event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/2) < event.target.offsetTop + event.clientY) {
+      event.target.style.top = `${event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/2)}px`
+      event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 오른쪽
+    } else if (event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/2) < event.target.offsetLeft + event.clientX) {
+      event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+      event.target.style.left = `${event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/2)}px`
+      alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
+
+    // 정상
+    } else {
+      event.target.style.top = `${event.target.offsetTop + event.clientY - coordinatesDiff.y}px`
+      event.target.style.left = `${event.target.offsetLeft + event.clientX - coordinatesDiff.x}px`
+    }
   }
 
   // 색상 변경시에만 실행됨
