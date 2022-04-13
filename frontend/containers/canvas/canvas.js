@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { createElement } from 'react/cjs/react.development'
 import Image from '../../components/image/image'
 
 import styles from './canvas.module.css'
