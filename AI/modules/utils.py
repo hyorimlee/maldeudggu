@@ -20,13 +20,10 @@ torchaudio.USE_SOUNDFILE_LEGACY_INTERFACE = False
 def logging(text: str, file_name: str, date: str):
     directory = date + '_log'
     if not os.path.exists(f'./log/{directory}'):
-        os.makedirs('/test')
+        os.makedirs(f'./log/{directory}')
 
     with open(f'./log/{directory}/{file_name}' ,'a') as f:
         f.write(text + '\n')
-
-
-
 
 """
 -- description : 오디오 파일 전처리 관련 클래스
@@ -51,9 +48,19 @@ class AudioPreprocessing():
 
         length = waveform.size(1)
         result = torch.zeros((1, self.audio_standard_length))
-        idx = (self.audio_standard_length - waveform.size(1)) // 2
+        # 2 channel to 1 channel
+        if waveform.size(0) == 2:
+            waveform = waveform[0, :].view(1, -1)
 
-        result[0, idx:idx+length] = waveform
+        if length <= self.audio_standard_length:
+            idx = (self.audio_standard_length - length) // 2
+            result[0, idx:idx+length] = waveform
+        else:
+            # random idx로부터 자르기
+            idx = random.randint(0, length-self.audio_standard_length)
+            start_idx = idx
+            end_idx = idx + self.audio_standard_length
+            result[0, :] = waveform[0, start_idx:end_idx]
 
         return result, sample_rate 
 
@@ -92,4 +99,5 @@ class AudioPreprocessing():
 
         melspec = mel_spectrogram(waveform)             # 결과값
 
-        return True, melspec.numpy()
+        return True, melspec
+
