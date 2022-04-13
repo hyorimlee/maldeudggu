@@ -7,7 +7,7 @@
 <p style="text-align:center;">말하기, 듣기, 꾸미기! '말듣꾸'</p>
 
 <div style="text-align:center;">
-    <img src="https://user-images.githubusercontent.com/87463504/163202422-8be87ae0-b43f-41ec-a3fb-54dd9f136694.png" alt="logo" style="zoom:30%;" />
+    <img src="https://user-images.githubusercontent.com/87463504/163202422-8be87ae0-b43f-41ec-a3fb-54dd9f136694.png" alt="logo" width="300px" />
 </div>
 
 
@@ -95,7 +95,6 @@
 | <img src="{}" width=150px, height=150px> | <img src="{}" width=150px, height=150px > | <img src="https://github.com/svstar94.png" width=150px, height=150px> |
 | 팀장 & BackEnd | BackEnd | Backend |
 | {} | {} | 요구사항 작성 <br> 음성 AI 개발 <br> 추론 API 개발 <br> 프로젝트 자료 정리 및 문서화  |
-
 | [이언호](https://github.com/%7B%7D) | [최현규](https://github.com/%7B%7D) | [한지윤](https://github.com/yoonnotyoun) |
 | :-----------------: | :-----------------: | :-----------------: |
 | <img src="{}" width=150px, height=150px> | <img src="{}"  width=150px, height=150px> | <img src="https://avatars.githubusercontent.com/u/87463504?v=4"  width=150px, height=150px> |
