@@ -27,7 +27,7 @@ for (let location of locations) {
 
 images.sort(() => Math.random() - 0.5);
 
-function LoadingSlide() {
+function LoadingSlide({ nightMode }) {
   return (
     <>
       <Swiper
@@ -42,7 +42,7 @@ function LoadingSlide() {
         className={styles.swiper}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} className={styles.swiperSlide}>
+          <SwiperSlide key={index} className={`${styles.swiperSlide} ${nightMode ? styles.nightMode : ''}`}>
             <img src={image} alt="image"></img>
           </SwiperSlide>
         ))}

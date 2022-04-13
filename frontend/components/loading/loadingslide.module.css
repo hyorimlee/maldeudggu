@@ -24,3 +24,7 @@
   display: block;
   height: 30vh;
 }
+
+.nightMode {
+  background: rgb(28, 28, 30);
+}

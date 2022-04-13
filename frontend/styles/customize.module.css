@@ -5,12 +5,15 @@
   align-items: center;
 }
 
-@media screen and (max-height: 700px) {
+@media ( 340px <= width <= 450px) {
   .container {
-    margin: 1.5rem 0;
+    min-height: calc(80vw + 80vw + 140px);
+    height: 100vh;
   }
 }
 
-.nightMode div {
-  height: 100vh;
+@media (min-height: 835px) {
+  .container {
+    height: 100vh;
+  }
 }

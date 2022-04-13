@@ -71,31 +71,35 @@ function RecordButton({ sentenceId, staticState, changeStaticState }) {
   function stopRecord({ mediaRecorder, analyser, source, stream }) {
     clearTimeout(timer)
 
-    mediaRecorder.stop()
-    analyser.disconnect();
-    source.disconnect();
-
-    stream.getAudioTracks().forEach(function (track) {
-      track.stop();
-    });
-
-    mediaRecorder.ondataavailable = event => {
-      const audioEl = document.createElement('audio')
-      if (/iPhone/.test(navigator.userAgent)) {
-        audioEl.autoplay = true
-      }
-      audioEl.src = URL.createObjectURL(event.data)
-
-      audioEl.onloadeddata = () => {
-        if (audioEl.duration === Infinity) {
-          audioEl.currentTime = Number.MAX_SAFE_INTEGER
-          audioEl.ontimeupdate = () => {
-            audioEl.ontimeupdate = null
+    if (mediaRecorder === undefined || analyser === undefined || source === undefined || stream === undefined) {
+      setAudio({ ...audio, rerecord: true })
+    } else {
+      mediaRecorder.stop()
+      analyser.disconnect();
+      source.disconnect();
+  
+      stream.getAudioTracks().forEach(function (track) {
+        track.stop();
+      });
+  
+      mediaRecorder.ondataavailable = event => {
+        const audioEl = document.createElement('audio')
+        if (/iPhone/.test(navigator.userAgent)) {
+          audioEl.autoplay = true
+        }
+        audioEl.src = URL.createObjectURL(event.data)
+  
+        audioEl.onloadeddata = () => {
+          if (audioEl.duration === Infinity) {
+            audioEl.currentTime = Number.MAX_SAFE_INTEGER
+            audioEl.ontimeupdate = () => {
+              audioEl.ontimeupdate = null
+              audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
+              audioEl.currentTime = 0
+            }
+          } else {
             audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
-            audioEl.currentTime = 0
           }
-        } else {
-          audioEl.duration >= 1.2 ? setAudio({ ...audio, audioUrl: event.data, duration: audioEl.duration }) : setAudio({ ...audio, rerecord: true })
         }
       }
     }

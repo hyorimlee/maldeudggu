@@ -156,7 +156,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
   }
 
   return (
-    <main className={styles.container}>
+    <section className={styles.container}>
       {
         delay
           ?
@@ -170,7 +170,6 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
                 bold
                 contents={'결과를 바탕으로 캐릭터를 꾸며보세요!'}
               ></Text>
-              {/* 이 안내메시지는 임시로 넣어뒀습니다... 어디에 넣을지 다시 고민해보기 */}
               <Text
                 size={12}
                 contents={'선택 창에서 아이템을 다시 누르면 캔버스에서 사라져요.'}
@@ -198,7 +197,7 @@ function Customize({ staticState, characterFiles, itemFiles, backgroundFiles }) 
             </>
           )
       }
-    </main>
+    </section>
   )
 }
 
