@@ -344,3 +344,7 @@ frontend/firebaseConfig.js
 *.png
 
 frontend/firebaseConfig.js
+
+PERSONAL_README.md
+
+PERSONAL_README.assets/
