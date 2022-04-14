@@ -23,6 +23,7 @@
 
 
 <div style="text-align:center;"><video width="50%" height="50%" controls="controls"><source src="assets/UCC.mp4" type="video/mp4"></div>
+
 ### 프로젝트 기간
 
 2022-02-28 ~ 2022-04-08 (6주)
