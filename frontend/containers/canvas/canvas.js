@@ -11,6 +11,9 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
   const item2 = useRef()
   const item3 = useRef()
 
+  const dragImgEl = document.createElement('img')
+  dragImgEl.src = '/img/transparent.png'
+
   // 최초 캐릭터 터치시에 터치된 부분과 캐릭터 div의 위치와 차이값 계산
   const touched = (event) => {
     const difX = event.targetTouches[0].clientX - event.target.offsetLeft
@@ -70,6 +73,7 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
   }
 
   const dragStart = event => {
+    event.dataTransfer.setDragImage(dragImgEl, 0, 0)
     setCoordinatesDiff({ x: event.clientX, y: event.clientY })
   }
 
@@ -104,7 +108,7 @@ function Canvas({ color, items, background, firstLocation, staticState }) {
       event.target.style.top = `${event.target.parentElement.offsetHeight - parseInt(event.target.offsetHeight/1.5)}px`
       event.target.style.left = `${event.target.parentElement.offsetWidth - parseInt(event.target.offsetWidth/1.5)}px`
       alert('캐릭터를 너무 바깥에 두지 말아주세요 ㅠ')
-    
+
     // 위
     } else if (event.target.offsetTop + event.clientY < -parseInt(event.target.offsetHeight/2)) {
       event.target.style.top = `${-parseInt(event.target.offsetHeight/2)}px`
