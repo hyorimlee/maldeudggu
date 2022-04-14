@@ -24,19 +24,20 @@
 
 ## 🎡CI/CD
 
+말듣꾸는 CI/CD 시스템을 구축하였습니다. 
+
+push event 이후 자동적으로 빌드 & 최종 시스템 로드까지 이루어집니다.
 <img align = "right" src="https://velog.velcdn.com/images/soover/post/e6896a09-5802-46dc-af32-15af096e9123/Jenkins.png" width="150">
 
 ### Jenkins
 
-Jenkins를 활용하여 ~~
+Jenkins와 Gitlab의 repository를 연결하였습니다.
 
-<br>
-<br>
+webhook 기능을 이용하여, develop branch에 push를 하면 지정해 놓은 일을 수행합니다.
 
-<img align = "right" src="https://blog.kakaocdn.net/dn/H8U2C/btrcQfxb7XO/LtSpjuVBVUJ1DN6DDsbHLK/img.png" width="150">
+Jenkins 서버에서 git clone한 후, ssh를 통해 aws ec2 서버에 파일을 이동시킵니다.
 
-### Docker
+이후, ec2 서버에서 미리 구현된 shell script를 실행하여 빌드&배포 작업을 완료합니다.
 
-Docker를 활용하여 ~~
-
+[shell scrip](../deploy.sh) 서버에 구동 중인 백엔드/프론트엔드 서버를 종료하고, 새로 빌드한 것을 서버에 구동시키는 과정이 구현되어 있습니다.
 
