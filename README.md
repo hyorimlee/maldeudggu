@@ -21,8 +21,22 @@
 
 각 방언 구획을 대표하는 귀여운 캐릭터로 나만의 이미지를 꾸며 보세요.
 
+<div style="text-align:center;">
+  <!-- for github -->
+  <!-- <video width="50%" height="50%" controls="controls"><source src="assets/UCC.mp4" type="video/mp4"> -->
+  <figure class="video_container">
+    <video controls="true" allowfullscreen="true" >
+      <source src="./assets/UCC.mp4" type="video/mp4">
+    </video>
+  </figure>
+</div>
 
-<div style="text-align:center;"><video width="50%" height="50%" controls="controls"><source src="assets/UCC.mp4" type="video/mp4"></div>
+
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="./assets/UCC.mp4" type="video/mp4">
+  </video>
+</figure>
 
 ### 프로젝트 기간
 
