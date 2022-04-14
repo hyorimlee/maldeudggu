@@ -33,9 +33,7 @@
 
 
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./assets/UCC.mp4" type="video/mp4">
-  </video>
+  <iframe src="https://drive.google.com/file/d/11uQRYWyfN1Vi7sisU9bPju_ijGKgCLwV/view?usp=sharing" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
 
 ### 프로젝트 기간
