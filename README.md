@@ -21,6 +21,21 @@
 
 각 방언 구획을 대표하는 귀여운 캐릭터로 나만의 이미지를 꾸며 보세요.
 
+<div style="text-align:center;">
+  <!-- for github -->
+  <!-- <video width="50%" height="50%" controls="controls"><source src="assets/UCC.mp4" type="video/mp4"> -->
+  <figure class="video_container">
+    <video controls="true" allowfullscreen="true" >
+      <source src="./assets/UCC.mp4" type="video/mp4">
+    </video>
+  </figure>
+</div>
+
+
+<figure class="video_container">
+  <iframe src="https://drive.google.com/file/d/11uQRYWyfN1Vi7sisU9bPju_ijGKgCLwV/view?usp=sharing" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+
 ### 프로젝트 기간
 
 2022-02-28 ~ 2022-04-08 (6주)
@@ -90,9 +105,9 @@
 
 ## 😎팀원 소개
 
-|    [김민채](https://github.com/minchae9)    |     [이효림](https://github.com/%7B%7D)     |    [최재진](https://github.com/svstar94)    |
+|    [김민채](https://github.com/minchae9)    |     [이효림](https://github.com/hyorimlee)     |    [최재진](https://github.com/svstar94)    |
 | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
-| <img src="https://github.com/minchae9.png" width=150px, height=150px> | <img src="{}" width=150px, height=150px > | <img src="https://github.com/svstar94.png" width=150px, height=150px> |
+| <img src="https://github.com/minchae9.png" width=150px, height=150px> | <img src="{https://github.com/hyorimlee.png}" width=150px, height=150px > | <img src="https://github.com/svstar94.png" width=150px, height=150px> |
 |               팀장 & Backend               |                 Backend                  |                 Backend                  |
 | PM(Jira 관리, Wiki 작성)<br>REST API 문서 작성 및 구현<br>DB구축<br>CI/CD 보조<br>UCC 기획 및 제작 |                    {}                    | 요구사항 작성 <br> 음성 AI 개발 <br> 추론 API 개발 <br> 프로젝트 자료 정리 및 문서화 |
 |     [이언호](https://github.com/unho-00)     |     [최현규](https://github.com/%7B%7D)     |  [한지윤](https://github.com/yoonnotyoun)   |
